@@ -1,0 +1,203 @@
+<?php
+namespace App\Http\Controllers\Admin\CRM;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Session;
+use DB;
+
+class VendorsController extends Controller{
+	function index(Request $request){
+		if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+        	//Header Data
+	    	$result = array(
+	            'page_title' => 'Manage Vendors',
+	            'meta_keywords' => '',
+	            'meta_description' => '',
+	        );
+
+	    	//Query For Getting Vendors
+	        $query = DB::table('tbl_users')
+	        			 ->select('tbl_users.id', 'first_name', 'last_name', 'cnic', 'address', 'phone_no', 'email', 'image', 'status', 'tbl_cities.name as city_name', 'tbl_countries.country_name')
+	        			 ->leftJoin('tbl_countries', 'tbl_countries.country_code', '=', 'tbl_users.country_id')
+	        			 ->leftJoin('tbl_cities', 'tbl_cities.id', '=', 'tbl_users.city_id')
+	        			 ->where('tbl_users.role', 2)
+	        			 ->orderBy('tbl_users.id', 'DESC');
+		 	$result['query'] = $query->paginate(10);
+     		$result['total_records'] = $result['query']->count();
+
+     		//Query For Getting Vendors Commission Details if exist
+     		$query = DB::table('tbl_vendors_commission')
+     		             ->select('vendor_id', 'type', 'total_percent', 'name')
+     		             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_vendors_commission.category_id')
+     		             ->where('status', 0)
+     		             ->orderBy('tbl_vendors_commission.id', 'DESC');
+         	$result['commission'] = $query->get();
+
+         	//call page
+	        return view('admin.crm.vendors.manage', $result); 
+        }else{
+        	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+    	}
+    }
+
+    function ajax_update_status(Request $request, $id, $status){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0 && $id)){
+            if($status == 0){
+                $status = 1;
+            }elseif($status == 1){
+                $status = 0;
+            }
+
+            $query = DB::table('tbl_users')
+                         ->where('id', $id)
+                         ->update(array('status' => $status));
+
+            if(!empty($query == 1)){
+                //Flash Erro Msg
+                $request->session()->flash('alert-success', 'Status has been updated successfully');
+            }else{
+                //Flash Erro Msg
+                $request->session()->flash('alert-danger', 'Something went wrong !!');
+            }
+
+            //Redirect
+            return redirect()->back();
+        }else{
+            print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+        }
+	}
+
+    function update(Request $request, $id){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0 && $id)){
+    		//Set Field data according to table column
+	        $data = array(
+	        	'status' => $request->input('status'),
+        	);
+
+			//Query For Updating User Status
+			$query = DB::table('tbl_users')
+			             ->where('id', $id)
+			             ->update($data);
+
+         	//Check either data updated or not
+	     	if(!empty($query == 1)){
+	     		//Flash Success Message
+	     		$request->session()->flash('alert-success', 'Vendor Status has been updated successfully');
+	     	}else{
+	     		//Flash Error Message
+	     		$request->session()->flash('alert-danger', 'Something went wrong !!');
+	     	}
+    		
+    		//Redirect 
+	     	return redirect()->back();
+		}else{
+        	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+    	}
+    }
+
+    function add_commission(Request $request, $id){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0 && $id)){
+    		//Inputs Validation
+	        $input_validations = $request->validate([
+	            'category.*' => 'nullable|numeric',
+	            'total.*' => 'nullable',
+	            'total_commission' => 'nullable',
+	        ]);
+
+	        if(!empty($request->input('commision_type') == 1)){
+	        	$count = 0;
+	     		foreach($request->input('category') as $row){
+	     			//Set Field data according to table column
+			        $data = array(
+			        	'admin_id' => $request->session()->get('id'),
+			        	'ip_address' => $request->ip(),
+			        	'vendor_id' => $id,
+			        	'type' => $request->input('commision_type'),
+			        	'category_id' => $row,
+			            'total_percent' => $request->input('total')[$count],
+			            'created_date' => date('Y-m-d'),
+			        	'created_time' => date('H:i:s'),
+			        );
+					$count++;
+
+					//Query For Inserting Data
+			    	$query = DB::table('tbl_vendors_commission')
+			    	             ->insertGetId($data);
+	     		}
+	        }else{
+	        	//Set Field data according to table column
+		        $data = array(
+		        	'admin_id' => $request->session()->get('id'),
+		        	'ip_address' => $request->ip(),
+		        	'vendor_id' => $id,
+		        	'type' => $request->input('commision_type'),
+		        	'category_id' => 0,
+		            'total_percent' => $request->input('total_commission'),
+		            'created_date' => date('Y-m-d'),
+		        	'created_time' => date('H:i:s'),
+		        );
+
+		        //Query For Inserting Data
+		    	$query = DB::table('tbl_vendors_commission')
+		    	             ->insertGetId($data);
+	        }
+
+	        //Check either data inserted or not
+	     	if(!empty($query)){
+	     		//Flash Success Message
+	     		$request->session()->flash('alert-success', 'Commission has been updated successfully');
+
+	     		//Redirect
+            	return redirect()->back();
+	     	}else{
+	     		//Query For Deleting last insert Page
+	     		$query = DB::table('tbl_vendors_commission')
+	     		             ->where('vendor_id', $id)
+	     		             ->delete();
+
+	     		//Flash Error Message
+	     		$request->session()->flash('alert-danger', 'Something went wrong !!');
+
+	     		//Redirect
+            	return redirect()->back()->withInput($request->all());
+	     	}
+	    }else{
+        	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+    	}
+    }
+
+    function search(Request $request){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        	//Necessary Page Data For header Page
+	        $result = array(
+	            'page_title' => 'Search Records',
+	            'meta_keywords' => '',
+	            'meta_description' => '',
+	        ); 
+
+	    	//Query For Getting Search Data
+			$query = DB::table('tbl_users')
+	                     ->select('tbl_users.id', 'first_name', 'last_name', 'cnic', 'address', 'phone_no', 'email', 'image', 'status', 'tbl_cities.name as city_name', 'tbl_countries.country_name')
+	        			 ->leftJoin('tbl_countries', 'tbl_countries.country_code', '=', 'tbl_users.country_id')
+	        			 ->leftJoin('tbl_cities', 'tbl_cities.id', '=', 'tbl_users.city_id');
+	        			 if(!empty($request->input('name'))){
+	  			 $query->where(DB::raw("CONCAT(first_name, ' ', last_name)"), 'Like', '%'.$request->input('name').'%');
+	        			 }
+	        			 if(!empty($request->input('email'))){
+	        	  $query->where('email', 'Like', '%'.$request->input('email').'%');
+	        			 }
+	        			 if(!empty($request->input('status'))){
+	        	  $query->where('status', $request->input('status'));
+	        			 } 
+	              $query->where('tbl_users.role', 2)
+	                    ->orderBy('tbl_users.id', 'DESC');
+	        $result['query'] = $query->paginate(10);
+     		$result['total_records'] = $query->count();
+
+	        //call page
+	        return view('admin.crm.vendors.manage', $result); 
+        }else{
+        	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+    	}
+    }
+}
