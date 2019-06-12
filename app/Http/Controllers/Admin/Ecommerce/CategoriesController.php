@@ -23,7 +23,7 @@ class CategoriesController extends Controller{
 
 	    	//Query for Getting Data
 	    	$query = DB::table('tbl_parent_categories')
-	    	             ->select('id', 'name', 'status')
+	    	             ->select('id', 'name', 'sorting_order', 'status')
 	    	             ->orderBy('id', 'DESC');
      		$result['query'] = $query->paginate($per_page);
      		$result['total_records'] = $result['query']->count();
@@ -61,18 +61,18 @@ class CategoriesController extends Controller{
         	$slug = strtolower(str_replace(' ', '-', $request->input('name')));
             $meta_keywords = $request->input('meta_keywords');
             $meta_description = $request->input('meta_description');
-            $status = $request->input('status', '0');
+            $status = $request->input('status');
             $created_date = date('Y-m-d');
             $created_time = date('H:i:s');
 
 	        //Inputs Validation
 	        $input_validations = $request->validate([
 	        	'image' => 'nullable|mimes:jpeg,jpg,png|max:2000|', //dimensions:max_width=300,max_height:200',
-	            'name' => 'required|unique:tbl_parent_categories',
-	            'slug' => 'nullable|unique:tbl_parent_categories',
+	            'name' => 'required',
+	            'sorting_order' => 'required|numeric|unique:tbl_parent_categories',
 	            'meta_keywords' => 'nullable',
 	            'meta_description' => 'nullable',
-	            'status' => 'required',
+	            'status' => 'required|numeric',
 	        ]);
 
 	        if(!empty($image)){
@@ -89,6 +89,7 @@ class CategoriesController extends Controller{
 		        	'slug' => $slug,
 		        	'meta_keywords' => $meta_keywords,
 		        	'meta_description' => $meta_description,
+		            'sorting_order' => $request->input('sorting_order'),
 		            'status' => $status,
 		            'created_date' => $created_date,
 		        	'created_time' => $created_time,
@@ -106,6 +107,7 @@ class CategoriesController extends Controller{
 		        	'slug' => $slug,
 		        	'meta_keywords' => $meta_keywords,
 		        	'meta_description' => $meta_description,
+		        	'sorting_order' => $request->input('sorting_order'),
 		            'status' => $status,
 		            'created_date' => $created_date,
 		        	'created_time' => $created_time,
@@ -202,11 +204,11 @@ class CategoriesController extends Controller{
 	        //Inputs Validation
 	        $input_validations = $request->validate([
 	        	'image' => 'nullable|mimes:jpeg,jpg,png|max:2000|', //dimensions:max_width=300,max_height:200',
-	            'name' => 'required|unique:tbl_parent_categories,id,'.$id,
-	            'slug' => 'nullable|unique:tbl_parent_categories,id,'.$id,
+	            'name' => 'required',
+	            'sorting_order' => 'required|numeric|unique:tbl_parent_categories,sorting_order,'.$id,
 	            'meta_keywords' => 'nullable',
 	            'meta_description' => 'nullable',
-	            'status' => 'required',
+	            'status' => 'required|numeric',
 	        ]);
 
 	        if(!empty($image)){
@@ -223,6 +225,7 @@ class CategoriesController extends Controller{
 		        	'slug' => $slug,
 		        	'meta_keywords' => $meta_keywords,
 		        	'meta_description' => $meta_description,
+		        	'sorting_order' => $request->input('sorting_order'),
 		            'status' => $status,
 		            'created_date' => $created_date,
 		        	'created_time' => $created_time,
@@ -241,6 +244,7 @@ class CategoriesController extends Controller{
 		        	'slug' => $slug,
 		        	'meta_keywords' => $meta_keywords,
 		        	'meta_description' => $meta_description,
+		        	'sorting_order' => $request->input('sorting_order'),
 		            'status' => $status,
 		            'created_date' => $created_date,
 		        	'created_time' => $created_time,
@@ -308,7 +312,7 @@ class CategoriesController extends Controller{
 
 			//Query For Getting Search Data
 			$query = DB::table('tbl_parent_categories')
-	                     ->select('*');
+	                     ->select('id', 'name', 'sorting_order', 'status');
 	                     if(!empty($request->input('name'))){
                    $query->where('name', 'Like', '%'.$request->input('name').'%');
 	                     }
@@ -330,15 +334,16 @@ class CategoriesController extends Controller{
 		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
 	    	//Header Data
 	    	$result = array(
-	            'page_title' => 'Manage child Categories',
+	            'page_title' => 'Manage Child Categories',
 	            'meta_keywords' => '',
 	            'meta_description' => '',
 	        );
 
 	    	//Query for Getting Data
 	    	$query = DB::table('tbl_child_categories')
-	    	             ->select('id', 'name', 'status')
-	    	             ->orderBy('id', 'DESC');
+	    	             ->select('tbl_child_categories.id', 'tbl_child_categories.name as child_name', 'tbl_child_categories.status', 'tbl_parent_categories.name as parent_name')
+	    	             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_child_categories.parent_id')
+	    	             ->orderBy('tbl_child_categories.id', 'DESC');
 	 		$result['query'] = $query->paginate(10);
 	 		$result['total_records'] = $result['query']->count();
 
@@ -390,13 +395,11 @@ class CategoriesController extends Controller{
 	        //Inputs Validation
 	        $input_validations = $request->validate([
 	        	'image' => 'nullable|mimes:jpeg,jpg,png|max:2000|', //dimensions:max_width=300,max_height:200',
-	        	'parent_category' => 'required',
-	            'name' => 'required|unique:tbl_child_categories',
-	            'slug' => 'nullable|unique:tbl_child_categories',
-	            'parent_category' => 'required',
+	        	'parent_category' => 'required|numeric',
+	            'name' => 'required',
 	            'meta_keywords' => 'nullable',
 	            'meta_description' => 'nullable',
-	            'status' => 'required',
+	            'status' => 'required|numeric',
 	        ]);
 
 	        if(!empty($image)){
@@ -539,12 +542,11 @@ class CategoriesController extends Controller{
 	        //Inputs Validation
 	        $input_validations = $request->validate([
 	        	'image' => 'nullable|mimes:jpeg,jpg,png|max:2000|', //dimensions:max_width=300,max_height:200',
-	            'name' => 'required|unique:tbl_child_categories,id,'.$id,
-	            'slug' => 'nullable|unique:tbl_child_categories,id,'.$id,
-	            'parent_category' => 'required',
+	            'name' => 'required',
+	            'parent_category' => 'required|numeric',
 	            'meta_keywords' => 'nullable',
 	            'meta_description' => 'nullable',
-	            'status' => 'required',
+	            'status' => 'required|numeric',
 	        ]);
 
 	        if(!empty($image)){
@@ -593,7 +595,7 @@ class CategoriesController extends Controller{
          	}
 
 	     	//Check either data updated or not
-	     	if(!empty($query == 0)){
+	     	if(!empty($query == 1)){
 	     		//Flash Success Message
 	     		$request->session()->flash('alert-success', 'Category has been updated successfully');
 	     	}else{
@@ -642,14 +644,18 @@ class CategoriesController extends Controller{
 
 			//Query For Getting Search Data
 			$query = DB::table('tbl_child_categories')
-	                     ->select('*');
+	                     ->select('tbl_child_categories.id', 'tbl_child_categories.name as child_name', 'tbl_child_categories.status', 'tbl_parent_categories.name as parent_name')
+	    	             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_child_categories.parent_id');
 	                     if(!empty($request->input('name'))){
-                   $query->where('name', 'Like', '%'.$request->input('name').'%');
+                   $query->where('tbl_child_categories.name', 'Like', '%'.$request->input('name').'%');
+	                     }
+	                     if(!empty($request->input('parent_name'))){
+                   $query->where('tbl_parent_categories.name', 'Like', '%'.$request->input('parent_name').'%');
 	                     }
 	                     if(!empty($request->input('status'))){
-                   $query->where('status', $request->input('status'));
+                   $query->where('tbl_child_categories.status', $request->input('status'));
 	                     }
-                   $query->orderBy('id', 'DESC');
+                   $query->orderBy('tbl_child_categories.id', 'DESC');
 	        $result['query'] = $query->paginate(10);
      		$result['total_records'] = $result['query']->count();
 
@@ -665,15 +671,17 @@ class CategoriesController extends Controller{
 		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
 	    	//Header Data
 	    	$result = array(
-	            'page_title' => 'Manage sub_child Categories',
+	            'page_title' => 'Manage Sub Child Categories',
 	            'meta_keywords' => '',
 	            'meta_description' => '',
 	        );
 
 	    	//Query for Getting Data
 	    	$query = DB::table('tbl_sub_child_categories')
-	    	             ->select('id', 'name', 'status')
-	    	             ->orderBy('id', 'DESC');
+	    	             ->select('tbl_parent_categories.name as parent_name', 'tbl_child_categories.name as child_name', 'tbl_sub_child_categories.id', 'tbl_sub_child_categories.name as sub_child_name', 'tbl_sub_child_categories.status')
+	    	             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_sub_child_categories.parent_id')
+	    	             ->leftJoin('tbl_child_categories', 'tbl_child_categories.id', '=', 'tbl_sub_child_categories.child_id')
+	    	             ->orderBy('tbl_sub_child_categories.id', 'DESC');
 	 		$result['query'] = $query->paginate(10);
 	 		$result['total_records'] = $result['query']->count();
 
@@ -747,7 +755,7 @@ class CategoriesController extends Controller{
     }
 
     function insert_sub_child_categories(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0 && $request->input('name'))){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
 	    	//Get All Inputs
         	$user_id = $request->session()->get('id');
         	$ip_address = $request->ip();
@@ -765,13 +773,12 @@ class CategoriesController extends Controller{
 	        //Inputs Validation
 	        $input_validations = $request->validate([
 	        	'image' => 'nullable|mimes:jpeg,jpg,png|max:2000|', //dimensions:max_width=300,max_height:200',
-	        	'parent_category' => 'required',
-	        	'child_category' => 'required',
-	            'name' => 'required|unique:tbl_sub_child_categories',
-	            'slug' => 'nullable|unique:tbl_sub_child_categories',
+	        	'parent_category' => 'required|numeric',
+	        	'child_category' => 'required|numeric',
+	            'name' => 'required',
 	            'meta_keywords' => 'nullable',
 	            'meta_description' => 'nullable',
-	            'status' => 'required',
+	            'status' => 'required|numeric',
 	        ]);
 
 	        if(!empty($image)){
@@ -926,13 +933,12 @@ class CategoriesController extends Controller{
 	        //Inputs Validation
 	        $input_validations = $request->validate([
 	        	'image' => 'nullable|mimes:jpeg,jpg,png|max:2000|', //dimensions:max_width=300,max_height:200',
-	        	'parent_category' => 'required',
-	        	'child_category' => 'required',
-	            'name' => 'required|unique:tbl_sub_child_categories,id,'.$id,
-	            'slug' => 'nullable|unique:tbl_sub_child_categories,id,'.$id,
+	        	'parent_category' => 'required|numeric',
+	        	'child_category' => 'required|numeric',
+	            'name' => 'required',
 	            'meta_keywords' => 'nullable',
 	            'meta_description' => 'nullable',
-	            'status' => 'required',
+	            'status' => 'required|numeric',
 	        ]);
 
 	        if(!empty($image)){
@@ -983,7 +989,7 @@ class CategoriesController extends Controller{
          	}
 
 	     	//Check either data inserted or not
-	     	if(!empty($query == 0)){
+	     	if(!empty($query == 1)){
 	     		//Flash Success Message
 	     		$request->session()->flash('alert-success', 'Category has been updated successfully');
 	     	}else{
@@ -1032,14 +1038,22 @@ class CategoriesController extends Controller{
 
 			//Query For Getting Search Data
 			$query = DB::table('tbl_sub_child_categories')
-	                     ->select('*');
-	                     if(!empty($request->input('name'))){
-                   $query->where('name', 'Like', '%'.$request->input('name').'%');
+	    	             ->select('tbl_parent_categories.name as parent_name', 'tbl_child_categories.name as child_name', 'tbl_sub_child_categories.id', 'tbl_sub_child_categories.name as sub_child_name', 'tbl_sub_child_categories.status')
+	    	             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_sub_child_categories.parent_id')
+	    	             ->leftJoin('tbl_child_categories', 'tbl_child_categories.id', '=', 'tbl_sub_child_categories.child_id');
+	    	             if(!empty($request->input('name'))){
+                   $query->where('tbl_sub_child_categories.name', 'Like', '%'.$request->input('name').'%');
+	                     }
+                   		 if(!empty($request->input('parent_name'))){
+                   $query->where('tbl_parent_categories.name', 'Like', '%'.$request->input('parent_name').'%');
+	                     }
+	                     if(!empty($request->input('child_name'))){
+                   $query->where('tbl_child_categories.name', 'Like', '%'.$request->input('child_name').'%');
 	                     }
 	                     if(!empty($request->input('status'))){
-                   $query->where('status', $request->input('status'));
+                   $query->where('tbl_sub_child_categories.status', $request->input('status'));
 	                     }
-                   $query->orderBy('id', 'DESC');
+	    	       $query->orderBy('tbl_sub_child_categories.id', 'DESC');
 	        $result['query'] = $query->paginate(10);
      		$result['total_records'] = $result['query']->count();
 

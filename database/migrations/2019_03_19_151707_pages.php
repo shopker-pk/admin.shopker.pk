@@ -9,9 +9,9 @@ class Pages extends Migration{
             $column->increments('id');
             $column->ipAddress('ip_address');
             $column->integer('user_id');
-            $column->LongText('title');
-            $column->LongText('slug');
-            $column->longText('content');
+            $column->string('title', 100)->unique();
+            $column->string('slug', 100)->unique();
+            $column->longText('content')->nullable();
             $column->integer('status');
             $column->date('created_date');
             $column->Time('created_time');

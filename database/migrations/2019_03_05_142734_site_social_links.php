@@ -12,6 +12,8 @@ class SiteSocialLinks extends Migration{
             $column->string('facebook', 100)->nullable();
             $column->string('twitter', 100)->nullable();
             $column->string('googleplus', 100)->nullable();
+            $column->date('created_date');
+            $column->Time('created_time');
         });
     }
 

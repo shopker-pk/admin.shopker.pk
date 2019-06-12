@@ -10,8 +10,8 @@ class PagesMetaDetails extends Migration{
             $column->ipAddress('ip_address');
             $column->integer('user_id');
             $column->integer('page_id');
-            $column->longText('meta_keywords');
-            $column->longText('meta_description');
+            $column->longText('meta_keywords')->nullable();
+            $column->longText('meta_description')->nullable();
             $column->date('created_date');
             $column->Time('created_time');
         });

@@ -34,7 +34,8 @@
 											<thead>
 			                                    <tr>
 			                                        <th>Name</th>
-			                                        <th>Status</th>
+			                                        <th>Sorting Order</th>
+                                                    <th>Status</th>
 			                                        <th>Action</th>
 			                                    </tr>
 			                                </thead>
@@ -43,6 +44,7 @@
                                                     @foreach($query as $row)
                                                         <tr>
         				                                    <td>{{ $row->name }}</td>
+        				                                    <td>{{ $row->sorting_order }}</td>
         				                                    <td>
                                                                 <label class="switch">
                                                                     <a href="{{ url('/user/admin/ecommerce/categories/parent/ajax/update-status/'. $row->id.'/'. $row->status) }}">
@@ -51,7 +53,7 @@
                                                                     </a>
                                                                 </label>
                                                             </td>
-        				                                    <td>
+                                                            <td>
         				                                    	<div role="group" class="btn-group">
         														    <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-menu-right"><i class="ft-edit icon-left"></i> Action</button>
         														    <div aria-labelledby="btnGroupDrop1" class="dropdown-menu">

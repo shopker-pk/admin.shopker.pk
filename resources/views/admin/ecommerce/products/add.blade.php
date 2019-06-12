@@ -25,7 +25,7 @@
                                                     @if(!empty($parent_categories))
                                                         <option>No cateogry selected</option>
                                                         @foreach($parent_categories as $row)
-                                                            <option value="{{ $row->id }}" @if(old('parent_category') == $row->id) selected @endif>{{ $row->name }}</option>
+                                                            <option value="{{ $row->id }}">{{ $row->name }}</option>
                                                         @endforeach
                                                     @else
                                                         <option>No parent cateogry found</option>
@@ -134,6 +134,14 @@
                                                         <input id="height" name="height" class="form-control" placeholder="Height" value="{{ old('height') }}">
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group row">
+                                                <label class="label-control">Product Video Url</label>
+                                                <input type="text" id="video_url" name="video_url" class="form-control" placeholder="Product Video Url" value="{{ old('video_url') }}">
                                             </div>
                                         </div>
                                     </div>

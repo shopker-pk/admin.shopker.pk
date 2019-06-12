@@ -25,13 +25,7 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="label-control">CNIC</label><label class="label-control" style="color:red">*</label>
-                                                    <input type="text" id="cnic" name="cnic" class="form-control" placeholder="CNIC*" value="{{ old('cnic', $query->cnic) }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="label-control">Phone NO</label><label class="label-control" style="color:red">*</label>
                                                     <input type="text" id="phone_no" name="phone_no" class="form-control" placeholder="Phone NO*" value="{{ old('phone_no', $query->phone_no) }}">

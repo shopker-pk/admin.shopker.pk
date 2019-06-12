@@ -11,6 +11,7 @@ class StoreSettings extends Migration{
             $column->integer('vendor_id');
             $column->LongText('bussiness_name');
             $column->LongText('store_name');
+            $column->LongText('store_slug');
             $column->string('store_email', 75)->unique();
             $column->string('store_phone_no', 13)->unique();
             $column->string('store_cell_no', 15)->nullable()->unique();

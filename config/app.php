@@ -173,6 +173,8 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         //PDF
         Barryvdh\DomPDF\ServiceProvider::class,
+        //Custom helper Provider
+        App\Providers\AdminHelpersServiceProvider::class,
     ],
 
     /*

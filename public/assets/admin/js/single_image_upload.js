@@ -13,6 +13,7 @@ $(document).ready(function(){
 	                    var file = e.target;
 	                    $('.single_image_preview_'+id+'').attr('src', e.target.result);
 	                });
+	                
 	                fileReader.readAsDataURL(f);
 	            }
         	}

@@ -10,7 +10,7 @@
                                     <div class="form-body">
                                         <h4 class="form-section">Manage Customers</h4>
                                         <div class="row">
-                                        	<div class="col-md-11">
+                                        	<div class="col-md-10">
                                         		@if($total_records > 1)
                                                     Total {{ $total_records }} Record Found
                                                 @elseif($total_records == 1)
@@ -23,6 +23,9 @@
                                     			<a href="javascript::void(0);" id="add_filter"><i class="ft-filter"></i> Filter</a>
                                                 <input type="hidden" id="search_url" value="{{ route('search_customers') }}">
                                     		</div>
+                                            <div class="col-md-1" id="filter_button">
+                                                <a href="javascript::void(0);" class="export_customers">Export</a>
+                                            </div>
                                     	</div>
                                     	<div id="filter_section"></div>
                                     </div><br><br>
@@ -71,109 +74,149 @@
                                 </form>
                                 @if(!empty($query))
                                     @foreach($query as $row)
-                                        <!-- Edit Customer Status Modal Start -->
-                                            <div class="modal fade text-left" id="customer_status_{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <label class="modal-title text-text-bold-600" id="myModalLabel33">Customer Name : {{ $row->first_name }} {{ $row->last_name }}</label>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
-                                                        </div>
-                                                        <form action="{{ route('update_customers', $row->id) }}" method="post">
-                                                            {{ csrf_field() }}
-                                                            <div class="modal-body">
-                                                                <label class="modal-title text-text-bold-600" id="myModalLabel33">Customer Email : {{ $row->email }}</label><br><br>
-                                                                <label class="label-control">Customer Status</label><br>
-                                                                <select id="status" name="status" class="form-control select_2" style="width:100%">
-                                                                    <option value="0" @if($row->status == 0) selected @endif>Active</option>
-                                                                    <option value="1" @if($row->status == 1) selected @endif>Inactive</option>
-                                                                </select>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="submit" class="btn btn-primary">
-                                                                    <i class="fa fa-check-square-o"></i> Update
-                                                                </button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
+                                    <!-- Edit Customer Status Modal Start -->
+                                    <div class="modal fade text-left" id="customer_status_{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <label class="modal-title text-text-bold-600" id="myModalLabel33">Customer Name : {{ $row->first_name }} {{ $row->last_name }}</label>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
                                                 </div>
+                                                <form action="{{ route('update_customers', $row->id) }}" method="post">
+                                                    {{ csrf_field() }}
+                                                    <div class="modal-body">
+                                                        <label class="modal-title text-text-bold-600" id="myModalLabel33">Customer Email : {{ $row->email }}</label><br><br>
+                                                        <label class="label-control">Customer Status</label><br>
+                                                        <select id="status" name="status" class="form-control select_2" style="width:100%">
+                                                            <option value="0" @if($row->status == 0) selected @endif>Active</option>
+                                                            <option value="1" @if($row->status == 1) selected @endif>Inactive</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            <i class="fa fa-check-square-o"></i> Update
+                                                        </button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                        <!-- Edit Customer Status Modal End -->
+                                        </div>
+                                    </div>
+                                    <!-- Edit Customer Status Modal End -->
 
-                                        <!-- Manage Customer Details Modal Start -->
-                                            <div class="modal fade text-left" id="customer_details_{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <label class="modal-title text-text-bold-600" id="myModalLabel33">Customer Name : {{ $row->first_name }} {{ $row->last_name }}</label>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">×</span>
-                                                            </button>
+                                    <!-- Manage Customer Details Modal Start -->
+                                    <div class="modal fade text-left" id="customer_details_{{ $row->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" style="display: none;" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <label class="modal-title text-text-bold-600" id="myModalLabel33">Customer Name : {{ $row->first_name }} {{ $row->last_name }}</label>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">×</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <span>First Name :</span>
+                                                            <span>{{ $row->first_name }}</span>
+                                                            <br>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <span>Name :</span>
-                                                                    <span>{{ $row->first_name }} {{ $row->last_name }}</span>
-                                                                    <br>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <span>CNIC# :</span>
-                                                                    <span>{{ $row->cnic }}</span>
-                                                                    <br>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <span>Phone # :</span>
-                                                                    <span>{{ $row->phone_no }}</span>
-                                                                    <br>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <span>Email :</span>
-                                                                    <span>{{ $row->email }}</span>
-                                                                    <br>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <span>Address :</span>
-                                                                    <span>{{ $row->address }}</span>
-                                                                    <br>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <span>Country :</span>
-                                                                    <span>{{ $row->country_name }}</span>
-                                                                    <br>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <span>City :</span>
-                                                                    <span>{{ $row->city_name }}</span>
-                                                                    <br>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <span>Status :</span>
-                                                                    @if($row->status == 0)
-                                                                        <span class="badge badge-default badge-success">Active</span>
-                                                                    @elseif($row->status == 1)
-                                                                        <span class="badge badge-default badge-danger">Inactive</span>
-                                                                    @endif 
-                                                                    <br>
-                                                                </div>
-                                                            </div>
+                                                        <div class="col-md-6">
+                                                            <span>Last Name :</span>
+                                                            <span>{{ $row->last_name }}</span>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <span>Phone # :</span>
+                                                            <span>{{ $row->phone_no }}</span>
+                                                            <br>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <span>Email :</span>
+                                                            <span>{{ $row->email }}</span>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span>Address :</span>
+                                                            <span>{{ $row->address }}</span>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <span>Country :</span>
+                                                            <span>{{ $row->country_name }}</span>
+                                                            <br>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <span>City :</span>
+                                                            <span>{{ $row->city_name }}</span>
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <span>Status :</span>
+                                                            @if($row->status == 0)
+                                                                <span class="badge badge-default badge-success">Active</span>
+                                                            @elseif($row->status == 1)
+                                                                <span class="badge badge-default badge-danger">Inactive</span>
+                                                            @endif 
+                                                            <br>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        <!-- Manage Customer Details Modal End -->
+                                        </div>
+                                    </div>
+                                    <!-- Manage Customer Details Modal End -->
                                     @endforeach
                                 @endif
+                                <div class="modal fade text-left" id="export_customers" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <label class="modal-title text-text-bold-600" id="myModalLabel33">Export Products</label>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button>
+                                            </div>
+                                            <form action="{{ route('export_customers') }}" method="post">
+                                                {{ csrf_field() }}
+                                                <div class="modal-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="label-control">Select Customer Status</label>
+                                                                <select id="customer_status" name="customer_status" class="form-control select_2" style="width: 100%">
+                                                                    <option value="2">All</option>
+                                                                    <option value="0">Active</option>
+                                                                    <option value="1">Inactive</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <label class="label-control">Write File Name</label><br>
+                                                                <input type="text" id="name" name="name" class="form-control" placeholder="Write File Name*">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        <i class="fa fa-check-square-o"></i> Export
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

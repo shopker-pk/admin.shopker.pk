@@ -17,15 +17,10 @@ class ProfileController extends Controller{
 
 	    	//Query for Getting Data
 	    	$query = DB::table('tbl_users')
-	    	             ->select('tbl_users.id as u_id', 'first_name', 'last_name', 'cnic', 'date_of_birth', 'gender', 'country_id', 'city_id', 'address', 'country_code_1', 'cell_number1', 'country_code_2', 'cell_number2', 'password', 'image', 'tbl_users_social_profile.id as u_s_id', 'user_id', 'facebook', 'twitter', 'googleplus')
-	    	             ->leftJoin('tbl_users_social_profile', 'tbl_users_social_profile.user_id', '=', 'tbl_users.id')
+	    	             ->select('tbl_users.id', 'first_name', 'last_name', 'address', 'phone_no', 'email', 'country_id', 'city_id', 'dob', 'image', 'gender_id')
+	    	             ->leftJoin('tbl_users_genders', 'tbl_users_genders.user_id', '=', 'tbl_users.id')
 	    	             ->where('tbl_users.id', $request->session()->get('id'));
      		$result['query'] = $query->first();
-
-     		//Query For Getting Country codes
-	 		$query = DB::table('tbl_countries_phone_code')
-	    	             ->select('*');
-	 		$result['country_code'] = $query->get();
 
      		//Query for Getting Countries
 	    	$query = DB::table('tbl_countries')
@@ -35,13 +30,13 @@ class ProfileController extends Controller{
 			
 			//Query for Getting Cities
 	    	$query = DB::table('tbl_cities')
-	    	             ->select('id', 'country_id', 'name')
+	    	             ->select('id', 'name')
 	    	             ->where('country_id', $result['query']->country_id)
 	    	             ->orderBy('id', 'DESC');
-     		$result['cities'] = $query->get();	
+     		$result['cities'] = $query->get();
 
 	        //call page
-	        return view('admin.settings.profile.edit', $result); 
+	        return view('admin.settings.profile.manage', $result); 
         }else{
         	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
     	}
@@ -49,6 +44,41 @@ class ProfileController extends Controller{
 
     function update(Request $request){
     	if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+    		//Inputs Validation
+	        $input_validations = $request->validate([
+	            'first_name' => 'required',
+	            'last_name' => 'required',
+	            'address' => 'required',
+	            'phone_no' => 'required|unique:tbl_users,id,'.$request->session()->get('id'),
+	            'city' => 'required|numeric',
+	            'country' => 'required|numeric',
+	            'city' => 'required|numeric',
+	            'dob' => 'required|date',
+	            'gender' => 'required|numeric',
+	            'password' => 'nullable|min:8|regex:/^((?=.*[a-z]))((?=.*[A-Z]))((?=.*[0-9])).+$/',
+	            'confirm_password' => 'nullable|min:8|regex:/^((?=.*[a-z]))((?=.*[A-Z]))((?=.*[0-9])).+$/',
+	        	'profile' => 'nullable|mimes:jpeg,jpg,png|max:2000',
+	        ]);
+	        
+	        //Set Field data according to table column
+	        $data = array(
+	        	'ip_address' => $request->ip(),
+	        	'first_name' => $request->input('first_name'),
+	        	'last_name' => $request->input('last_name'),
+	        	'address' => $request->input('address'),
+	        	'phone_no' => $request->input('phone_no'),
+	        	'country_id' => $request->input('country'),
+	        	'city_id' => $request->input('city'),
+	        	'date_of_birth' => $request->input('dob'),
+	            'created_date' => date('Y-m-d'),
+	        	'created_time' => date('h:i:s'),
+	        );
+
+	        //Query For Updating Data
+	    	$profile_settings = DB::table('tbl_users')
+	    	             ->where('id', $request->session()->get('id'))
+	    	             ->update($data);
+
     		if($request->input('btn') == 0){
 	    		//Get All Inputs
 	        	$ip_address = $request->ip();

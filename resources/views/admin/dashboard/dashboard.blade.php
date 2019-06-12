@@ -93,7 +93,7 @@
                             <a href="javascript::void(0)" class="media border-0">
                                 <div class="media-left pr-1">
                                     <span class="avatar avatar-md avatar-online">
-                                        <img class="media-object rounded-circle" src="{{ asset('public/assets/admin/images/profile_images/1543478364.jpeg') }}" alt="User Image">
+                                        <img class="media-object rounded-circle" src="{{ asset('public/assets/admin/images/profile_images/avatar.png') }}" alt="User Image">
                                     </span>
                                 </div>
                                 <div class="media-body w-100">

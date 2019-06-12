@@ -17,7 +17,7 @@ class AdminsController extends Controller{
 
 	    	//Query For Getting Data
 	        $query = DB::table('tbl_users')
-	        			 ->select('tbl_users.id', 'first_name', 'last_name', 'cnic', 'address', 'phone_no', 'email', 'image', 'status', 'tbl_cities.name as city_name', 'tbl_countries.country_name')
+	        			 ->select('tbl_users.id', 'first_name', 'last_name', 'address', 'phone_no', 'email', 'image', 'status', 'tbl_cities.name as city_name', 'tbl_countries.country_name')
 	        			 ->leftJoin('tbl_countries', 'tbl_countries.country_code', '=', 'tbl_users.country_id')
 	        			 ->leftJoin('tbl_cities', 'tbl_cities.id', '=', 'tbl_users.city_id')
 	        			 ->where('tbl_users.role', 1)
@@ -60,7 +60,6 @@ class AdminsController extends Controller{
 	        $input_validations = $request->validate([
 	            'first_name' => 'required',
 	            'last_name' => 'required',
-	            'cnic' => 'required|numeric|digits_between:13,13|unique:tbl_users',
 	            'phone_no' => 'required|max:13|min:11|unique:tbl_users',
 	            'address' => 'required',
 	            'country' => 'required',
@@ -77,7 +76,6 @@ class AdminsController extends Controller{
 	        	'varification_code' => rand(111111, 999999),
 	        	'first_name' => $request->input('first_name'),
 	        	'last_name' => $request->input('last_name'),
-	        	'cnic' => $request->input('cnic'),
 	        	'phone_no' => $request->input('phone_no'),
 	        	'address' => $request->input('address'),
 	        	'country_id' => $request->input('country'),
@@ -212,7 +210,6 @@ class AdminsController extends Controller{
 	        $input_validations = $request->validate([
 	            'first_name' => 'required',
 	            'last_name' => 'required',
-	            'cnic' => 'required|numeric|digits_between:13,13|unique:tbl_users,id,'.$id,
 	            'phone_no' => 'required|max:13|min:11|unique:tbl_users,id,'.$id,
 	            'address' => 'required',
 	            'country' => 'required',
@@ -229,7 +226,6 @@ class AdminsController extends Controller{
 	        	'varification_code' => rand(111111, 999999),
 	        	'first_name' => $request->input('first_name'),
 	        	'last_name' => $request->input('last_name'),
-	        	'cnic' => $request->input('cnic'),
 	        	'phone_no' => $request->input('phone_no'),
 	        	'address' => $request->input('address'),
 	        	'country_id' => $request->input('country'),
@@ -327,7 +323,7 @@ class AdminsController extends Controller{
 
 			//Query For Getting Search Data
 			$query = DB::table('tbl_users')
-	                     ->select('tbl_users.id', 'first_name', 'last_name', 'cnic', 'address', 'phone_no', 'email', 'image', 'status', 'tbl_cities.name as city_name', 'tbl_countries.country_name')
+	                     ->select('tbl_users.id', 'first_name', 'last_name', 'address', 'phone_no', 'email', 'image', 'status', 'tbl_cities.name as city_name', 'tbl_countries.country_name')
 	        			 ->leftJoin('tbl_countries', 'tbl_countries.country_code', '=', 'tbl_users.country_id')
 	        			 ->leftJoin('tbl_cities', 'tbl_cities.id', '=', 'tbl_users.city_id');
 	        			 if(!empty($request->input('name'))){

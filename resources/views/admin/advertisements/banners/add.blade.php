@@ -35,9 +35,7 @@
                                                     <label class="label-control">Pages</label><label class="label-control" style="color:red">*</label>
                                                     <select id="page" name="page" class="form-control select_2" style="width: 100%">
                                                         <option>No Page Selected</option>
-                                                        <option value="0">Page 1</option>
-                                                        <option value="1">Page 2</option>
-                                                        <option value="2">Page 3</option>
+                                                        <option value="0" @if(old('page') == 0) selected @endif>Home</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -46,9 +44,9 @@
                                                     <label class="label-control">Type</label><label class="label-control" style="color:red">*</label>
                                                     <select id="type" name="type" class="form-control select_2" style="width: 100%">
                                                         <option>No Type Selected</option>
-                                                        <option value="0">Header</option>
-                                                        <option value="1">Bottom Top</option>
-                                                        <option value="2">Bottom Center</option>
+                                                        <option value="0" @if(old('type') == 0) selected @endif>Header</option>
+                                                        <option value="1" @if(old('type') == 1) selected @endif>Bottom Top</option>
+                                                        <option value="2" @if(old('type') == 2) selected @endif>Bottom Center</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -57,13 +55,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group row">
                                                     <label class="label-control">Banner Start Date</label><label class="label-control" style="color:red">*</label>
-                                                    <input type="text" id="start_date" name="start_date" class="form-control datepicker" style="width: 100%;height: 40px;"/>
+                                                    <input type="text" id="start_date" name="start_date" class="form-control advertise_datepicker" style="width: 100%;height: 40px;"/>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group row last">
                                                     <label class="label-control">Banner End Date</label><label class="label-control" style="color:red">*</label>
-                                                    <input type="text" id="end_date" name="end_date" class="form-control datepicker" style="width: 100%;height: 40px;"/>
+                                                    <input type="text" id="end_date" name="end_date" class="form-control advertise_datepicker" style="width: 100%;height: 40px;"/>
                                                 </div>
                                             </div>
                                         </div>

@@ -33,7 +33,9 @@
   										<table class="table">
 											<thead>
 			                                    <tr>
-			                                        <th>Name</th>
+                                                    <th>Parent Name</th>
+                                                    <th>Child Name</th>
+			                                        <th>Sub Child Name</th>
 			                                        <th>Status</th>
 			                                        <th>Action</th>
 			                                    </tr>
@@ -42,7 +44,9 @@
                                                 @if(!empty($query))
                                                     @foreach($query as $row)
                                                         <tr>
-        				                                    <td>{{ $row->name }}</td>
+        				                                    <td>{{ $row->parent_name }}</td>
+                                                            <td>{{ $row->child_name }}</td>
+                                                            <td>{{ $row->sub_child_name }}</td>
         				                                    <td>
                                                                 <label class="switch">
                                                                     <a href="{{ url('/user/admin/ecommerce/categories/sub-child/ajax/update-status/'. $row->id.'/'. $row->status) }}">

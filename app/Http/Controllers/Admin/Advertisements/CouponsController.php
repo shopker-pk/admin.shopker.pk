@@ -217,7 +217,8 @@ class CouponsController extends Controller{
 
 			//Query For Getting Coupon
 			$query = DB::table('tbl_coupons')
-			             ->select('*');
+			             ->select('*')
+			             ->where('id', $id);
          	$coupon = $query->first();
 
          	if(!empty($coupon)){
@@ -240,28 +241,30 @@ class CouponsController extends Controller{
  				$query = DB::table('tbl_coupons_products')
  				             ->select('tbl_products.id', 'tbl_products.name')
  				             ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_coupons_products.product_id')
- 				             ->where('tbl_coupons_products.coupon_id', $coupon->id)
+ 				             ->where('tbl_coupons_products.coupon_id', $coupon_array['coupon_id'])
  				             ->where('tbl_products.status', 0)
  				             ->orderBy('tbl_coupons_products.id', 'DESC');
              	$products = $query->get();
 
-             	foreach($products as $row){
-             		$products_array[] = array(
-             			'product_id' => $row->id,
-             			'name' => $row->name,
-             		);
+             	if(count($products) > 0){
+             		foreach($products as $row){
+	             		$products_array[] = array(
+	             			'product_id' => $row->id,
+	             			'name' => $row->name,
+	             		);
+	             	}
+
+	             	//Query For Getting All Products
+	             	$query = DB::table('tbl_products')
+	             	             ->select('id', 'name')
+	             	             ->where('status', 0);
+	             	$result['products'] = $query->get();
+
+	             	$result['coupon_products'] = $products_array;
              	}
+             	
+             	$result['query'] = $coupon_array; 
 
-             	//Query For Getting All Products
-             	$query = DB::table('tbl_products')
-             	             ->select('id', 'name')
-             	             ->where('status', 0);
-             	$result['products'] = $query->get();
-
-             	$result['coupon_products'] = $products_array;
-
-     			$result['query'] = $coupon_array; 
-     			
      			return view('admin.advertisements.coupons.edit', $result);
          	}else{
 	            print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
@@ -391,6 +394,74 @@ class CouponsController extends Controller{
                 }
 	        }
 		}else{
+	    	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+		}
+	}
+
+	function delete(Request $request, $id){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0 && $id)){
+			//Query For Deleting Coupon 
+	        $coupons = DB::table('tbl_coupons')
+	                       ->where('id', $id)
+	                       ->delete();
+
+           	//Query For Checking If Products Exist on this coupon?
+           	$query = DB::table('tbl_coupons_products')
+ 				         ->where('coupon_id', $id)
+ 				         ->orderBy('id', 'DESC');
+            $products = $query->get();
+
+            if(count($products) > 0){
+            	//Query For Deleting Products
+            	$coupons_products = DB::table('tbl_coupons_products')
+		                       ->where('coupon_id', $id)
+		                       ->delete();
+            }
+
+            //Check either data deleted or not
+	     	if(!empty($coupons || $coupons_products)){
+	     		//Flash Success Message
+	     		$request->session()->flash('alert-success', 'Coupon has been deleted successfully');
+	     	}else{
+	     		//Flash Error Message
+	     		$request->session()->flash('alert-danger', 'Something went wrong !!');
+	     	}
+
+	     	return redirect()->back();
+		}else{
+	    	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+		}
+	}
+
+	function search(Request $request){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+	    	//Header Data
+	    	$result = array(
+	            'page_title' => 'Search Records',
+	            'meta_keywords' => '',
+	            'meta_description' => '',
+	        ); 
+
+	    	//Query For Getting Coupons
+	        $query = DB::table('tbl_coupons')
+	        			 ->select('tbl_coupons.id', 'admin_id', 'code', 'discount_type', 'start_date', 'end_date', 'discount_offer', 'no_of_uses', 'min_order_amount', 'max_order_amount', 'limit_per_customer', 'order_type', 'tbl_coupons.status', 'tbl_coupons.created_date', 'first_name', 'last_name')
+	        			 ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_coupons.vendor_id');
+	        			 if(!empty($request->input('name'))){
+	        	   $query->where('code', 'Like', '%'.$request->input('name').'%');
+	        			 }
+	        	   $query->orderBy('tbl_coupons.id', 'DESC');
+		 	$result['query'] = $query->paginate(10);
+     		$result['total_records'] = $result['query']->count();
+     		
+     		//Query For Getting All Admins
+     		$query = DB::table('tbl_users')
+     		             ->select('id', DB::raw("CONCAT(first_name, last_name) as admin_name"))
+     		             ->where('status', 0);
+         	$result['admins'] = $query->get();
+
+	    	//call page
+	        return view('admin.advertisements.coupons.manage', $result); 
+	    }else{
 	    	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
 		}
 	}

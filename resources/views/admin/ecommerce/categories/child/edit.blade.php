@@ -23,7 +23,6 @@
                                                 <div class="form-group row">
                                                     <label class="label-control">Parent Category</label>
                                                     <select id="parent_category" name="parent_category" class="form-control select_2">
-                                                        <option value="0" @if(old('parent_categories') == '0') selected @endif>No parent cateogry</option>
                                                         @if(!empty($parent_categories))
                                                             @foreach($parent_categories as $row)
                                                                 <option value="{{ $row->id }}" @if(old('parent_categories') == $row->id) selected @endif @if($query_categories == $row->id) selected @endif>{{ $row->name }}</option>

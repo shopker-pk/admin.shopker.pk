@@ -14,10 +14,10 @@ class SiteSettings extends Migration{
             $column->string('country_id', 5)->nullable();
             $column->string('city_id', 5)->nullable();
             $column->integer('zip_code')->nullable();
-            $column->string('phone_number1', 13)->unique()->nullable();
-            $column->string('phone_number2', 13)->unique()->nullable();
-            $column->string('email1', 50)->unique()->nullable();
-            $column->string('email2', 50)->unique()->nullable();
+            $column->string('phone_1', 13)->unique();
+            $column->string('phone_2', 13)->unique()->nullable();
+            $column->string('email_1', 50)->unique();
+            $column->string('email_2', 50)->unique()->nullable();
             $column->date('created_date');
             $column->Time('created_time');
         });

@@ -15,4 +15,5 @@
 <script src="{{ asset('public/assets/admin/js/image_upload.js') }}" type="text/javascript"></script>
 <script src="{{ asset('public/assets/admin/js/jquery-ui.js') }}" type="text/javascript"></script>
 <script src="{{ asset('public/assets/admin/js/multi_images_upload.js') }}" type="text/javascript"></script>
-<script src="{{ asset('public/assets/admin/js/jquery-ui-timepicker-addon.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/single_image_upload.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>

@@ -102,8 +102,7 @@ $(document).ready(function(){
 		//Show Filter
 		$(document).on('click', '#add_filter', function(){
             var current_url = $('#search_url').val();
-
-            if(window.location.href.split('/admin')[1] == '/ecommerce/categories/parent/manage'){
+            if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/parent/manage'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -112,7 +111,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/categories/parent/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/parent/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -121,16 +120,17 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/categories/child/manage'){
-            	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
+            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/child/manage'){
+            	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-5"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="parent_name" name="parent_name" class="form-control" placeholder="Parent Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
 					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
 					+'</div></form>'
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/categories/child/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/child/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -140,7 +140,9 @@ $(document).ready(function(){
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
             }else if(window.location.href.split('/admin')[1] == '/ecommerce/categories/sub-child/manage'){
-            	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
+            	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-3"></div>'
+					+'<div class="col-md-2"><input type="text" id="parent_name" name="parent_name" class="form-control" placeholder="Parent Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="child_name" name="child_name" class="form-control" placeholder="Child Name"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
 					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
@@ -148,8 +150,10 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/categories/sub-child/search'){
-            	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
+            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/sub-child/search'){
+            	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-3"></div>'
+					+'<div class="col-md-2"><input type="text" id="parent_name" name="parent_name" class="form-control" placeholder="Parent Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="child_name" name="child_name" class="form-control" placeholder="Child Name"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
 					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
@@ -166,7 +170,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/brands/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/brands/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Brand Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -184,7 +188,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/variations/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/variations/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Variation Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -202,7 +206,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/products/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/products/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Product name"></div>'
 					+'<div class="col-md-2"><input type="text" id="sku" name="sku" class="form-control" placeholder="Product SKU"></div>'
@@ -214,22 +218,50 @@ $(document).ready(function(){
             }else if(window.location.href.split('/admin')[1] == '/orders/manage'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
-					+'<div class="col-md-2"><select id="payment_type" name="payment_type" class="custom-select block select_2"><option value="0">Paypal</option><option value="1">Stripe</option><option value="2">Bank Transaction</option><option value="3">Cash on delivery</option></select></div>'
-					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Delivered</option><option value="1">Active</option><option value="2">In Process</option><option value="3">Rejected</option></select></div>'
-					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px"></div>'
+					+'<div class="col-md-2">'
+						+'<select id="payment_type" name="payment_type" class="custom-select block select_2">'
+							+'<option value="0">Paid</option>'
+							+'<option value="1">Un Paid</option>'
+						+'</select>'
+					+'</div>'
+					+'<div class="col-md-2">'
+						+'<select id="status" name="status" class="custom-select block select_2">'
+							+'<option value="0">Pending</option>'
+							+'<option value="1">In Process</option>'
+							+'<option value="2">Ready to Ship</option>'
+							+'<option value="3">Shiped</option>'
+							+'<option value="4">Delivered</option>'
+							+'<option value="5">Canceled</option>'
+						+'</select>'
+					+'</div>'
+					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px" placeholder="From Date"></div>'
+					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px" placeholder="To Date"></div>'
 					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
 					+'</div></form>'
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/orders/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/orders/search'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
-					+'<div class="col-md-2"><select id="payment_type" name="payment_type" class="custom-select block select_2"><option value="0">Paypal</option><option value="1">Stripe</option><option value="2">Bank Transaction</option><option value="3">Cash on delivery</option></select></div>'
-					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Delivered</option><option value="1">Active</option><option value="2">In Process</option><option value="3">Rejected</option></select></div>'
-					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px"></div>'
+					+'<div class="col-md-2">'
+						+'<select id="payment_type" name="payment_type" class="custom-select block select_2">'
+							+'<option value="0">Paid</option>'
+							+'<option value="1">Un Paid</option>'
+						+'</select>'
+					+'</div>'
+					+'<div class="col-md-2">'
+						+'<select id="status" name="status" class="custom-select block select_2">'
+							+'<option value="0">Pending</option>'
+							+'<option value="1">In Process</option>'
+							+'<option value="2">Ready to Ship</option>'
+							+'<option value="3">Shiped</option>'
+							+'<option value="4">Delivered</option>'
+							+'<option value="5">Canceled</option>'
+						+'</select>'
+					+'</div>'
+					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px" placeholder="From Date"></div>'
+					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px" placeholder="To Date"></div>'
 					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
 					+'</div></form>'
 				);
@@ -240,21 +272,94 @@ $(document).ready(function(){
             		+'<div class="row">'
 					+'<div class="col-md-2"></div>'
 					+'<div class="col-md-2"></div>'
-					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Delivered</option><option value="1">Active</option><option value="2">In Process</option><option value="3">Rejected</option></select></div>'
+					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px" placeholder="From Date"></div>'
+					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px" placeholder="End Date"></div>'
+					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
 					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
 					+'</div></form>'
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/advertisements/banners/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/advertisements/banners/search'){
+            	$('#filter_section').append('<br><form action='+current_url+' method="get">'
+            		+'<div class="row">'
+					+'<div class="col-md-2"></div>'
+					+'<div class="col-md-2"></div>'
+					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px" placeholder="From Date"></div>'
+					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px" placeholder="End Date"></div>'
+					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
+					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.href.split('/admin')[1] == '/advertisements/coupons/manage'){
+            	$('#filter_section').append('<br><form action='+current_url+' method="get">'
+            		+'<div class="row">'
+					+'<div class="col-md-6"></div>'
+					+'<div class="col-md-4"><input type="text" id="name" name="name" class="form-control" placeholder="Search By Coupon Code"></div>'
+					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/admin')[1] == '/advertisements/coupons/search'){
+            	$('#filter_section').append('<br><form action='+current_url+' method="get">'
+            		+'<div class="row">'
+					+'<div class="col-md-6"></div>'
+					+'<div class="col-md-4"><input type="text" id="name" name="name" class="form-control" placeholder="Search By Coupon Code"></div>'
+					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/admin')[1] == '/payments/invoices/manage'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
-					+'<div class="col-md-2"><select id="payment_type" name="payment_type" class="custom-select block select_2"><option value="0">Paypal</option><option value="1">Stripe</option><option value="2">Bank Transaction</option><option value="3">Cash on delivery</option></select></div>'
-					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Delivered</option><option value="1">Active</option><option value="2">In Process</option><option value="3">Rejected</option></select></div>'
-					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px"></div>'
+					+'<div class="col-md-2">'
+						+'<select id="payment_type" name="payment_type" class="custom-select block select_2">'
+							+'<option value="0">Paid</option>'
+							+'<option value="1">Un Paid</option>'
+						+'</select>'
+					+'</div>'
+					+'<div class="col-md-2">'
+						+'<select id="status" name="status" class="custom-select block select_2">'
+							+'<option value="0">Pending</option>'
+							+'<option value="1">In Process</option>'
+							+'<option value="2">Ready to Ship</option>'
+							+'<option value="3">Shiped</option>'
+							+'<option value="4">Delivered</option>'
+							+'<option value="5">Canceled</option>'
+						+'</select>'
+					+'</div>'
+					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px" placeholder="From Date"></div>'
+					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px" placeholder="To Date"></div>'
+					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/admin')[1] == '/payments/invoices/search'){
+            	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
+					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
+					+'<div class="col-md-2">'
+						+'<select id="payment_type" name="payment_type" class="custom-select block select_2">'
+							+'<option value="0">Paid</option>'
+							+'<option value="1">Un Paid</option>'
+						+'</select>'
+					+'</div>'
+					+'<div class="col-md-2">'
+						+'<select id="status" name="status" class="custom-select block select_2">'
+							+'<option value="0">Pending</option>'
+							+'<option value="1">In Process</option>'
+							+'<option value="2">Ready to Ship</option>'
+							+'<option value="3">Shiped</option>'
+							+'<option value="4">Delivered</option>'
+							+'<option value="5">Canceled</option>'
+						+'</select>'
+					+'</div>'
+					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px" placeholder="From Date"></div>'
+					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px" placeholder="To Date"></div>'
 					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
 					+'</div></form>'
 				);
@@ -272,7 +377,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/crm/customers/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/crm/customers/search'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
 					+'<div class="col-md-2"><select id="payment_type" name="payment_type" class="custom-select block select_2"><option value="0">Paypal</option><option value="1">Stripe</option><option value="2">Bank Transaction</option><option value="3">Cash on delivery</option></select></div>'
@@ -293,12 +398,146 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/advertisements/daily-deals/search'){
+            }else if(window.location.pathname.split('/admin')[1] == '/advertisements/daily-deals/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Product name"></div>'
 					+'<div class="col-md-2"><input type="text" id="sku" name="sku" class="form-control" placeholder="Product SKU"></div>'
 					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
 					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.href.split('/admin')[1] == '/cms/pages/manage'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-5"></div>'
+							+'<div class="col-md-4">'
+								+'<input type="text" id="name" name="name" class="form-control" placeholder="Page name">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<select id="status" name="status" class="form-control select_2">'
+									+'<option value="2">All</option>'
+									+'<option value="0">Active</option>'
+									+'<option value="1">Inactive</option>'
+								+'</select>'
+							+'</div>'
+							+'<div class="col-md-1">'
+								+'<button type="submit" class="btn btn-primary"><i class="ft-search"></i></button>'
+							+'</div>'
+						+'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/admin')[1] == '/cms/pages/search'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-5"></div>'
+							+'<div class="col-md-4">'
+								+'<input type="text" id="name" name="name" class="form-control" placeholder="Page name">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<select id="status" name="status" class="form-control select_2">'
+									+'<option value="2">All</option>'
+									+'<option value="0">Active</option>'
+									+'<option value="1">Inactive</option>'
+								+'</select>'
+							+'</div>'
+							+'<div class="col-md-1">'
+								+'<button type="submit" class="btn btn-primary"><i class="ft-search"></i></button>'
+							+'</div>'
+						+'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.href.split('/admin')[1] == '/finance/account-statement/manage'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-7"></div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="from" name="from" class="form-control datepicker" placeholder="From">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="to" name="to" class="form-control datepicker" placeholder="To">'
+							+'</div>'
+							+'<div class="col-md-1">'
+								+'<button type="submit" class="btn btn-primary"><i class="ft-search"></i></button>'
+							+'</div>'
+						+'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/admin')[1] == '/finance/account-statement/search'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-7"></div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="from" name="from" class="form-control datepicker" placeholder="From">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="to" name="to" class="form-control datepicker" placeholder="To">'
+							+'</div>'
+							+'<div class="col-md-1">'
+								+'<button type="submit" class="btn btn-primary"><i class="ft-search"></i></button>'
+							+'</div>'
+						+'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.href.split('/admin')[1] == '/finance/orders-overview/manage'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-3"></div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="order_no" name="order_no" class="form-control pull-right" placeholder="Order NO#">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="sku" name="sku" class="form-control pull-right" placeholder="Product SKU">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="from" name="from" class="form-control datepicker" placeholder="From">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="to" name="to" class="form-control datepicker" placeholder="To">'
+							+'</div>'
+							+'<div class="col-md-1">'
+								+'<button type="submit" class="btn btn-primary"><i class="ft-search"></i></button>'
+							+'</div>'
+						+'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/admin')[1] == '/finance/orders-overview/search'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-3"></div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="order_no" name="order_no" class="form-control pull-right" placeholder="Order NO#">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="sku" name="sku" class="form-control pull-right" placeholder="Product SKU">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="from" name="from" class="form-control datepicker" placeholder="From">'
+							+'</div>'
+							+'<div class="col-md-2">'
+								+'<input type="text" id="to" name="to" class="form-control datepicker" placeholder="To">'
+							+'</div>'
+							+'<div class="col-md-1">'
+								+'<button type="submit" class="btn btn-primary"><i class="ft-search"></i></button>'
+							+'</div>'
+						+'</div>'
+					+'</form>'
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
@@ -401,6 +640,30 @@ $(document).ready(function(){
 			});
 		});
 	//Export Products End
+
+	//Import Products Start
+		$(document).on('click', '.import_products', function(){
+			$('#import_products').modal({
+    			show: true
+			});
+		});
+	//Import Products End
+	
+	//Export Customers Start
+		$(document).on('click', '.export_customers', function(){
+			$('#export_customers').modal({
+    			show: true
+			});
+		});
+	//Export Customers End
+	
+	//Export Customers Start
+		$(document).on('click', '.export_vendors', function(){
+			$('#export_vendors').modal({
+    			show: true
+			});
+		});
+	//Export Customers End
 	
 	//Per Page Records Change Start
 		$(document).on('change', '#per_page', function(){
@@ -455,13 +718,13 @@ $(document).ready(function(){
 
 	//Show Fields According To Commission Type Start
 		$(document).on('change', '#commision_type', function(){
-			$('#additional_divs').empty();
-			$('#add_btn').empty();
+			$('#additional_divs_'+$(this).attr('data-id')).empty();
+			$('#add_btn_'+$(this).attr('data-id')).empty();
 			var id = Math.floor((Math.random() * 100) + 1);
 			var options = '';
 
 			if($(this).val() == 0){
-				$('#additional_divs').append(''
+				$('#additional_divs_'+$(this).attr('data-id')).append(''
 					+'<div class="row">'
     					+'<div class="col-md-12">'
         					+'<div class="form-group">'
@@ -483,7 +746,7 @@ $(document).ready(function(){
 					}
 				});
 
-				$('#additional_divs').append(''
+				$('#additional_divs_'+$(this).attr('data-id')).append(''
 					+'<div id="row_'+id+'">'
 						+'<div class="row">'
 	    					+'<div class="col-md-6">'
@@ -514,7 +777,7 @@ $(document).ready(function(){
 
 				$('.select_2').select2();
 				
-				$('#add_btn').append(''
+				$('#add_btn_'+$(this).attr('data-id')).append(''
 					+'<div class="row">'
     					+'<div class="col-md-12">'
         					+'<div class="form-group">'
@@ -595,8 +858,7 @@ $(document).ready(function(){
 					+'<div class="row">'
 						+'<div class="col-md-12">'
 	    					+'<div class="form-group">'
-	        					+'<label class="label-control">Products</label>'
-	        					+'<label class="label-control" style="color:red">*</label>'
+	        					+'<label class="label-control">Products</label><label class="label-control" style="color:red">*</label>'
 	        					+'<select id="products" name="products[]" class="form-control select_2" style="width:100%" multiple>'
 	        						+options
 	        					+'</select>'
@@ -647,7 +909,8 @@ $(document).ready(function(){
 		$(document).on('click', '.datetime_picker', function(){
 			$(this).datetimepicker({ 
 					autoclose: true,
-					format: 'dd-MM-yy HH:mm',
+					dateFormat: 'yy-mm-dd',
+        			timeFormat: 'HH:mm:ss',
 				    changeMonth: true,
 		    	 	minDate: new Date(),
 		    	 	startDate: new Date(),

@@ -17,3 +17,4 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/custom.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/image_upload.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/jquery-ui.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/bootstrap-datetimepicker.min.css') }}">

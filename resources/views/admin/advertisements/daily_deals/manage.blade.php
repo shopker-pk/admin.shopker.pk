@@ -118,13 +118,13 @@
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label class="label-control">From Date</label>
-                                                                        <input type="text" id="{{ uniqid() }}" name="from_date" class="form-control datetime_picker" placeholder="From Date" value="{{ old('from_date', date('d-m-Y H:i:s', strtotime($row->from_date.' '.$row->deal_start_time))) }}">
+                                                                        <input type="text" id="{{ uniqid() }}" name="from_date" class="form-control datetime_picker" placeholder="From Date" value="{{ old('from_date', date('Y/m/d H:i', strtotime($row->from_date.' '.$row->deal_start_time))) }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label class="label-control">To Date</label>
-                                                                        <input type="datetime" id="{{ uniqid() }}" name="to_date" class="form-control datetime_picker" placeholder="To Date" value="{{ old('to_date', date('d-m-Y H:i:s', strtotime($row->to_date.' '.$row->deal_end_time))) }}">
+                                                                        <input type="datetime" id="{{ uniqid() }}" name="to_date" class="form-control datetime_picker" placeholder="To Date" value="{{ old('to_date', date('Y/m/d H:i', strtotime($row->to_date.' '.$row->deal_end_time))) }}">
                                                                     </div>
                                                                 </div>
                                                             </div>

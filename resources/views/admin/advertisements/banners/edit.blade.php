@@ -16,8 +16,7 @@
                                                     <label class="label-control">Banner Images</label><label class="label-control" style="color:red">*</label>
                                                     <div class="col-md-12">
                                                         <label id="image" class="file center-block">
-                                                            <input class="multi_image" type="file" multiple>
-                                                            <span class="file-custom"></span>
+                                                            <input type="file" id="single_image" name="url" data-id="1">
                                                         </label>
                                                     </div>
                                                 </div>
@@ -25,13 +24,10 @@
                                             <div class="col-md-6">
                                                 <div class="form-group row last">
                                                     <label class="label-control">Image Preview</label><label class="label-control" style="color:red">*</label>
-                                                    <div class="col-md-12" id="preview_images">
-                                                        <span class="pip" data-id="{{ $query->id }}">      
-                                                            <img src="{{ asset('public/assets/admin/images/advertisements/banners/'.$query->image) }}" alt="Product Images" style="width:184px; height:100px"/> 
-                                                            <br/>
-                                                            <input type="text" id="url" name="url[]" class="form-control" placeholder="Item Link" value="{{ $query->url }}">
-                                                            <span class="remove remove_2" data-id="{{ $query->id }}">Remove</span>
-                                                        </span>
+                                                    <div class="col-md-12">
+                                                        <img src="{{ asset('public/assets/admin/images/advertisements/banners/'.$query->image) }}" alt="Product Images" class="single_image_preview_1" style="width:184px; height:100px"/> 
+                                                        <br/>
+                                                        <input type="text" id="banner_url" name="banner_url" class="form-control" placeholder="Item Link" value="{{ $query->url }}" style="width:184px;">
                                                     </div>
                                                 </div>
                                             </div>
@@ -39,16 +35,22 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group row">
-                                                    <label class="label-control">Page</label><label class="label-control" style="color:red">*</label>
+                                                    <label class="label-control">Pages</label><label class="label-control" style="color:red">*</label>
                                                     <select id="page" name="page" class="form-control select_2" style="width: 100%">
-                                                        <option>No Page Selected</option>
-                                                        <option value="0" @if($query->page_id == 0) selected @endif>Page 1</option>
-                                                        <option value="1" @if($query->page_id == 1) selected @endif>Page 2</option>
-                                                        <option value="2" @if($query->page_id == 2) selected @endif>Page 3</option>
+                                                        <option value="0" @if(old('page') == 0) selected @endif @if($query->page_id == 0) selected @endif>Home</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6"></div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="label-control">Type</label><label class="label-control" style="color:red">*</label>
+                                                    <select id="type" name="type" class="form-control select_2" style="width: 100%">
+                                                        <option value="0" @if(old('type') == 0) selected @endif @if($query->type == 0) selected @endif>Header</option>
+                                                        <option value="1" @if(old('type') == 1) selected @endif @if($query->type == 0) selected @endif>Bottom Top</option>
+                                                        <option value="2" @if(old('type') == 2) selected @endif @if($query->type == 0) selected @endif>Bottom Center</option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">

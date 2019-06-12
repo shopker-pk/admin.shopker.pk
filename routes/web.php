@@ -91,7 +91,9 @@
 				Route::get('/user/admin/ecommerce/products/search', 'Admin\Ecommerce\ProductsController@search')->name('search_products');
 				Route::get('/user/admin/ecommerce/products/copy-listing/{id}', 'Admin\Ecommerce\ProductsController@copy_product')->name('copy_product');
 				Route::post('/user/admin/ecommerce/products/insert-copy-listing', 'Admin\Ecommerce\ProductsController@insert_copy_product')->name('insert_copy_product');
-				Route::post('/user/admin/ecommerce/products/export-products', 'Admin\Ecommerce\ProductsController@export_products')->name('export_products');
+				Route::post('/user/admin/ecommerce/products/export-products', 'Admin\Ecommerce\ProductsController@export')->name('export_products');
+				Route::post('/user/admin/ecommerce/products/import-products', 'Admin\Ecommerce\ProductsController@import')->name('import_products');
+				Route::get('/user/admin/ecommerce/products/ajax/update-visibility/{id}/{status}', 'Admin\Ecommerce\ProductsController@update_visibility')->name('update_visibility');
 			//Products Routes End
 		//Ecommerce Routes End
 
@@ -110,6 +112,7 @@
 			Route::get('/user/admin/payments/invoices/manage', 'Admin\Payments\InvoicesController@index')->name('manage_admin_invoices');
 			Route::get('/user/admin/payments/invoices/details/{order_no}', 'Admin\Payments\InvoicesController@details')->name('manage_admin_invoices_details');
 			Route::get('/user/admin/payments/invoices/download/{order_no}', 'Admin\Payments\InvoicesController@download')->name('download_admin_invoice');
+			Route::get('/user/admin/payments/invoices/search', 'Admin\Payments\InvoicesController@search')->name('search_admin_invoices');
 		//Invoices Routes End
 
 		//Setting Routes Start
@@ -121,19 +124,8 @@
 			//Store Settings Routes Start
 				Route::get('/user/admin/settings/store/edit', 'Admin\Settings\StoreController@edit')->name('edit_store_setting');
 				Route::get('/user/admin/settings/store/countries-list', 'Admin\Settings\StoreController@countries_list')->name('countries_list');
-				Route::post('/user/admin/settings/store/update', 'Admin\Settings\StoreController@update')->name('update');
+				Route::post('/user/admin/settings/store/update', 'Admin\Settings\StoreController@update')->name('update_store_setting');
 			//Store Settings Routes End
-
-			//Shipping Settings Routes Start
-				Route::get('/user/admin/settings/shipping-areas/manage', 'Admin\Settings\ShippingController@index')->name('manage_shipping_areas');
-				Route::get('/user/admin/settings/shipping-areas/country-list', 'Admin\Settings\ShippingController@countries_list')->name('shipping_countries');
-				Route::get('/user/admin/settings/shipping-areas/add', 'Admin\Settings\ShippingController@add')->name('add_shipping_areas');
-				Route::post('/user/admin/settings/shipping-areas/insert', 'Admin\Settings\ShippingController@insert')->name('insert_shipping_areas');
-				Route::get('/user/admin/settings/shipping-areas/edit/{id}', 'Admin\Settings\ShippingController@edit')->name('edit_shipping_areas');
-				Route::post('/user/admin/settings/shipping-areas/update/{id}', 'Admin\Settings\ShippingController@update')->name('update_shipping_areas');
-				Route::get('/user/admin/settings/shipping-areas/delete/{id}', 'Admin\Settings\ShippingController@delete')->name('delete_shipping_areas');
-				Route::get('/user/admin/settings/shipping-areas/search', 'Admin\Settings\ShippingController@search')->name('search_shipping_areas');
-			//Shipping Settings Routes End
 		//Setting Routes End
 
 		//Advertisement Routes Start
@@ -141,7 +133,6 @@
 				Route::get('/user/admin/advertisements/banners/manage', 'Admin\Advertisements\BannersController@index')->name('manage_banner_advertisements');
 				Route::get('/user/admin/advertisements/banners/add', 'Admin\Advertisements\BannersController@add')->name('add_banner_advertisements');
 				Route::post('/user/admin/advertisements/banners/insert', 'Admin\Advertisements\BannersController@insert')->name('insert_banner_advertisements');
-				Route::get('/user/admin/advertisements/banners/images/ajax-delete-image/{id}', 'Admin\Advertisements\BannersController@delete_images');
 				Route::get('/user/admin/advertisements/banners/edit/{id}', 'Admin\Advertisements\BannersController@edit')->name('edit_banner_advertisements');
 				Route::post('/user/admin/advertisements/banners/update/{id}', 'Admin\Advertisements\BannersController@update')->name('update_banner_advertisements');
 				Route::get('/user/admin/advertisements/banners/delete/{id}', 'Admin\Advertisements\BannersController@delete')->name('delete_banner_advertisements');
@@ -172,6 +163,7 @@
 				Route::post('/user/admin/crm/customers/update/{id}', 'Admin\CRM\CustomersController@update')->name('update_customers');
 				Route::get('/user/admin/crm/customers/update-status/{id}/{status}', 'Admin\CRM\CustomersController@ajax_update_status');
 				Route::get('/user/admin/crm/customers/search', 'Admin\CRM\CustomersController@search')->name('search_customers');
+				Route::post('/user/admin/crm/customers/export-customers', 'Admin\CRM\CustomersController@export')->name('export_customers');
 			//Customers Routes End
 
 			//Vendors Routes Start
@@ -180,6 +172,7 @@
 				Route::get('/user/admin/crm/vendors/update-status/{id}/{status}', 'Admin\CRM\VendorsController@ajax_update_status');
 				Route::post('/user/admin/crm/vendors/add-commission/{id}', 'Admin\CRM\VendorsController@add_commission')->name('add_commission');
 				Route::get('/user/admin/crm/vendors/search', 'Admin\CRM\VendorsController@search')->name('search_vendors');
+				Route::post('/user/admin/crm/vendors/export-vendors', 'Admin\CRM\VendorsController@export')->name('export_vendors');
 			//Vendors Routes End
 
 			//Admin Routes Start
@@ -204,6 +197,18 @@
 			Route::get('/user/admin/cms/pages/search', 'Admin\CMS\PagesController@search')->name('search_pages');
 			Route::get('/user/admin/cms/pages/update-status/{id}/{status}', 'Admin\CMS\PagesController@ajax_update_status');
 		//CMS Routes End
+
+		//Finance Routes Start
+			//Account Statement Routes Start
+				Route::get('/user/admin/finance/account-statement/manage', 'Admin\Finance\AccountsController@manage')->name('manage_account_statement');
+				Route::get('/user/admin/finance/account-statement/search', 'Admin\Finance\AccountsController@search')->name('search_account_statement');
+			//Account Statement Routes End
+
+			//Orders Overview Routes Start
+				Route::get('/user/admin/finance/orders-overview/manage', 'Admin\Finance\OrdersController@manage')->name('manage_orders_overview');
+				Route::get('/user/admin/finance/orders-overview/search', 'Admin\Finance\OrdersController@search')->name('search_orders_overview');
+			//Orders Overview Routes End
+		//Finance Routes End
 
 		//Common Routes Start
 			Route::get('/user/admin/common/cities/{id}', 'Admin\Common\CommonController@get_ajax_cities_list');

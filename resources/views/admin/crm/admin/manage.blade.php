@@ -119,13 +119,13 @@
                                                         <div class="modal-body">
                                                             <div class="row">
                                                                 <div class="col-md-6">
-                                                                    <span>Name :</span>
-                                                                    <span>{{ $row->first_name }} {{ $row->last_name }}</span>
+                                                                    <span>First Name :</span>
+                                                                    <span>{{ $row->first_name }}</span>
                                                                     <br>
                                                                 </div>
                                                                 <div class="col-md-6">
-                                                                    <span>CNIC# :</span>
-                                                                    <span>{{ $row->cnic }}</span>
+                                                                    <span>Last Name :</span>
+                                                                    <span>{{ $row->last_name }}</span>
                                                                     <br>
                                                                 </div>
                                                             </div>

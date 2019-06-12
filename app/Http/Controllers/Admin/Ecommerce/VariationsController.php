@@ -206,7 +206,7 @@ class VariationsController extends Controller{
 	        }
 
 	        //Check either data inserted or not
-	     	if(!empty($query == 1)){
+	     	if(!empty($query)){
 	     		//Flash Success Message
 	     		$request->session()->flash('alert-success', 'Variation has been updated successfully');
 	     	}else{

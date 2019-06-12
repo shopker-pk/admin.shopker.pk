@@ -11,7 +11,7 @@
                                     <div class="form-body">
                                         <h4 class="form-section">Add Sub Child Category</h4>
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-group row">
                                                     <label class="label-control">Category Name</label>
                                                     <input type="text" id="name" name="name" class="form-control" placeholder="Category Name" value="{{ old('name') }}">
@@ -23,7 +23,7 @@
                                                 <div class="form-group row">
                                                     <label class="label-control">Parent Category</label>
                                                     <select id="parent_category" name="parent_category" class="form-control select_2">
-                                                        <option value="0" @if(old('parent_category') == '0') selected @endif>No parent cateogry selected</option>
+                                                        <option>No parent cateogry selected</option>
                                                         @if(!empty($parent_categories))
                                                             @foreach($parent_categories as $row)
                                                                 <option value="{{ $row->id }}" @if(old('parent_category') == $row->id) selected @endif>{{ $row->name }}</option>
@@ -36,7 +36,7 @@
                                                 <div class="form-group row">
                                                     <label class="label-control">Child Category</label>
                                                     <select id="child_category" name="child_category" class="form-control select_2">
-                                                        <option value="0" @if(old('child_category') == '0') selected @endif>No Child cateogry selected</option>
+                                                        <option>No Child cateogry selected</option>
                                                     </select>
                                                 </div>
                                             </div>

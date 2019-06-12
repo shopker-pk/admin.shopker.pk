@@ -53,10 +53,12 @@
                                         <h4 class="form-section">Customer Details</h4>
                                     </div>
                                     @if(!empty($customer_details))
-                                        <span>Full Name : {{ $customer_details->first_name }} {{ $customer_details->last_name }} </span><br>
+                                        <span>Full Name : {{ $customer_details->first_name.' '.$customer_details->last_name }} </span><br>
                                         <span>Contact No# : {{ $customer_details->phone_no }}</span><br>
                                         <span>Email : {{ $customer_details->email }}</span><br>
                                         <span>Address : {{ $customer_details->address }}</span><br>
+                                        <span>City : {{ $customer_details->city_name }}</span><br>
+                                        <span>Country : {{ $customer_details->country_name }}</span><br><br>
                                     @endif
                                 </form>
                             </div>
@@ -72,11 +74,13 @@
                                         <h4 class="form-section">Shipping Details</h4>
                                     </div>
                                     @if(!empty($shipping_details))
-                                        <span>Full Name : {{ $shipping_details->name }}</span><br>
-                                        <span>Contact No# : {{ $shipping_details->contact_no }}</span><br>
+                                        <span>Full Name : {{ $shipping_details->first_name.' '.$shipping_details->last_name }}</span><br>
+                                        <span>Contact No# : {{ $shipping_details->phone_no }}</span><br>
+                                        <span>Email : {{ $shipping_details->email }}</span><br>
                                         <span>Address : {{ $shipping_details->address }}</span><br>
                                         <span>City : {{ $shipping_details->city_name }}</span><br>
-                                        <span>Country : {{ $shipping_details->country_name }}</span>
+                                        <span>Country : {{ $shipping_details->country_name }}</span><br>
+                                        <span>Area : @foreach($areas as $row) @if($row['area_id'] == $shipping_details->area_id) {{ $row['area_name'] }} @endif @endforeach</span>
                                     @endif
                                 </form>
                             </div>
@@ -94,6 +98,7 @@
                                     @if(!empty($order_summary))
                                         <span>Order No# : {{ $order_summary->order_no }}</span><br>
                                         <span>Subtotal : {{ $order_summary->sub_total }}</span><br>
+                                        <span>Discount Fee : </span><br>
                                         <span>Shipping Fee : {{ $order_summary->charges }}</span><br>
                                         <span>Total : {{ $order_summary->total }}</span><br>
                                         <span></span><br>

@@ -10,8 +10,9 @@ class ParentCategories extends Migration{
             $column->ipAddress('ip_address');
             $column->integer('user_id');
             $column->string('featured_image')->nullable();
-            $column->string('name', 100)->unique();
-            $column->string('slug', 100)->nullable()->unique();
+            $column->string('name', 100);
+            $column->string('slug', 100);
+            $column->integer('sorting_order')->default(0)->unique();
             $column->longText('meta_keywords')->nullable();
             $column->longText('meta_description')->nullable();
             $column->integer('status');

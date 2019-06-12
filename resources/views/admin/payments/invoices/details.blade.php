@@ -22,7 +22,6 @@
                                     </div>
                                     <div id="print_section">
                                         <div class="css_js" style="display: hidden">
-                                            @include('admin.layouts.header')
                                         </div>
                                         <div id="invoice-company-details" class="row">
                                             <!-- Company Details Start -->
@@ -74,21 +73,25 @@
                                                             <li class="text-bold-800">
                                                                 <label>Order Status :</label> 
                                                                 @if($invoice_and_customer_details->order_status == 0)
-                                                                    <span class="badge badge-success">Delivered</span>
+                                                                    <span class="badge badge-warning">Pending</span>
                                                                 @elseif($invoice_and_customer_details->order_status == 1)
-                                                                    <span class="badge badge-primary">Active</span>
+                                                                    <span class="badge badge-info">In Process</span>
                                                                 @elseif($invoice_and_customer_details->order_status == 2)
-                                                                    <span class="badge badge-warning">In Process</span>
-                                                                @else
-                                                                    <span class="badge badge-danger">Rejected</span>
+                                                                    <span class="badge badge-info">Ready To Ship</span>
+                                                                @elseif($invoice_and_customer_details->order_status == 3)
+                                                                    <span class="badge badge-info">Shipped</span>
+                                                                @elseif($invoice_and_customer_details->order_status == 4)
+                                                                    <span class="badge badge-success">Delivered</span>
+                                                                @elseif($invoice_and_customer_details->order_status == 5)
+                                                                    <span class="badge badge-danger">Canceled</span>
                                                                 @endif
                                                             </li>
                                                             <li class="text-bold-800">
                                                                 <label>Payment Status :</label> 
                                                                 @if($invoice_and_customer_details->payment_status == 0)
-                                                                    <span class="badge badge-default badge-success">Paid</span>
+                                                                    <span class="badge badge-success">Paid</span>
                                                                 @else
-                                                                    <span class="badge badge-default badge-danger">Unpaid</span>
+                                                                    <span class="badge badge-danger">Unpaid</span>
                                                                 @endif
                                                             </li>
                                                         </ul>
@@ -131,15 +134,19 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td>Sub Total</td>
-                                                                <td class="text-right">{{ $subtotal }}</td>
+                                                                <td class="text-right">{{ $payment_details->sub_total }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Discount</td>
-                                                                <td class="text-right">{{ $discount }}</td>
+                                                                <td class="text-right"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Shipping</td>
+                                                                <td class="text-right">{{ $payment_details->charges }}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="text-bold-800">Total</td>
-                                                                <td class="text-bold-800 text-right">{{ $total }}</td>
+                                                                <td class="text-bold-800 text-right">{{ $payment_details->total }}</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>

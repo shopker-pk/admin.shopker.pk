@@ -8,8 +8,8 @@ class Coupons extends Migration{
         Schema::create('tbl_coupons', function (Blueprint $column){
             $column->increments('id');
             $column->ipAddress('ip_address');
-            $column->integer('admin_id');
-            $column->integer('vendor_id');
+            $column->integer('admin_id')->nullable();
+            $column->integer('vendor_id')->nullable();
             $column->string('code', 30)->unique();
             $column->integer('discount_type');
             $column->date('start_date');

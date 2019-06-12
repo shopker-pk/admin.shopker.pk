@@ -12,14 +12,14 @@ class OrdersController extends Controller{
             //Necessary Page Data For header Page
             $result = array(
                 'page_title' => 'Manage Orders',
-                'meta_keywords' => 'manage_orders',
-                'meta_description' => 'manage_orders',
+                'meta_keywords' => '',
+                'meta_description' => '',
             );
             
             //Query For Getting Orders
             $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.id as o_id', 'tbl_orders.order_no', 'tbl_orders.payment_method', 'tbl_orders.order_date', 'tbl_orders.status as o_status', 'tbl_order_invoices.status as p_status', 'tbl_users.first_name', 'tbl_users.last_name')
-                         ->leftJoin('tbl_order_invoices', 'tbl_order_invoices.order_no', '=', 'tbl_orders.order_no')
+                         ->select('tbl_orders.id as o_id', 'tbl_orders.order_no', 'tbl_orders.payment_method', 'tbl_orders.order_date', 'tbl_orders.status as o_status', 'tbl_orders_invoices.status as p_status', 'tbl_users.first_name', 'tbl_users.last_name')
+                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id')
                          ->groupBy('tbl_orders.order_no')
                          ->orderBy('tbl_orders.id', 'DESC');
@@ -38,8 +38,8 @@ class OrdersController extends Controller{
 			//Necessary Page Data For header Page
             $result = array(
                 'page_title' => 'View Order Details',
-                'meta_keywords' => 'view_order_details',
-                'meta_description' => 'view_order_details',
+                'meta_keywords' => '',
+                'meta_description' => '',
             );
 
             //Query For Getting Order Products
@@ -52,27 +52,31 @@ class OrdersController extends Controller{
 
             //Query For Getting Customer Details
             $query = DB::table('tbl_orders')
-                         ->select('tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.phone_no', 'tbl_users.email', 'tbl_users.address')
+                         ->select('tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.phone_no', 'tbl_users.email', 'tbl_users.address', 'tbl_countries.country_name', 'tbl_cities.name as city_name')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id')
+                         ->leftJoin('tbl_countries', 'tbl_countries.country_code', '=', 'tbl_users.country_id')
+                         ->leftJoin('tbl_cities', 'tbl_cities.id', '=', 'tbl_users.city_id')
                          ->where('tbl_orders.order_no', $order_no);
          	$result['customer_details'] = $query->first();
 
         	//Query For Getting Shipping Details
         	$query = DB::table('tbl_orders')
-                         ->select('tbl_orders_shipping_details.name', 'tbl_orders_shipping_details.contact_no', 'tbl_orders_shipping_details.city_id', 'tbl_orders_shipping_details.country_id', 'tbl_orders_shipping_details.address', 'tbl_cities.name as city_name', 'tbl_countries.country_name')
-                         ->leftJoin('tbl_orders_shipping_details', 'tbl_orders_shipping_details.order_no', '=', 'tbl_orders.order_no')
-                         ->leftJoin('tbl_cities', 'tbl_cities.id', '=', 'tbl_orders_shipping_details.city_id')
-                         ->leftJoin('tbl_countries', 'tbl_countries.country_code', '=', 'tbl_orders_shipping_details.country_id')
+                         ->select('tbl_shipping_details.first_name', 'tbl_shipping_details.last_name', 'tbl_shipping_details.email', 'tbl_shipping_details.phone_no', 'tbl_shipping_details.address', 'tbl_countries.country_name', 'tbl_shipping_details.city as city_id', 'tbl_cities.name as city_name', 'tbl_shipping_details.area as area_id')
+                         ->leftJoin('tbl_shipping_details', 'tbl_shipping_details.order_no', '=', 'tbl_orders.order_no')
+                         ->leftJoin('tbl_countries', 'tbl_countries.country_code', '=', 'tbl_shipping_details.country')
+                         ->leftJoin('tbl_cities', 'tbl_cities.id', '=', 'tbl_shipping_details.city')
                          ->where('tbl_orders.order_no', $order_no);
          	$result['shipping_details'] = $query->first();
 
          	//Query For Getting Order Summary
          	$query = DB::table('tbl_orders')
-                         ->select('tbl_orders.order_no', 'tbl_order_delivery_charges.charges', 'tbl_order_invoices.total', DB::raw('SUM(tbl_order_invoices.total - tbl_order_delivery_charges.charges) as sub_total'))
-                         ->leftJoin('tbl_order_delivery_charges', 'tbl_order_delivery_charges.order_no', '=', 'tbl_orders.order_no')
-                         ->leftJoin('tbl_order_invoices', 'tbl_order_invoices.order_no', '=', 'tbl_orders.order_no')
+                         ->select('tbl_orders.order_no', 'tbl_shipping_charges.charges', 'tbl_orders_invoices.total', DB::raw('SUM(tbl_orders_invoices.total - tbl_shipping_charges.charges) as sub_total'))
+                         ->leftJoin('tbl_shipping_charges', 'tbl_shipping_charges.order_no', '=', 'tbl_orders.order_no')
+                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
                          ->where('tbl_orders.order_no', $order_no);
          	$result['order_summary'] = $query->first();
+
+            $result['areas'] = get_cities_areas($result['shipping_details']->city_id);
 
             //Call Page
             return view('admin.orders.details', $result);
@@ -85,19 +89,18 @@ class OrdersController extends Controller{
 		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0 && $order_no)){
 			//Set Field data according to table column
             $data = array(
-                'tbl_order_invoices.status' => $request->input('payment_status'),
+                'tbl_orders_invoices.status' => $request->input('payment_status'),
             );
 
 			//Query For Updating Data
             $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.order_no', 'tbl_order_invoices.order_no', 'tbl_order_invoices.status')
-                         ->leftJoin('tbl_order_invoices', 'tbl_order_invoices.order_no', '=', 'tbl_orders.order_no')
+                         ->select('tbl_orders.order_no', 'tbl_orders_invoices.order_no', 'tbl_orders_invoices.status')
+                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id')
-                         ->where('tbl_orders.seller_id', $request->session()->get('id'))
                          ->where('tbl_orders.order_no', $order_no)
                          ->update($data);
 
-            if(!empty($query)){
+            if(!empty($query != 0)){
                 //Flash Success Msg
                 $request->session()->flash('alert-success', 'Payment status has been updated successfully');
             }else{
@@ -120,11 +123,10 @@ class OrdersController extends Controller{
 
 			//Query For Updating Data
             $query = DB::table('tbl_orders')
-                         ->where('order_no', '=', $order_no)
-                         ->where('seller_id', '=', $request->session()->get('id'))
+                         ->where('order_no', $order_no)
                          ->update($data);
 
-            if(!empty($query)){
+            if(!empty($query != 0)){
                 //Flash Success Msg
                 $request->session()->flash('alert-success', 'Order status has been updated successfully');
             }else{
@@ -140,9 +142,8 @@ class OrdersController extends Controller{
     function export(Request $request){
         if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
             $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.order_no', 'tbl_orders.quantity', 'tbl_orders.product_amount', 'tbl_orders.type', 'tbl_orders.payment_method', 'tbl_orders.status', 'tbl_orders.order_date', 'tbl_orders.order_time', 'tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.cell_number1', 'tbl_users.email', 'tbl_users.address', 'tbl_countries_phone_code.code',  'tbl_products.name', 'tbl_products.regural_price', 'tbl_orders.product_amount', 'tbl_products.sku_code')
+                         ->select('tbl_orders.order_no', 'tbl_orders.quantity', 'tbl_orders.product_amount', 'tbl_orders.type', 'tbl_orders.payment_method', 'tbl_orders.status', 'tbl_orders.order_date', 'tbl_orders.order_time', 'tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.phone_no', 'tbl_users.email', 'tbl_users.address', 'tbl_products.name', 'tbl_products.regural_price', 'tbl_orders.product_amount', 'tbl_products.sku_code')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id')
-                         ->leftJoin('tbl_countries_phone_code', 'tbl_countries_phone_code.id', '=', 'tbl_users.country_code_1')
                          ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
                          ->where('tbl_orders.status', $request->input('order_type'));
             $results = $query->get();
@@ -171,7 +172,7 @@ class OrdersController extends Controller{
                         'Order Date' => date('D-M-Y', strtotime($row->order_date)),
                         'Order Time' => date('h:i:s a', strtotime($row->order_time)),
                         'Customr Name' => $row->first_name.' '.$row->last_name,
-                        'Customr Contact No#' => $row->code.''.$row->cell_number1,
+                        'Customr Contact No#' => $row->phone_no,
                         'Customr Email' => $row->email,
                         'Customr Address' => $row->address,
                         'Product Name' => $row->name,
@@ -218,14 +219,14 @@ class OrdersController extends Controller{
 
             //Query For Getting Orders
             $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.id as o_id', 'tbl_orders.order_no', 'tbl_orders.payment_method', 'tbl_orders.order_date', 'tbl_orders.status as o_status', 'tbl_order_invoices.status as p_status', 'tbl_users.first_name', 'tbl_users.last_name')
-                         ->leftJoin('tbl_order_invoices', 'tbl_order_invoices.order_no', '=', 'tbl_orders.order_no')
+                         ->select('tbl_orders.id as o_id', 'tbl_orders.order_no', 'tbl_orders.payment_method', 'tbl_orders.order_date', 'tbl_orders.status as o_status', 'tbl_orders_invoices.status as p_status', 'tbl_users.first_name', 'tbl_users.last_name')
+                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id');
                          if(!empty($request->input('order_no'))){
                    $query->where('tbl_orders.order_no', $request->input('order_no'));
                          }
                          if(!empty($request->input('payment_type'))){
-                   $query->where('tbl_orders.payment_type', $request->input('payment_type'));
+                   $query->where('tbl_orders_invoices.status', $request->input('payment_type'));
                          }
                          if(!empty($request->input('status'))){
                    $query->where('tbl_orders.status', $request->input('status'));

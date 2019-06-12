@@ -9,7 +9,7 @@ class StoresBankDetails extends Migration{
             $column->increments('id');
             $column->ipAddress('ip_address');
             $column->integer('store_id');
-            $column->string('name', 20)->unique();
+            $column->string('name', 20);
             $column->string('title', 20)->unique();
             $column->string('account_no', 20)->unique();
             $column->string('branch_code', 20)->unique();

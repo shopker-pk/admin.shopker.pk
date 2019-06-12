@@ -7,7 +7,8 @@ class Cities extends Migration{
     function up(){
         Schema::create('tbl_cities', function(Blueprint $column){
             $column->increments('id');
-            $column->string('country_id', 5);
+            $column->LongText('country_id');
+            $column->LongText('city_id');
             $column->longText('name');
         });
     }

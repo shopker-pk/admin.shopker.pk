@@ -17,12 +17,11 @@ class InvoicesController extends Controller{
             );
 
             //Query for Getting Data
-            $query = DB::table('tbl_order_invoices')
-                         ->select('tbl_order_invoices.payer_id', 'tbl_order_invoices.transaction_id', 'tbl_order_invoices.total', 'tbl_order_invoices.status as invoice_status', 'tbl_orders.order_no', 'tbl_orders.status as order_status', 'tbl_orders.order_date', 'tbl_users.first_name', 'tbl_users.last_name')
-                         ->leftJoin('tbl_orders', 'tbl_orders.order_no', '=', 'tbl_order_invoices.order_no')
+            $query = DB::table('tbl_orders_invoices')
+                         ->select('tbl_orders_invoices.payer_id', 'tbl_orders_invoices.transaction_id', 'tbl_orders_invoices.total', 'tbl_orders_invoices.status as invoice_status', 'tbl_orders.order_no', 'tbl_orders.status as order_status', 'tbl_orders.order_date', 'tbl_users.first_name', 'tbl_users.last_name')
+                         ->leftJoin('tbl_orders', 'tbl_orders.order_no', '=', 'tbl_orders_invoices.order_no')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id')
-                         ->where('tbl_orders.seller_id', $request->session()->get('id'))
-                         ->orderBy('tbl_order_invoices.order_no', 'DESC')
+                         ->orderBy('tbl_orders_invoices.order_no', 'DESC')
                          ->groupBy('tbl_orders.order_no');
             $result['query'] = $query->paginate(10);
             $result['total_records'] = $result['query']->count();
@@ -52,9 +51,9 @@ class InvoicesController extends Controller{
             $result['header_details'] = $query->first();
 
             //Query For Getting Invoice Details & Customer Details
-            $query = DB::table('tbl_order_invoices')
-                         ->select('tbl_order_invoices.transaction_id', 'tbl_order_invoices.total', 'tbl_order_invoices.status as payment_status', 'tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_orders.status as order_status', 'tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.email', 'tbl_users.phone_no')
-                         ->leftJoin('tbl_orders', 'tbl_orders.order_no', '=', 'tbl_order_invoices.order_no')
+            $query = DB::table('tbl_orders_invoices')
+                         ->select('tbl_orders_invoices.transaction_id', 'tbl_orders_invoices.total', 'tbl_orders_invoices.status as payment_status', 'tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_orders.status as order_status', 'tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.email', 'tbl_users.phone_no')
+                         ->leftJoin('tbl_orders', 'tbl_orders.order_no', '=', 'tbl_orders_invoices.order_no')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id')
                          ->where('tbl_orders.order_no', $order_no)
                          ->groupBy('tbl_orders.order_no');
@@ -70,25 +69,11 @@ class InvoicesController extends Controller{
 
             //Query For Getting Order Payment Detail
             $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.type', 'tbl_orders.quantity as product_quantity', 'tbl_orders.product_amount as product_price', DB::raw('tbl_orders.quantity * tbl_orders.product_amount as total_amount'), 'tbl_products.regural_price', 'tbl_products.sale_price', DB::raw('tbl_products.regural_price - tbl_orders.product_amount as discount'))
-                         ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
-                         ->where('tbl_orders.order_no', $order_no)
-                         ->orderBy('tbl_orders.id', 'DESC');
-            $payment_details = $query->get();
-
-            if(!empty($payment_details)){
-                $subtotal = 0;
-                $discount = 0;
-                $total = 0;
-                foreach($payment_details as $row){
-                    $subtotal += $row->total_amount;
-                    $discount += $row->discount;
-                    $total = $subtotal + $discount;
-                }
-            }
-            $result['subtotal'] = $subtotal;
-            $result['discount'] = $discount;
-            $result['total'] = $total;
+                         ->select('tbl_shipping_charges.charges', 'tbl_orders_invoices.total', DB::raw('SUM(tbl_orders_invoices.total - tbl_shipping_charges.charges) as sub_total'))
+                         ->leftJoin('tbl_shipping_charges', 'tbl_shipping_charges.order_no', '=', 'tbl_orders.order_no')
+                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
+                         ->where('tbl_orders.order_no', $order_no);
+            $result['payment_details'] = $query->first();
             
             //call page
             return view('admin.payments.invoices.details', $result); 
@@ -109,9 +94,9 @@ class InvoicesController extends Controller{
             $result['header_details'] = $query->first();
 
             //Query For Getting Invoice Details & Customer Details
-            $query = DB::table('tbl_order_invoices')
-                         ->select('tbl_order_invoices.transaction_id', 'tbl_order_invoices.total', 'tbl_order_invoices.status as payment_status', 'tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_orders.status as order_status', 'tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.email', 'tbl_users.phone_no')
-                         ->leftJoin('tbl_orders', 'tbl_orders.order_no', '=', 'tbl_order_invoices.order_no')
+            $query = DB::table('tbl_orders_invoices')
+                         ->select('tbl_orders_invoices.transaction_id', 'tbl_orders_invoices.total', 'tbl_orders_invoices.status as payment_status', 'tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_orders.status as order_status', 'tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.email', 'tbl_users.phone_no')
+                         ->leftJoin('tbl_orders', 'tbl_orders.order_no', '=', 'tbl_orders_invoices.order_no')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id')
                          ->where('tbl_orders.order_no', $order_no)
                          ->where('tbl_orders.seller_id', $request->session()->get('id'))
@@ -128,31 +113,58 @@ class InvoicesController extends Controller{
 
             //Query For Getting Order Payment Detail
             $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.type', 'tbl_orders.quantity as product_quantity', 'tbl_orders.product_amount as product_price', DB::raw('tbl_orders.quantity * tbl_orders.product_amount as total_amount'), 'tbl_products.regural_price', 'tbl_products.sale_price', DB::raw('tbl_products.regural_price - tbl_orders.product_amount as discount'))
-                         ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
-                         ->where('tbl_orders.order_no', $order_no)
-                         ->orderBy('tbl_orders.id', 'DESC');
-            $payment_details = $query->get();
-
-            if(!empty($payment_details)){
-                $subtotal = 0;
-                $discount = 0;
-                $total = 0;
-                foreach($payment_details as $row){
-                    $subtotal += $row->total_amount;
-                    $discount += $row->discount;
-                    $total = $subtotal + $discount;
-                }
-            }
-            $result['subtotal'] = $subtotal;
-            $result['discount'] = $discount;
-            $result['total'] = $total;
+                         ->select('tbl_shipping_charges.charges', 'tbl_orders_invoices.total', DB::raw('SUM(tbl_orders_invoices.total - tbl_shipping_charges.charges) as sub_total'))
+                         ->leftJoin('tbl_shipping_charges', 'tbl_shipping_charges.order_no', '=', 'tbl_orders.order_no')
+                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
+                         ->where('tbl_orders.order_no', $order_no);
+            $result['payment_details'] = $query->first();
             //return view('admin.payments.invoices.pdf', $result); 
             
             //Download PDF
             $pdf = PDF::loadView('admin.payments.invoices.pdf', $result)->setPaper('a4', 'landscape');
             return $pdf->stream('order_'.$order_no.'.pdf');
             //$pdf->download('orders.pdf');
+        }else{
+            print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+        }
+    }
+
+    function search(Request $request){
+        if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+            //Necessary Page Data For header Page
+            $result = array(
+                'page_title' => 'Search Result',
+                'meta_keywords' => 'search_result',
+                'meta_description' => 'search_result',
+            );
+
+            //Query for Getting Data
+            $query = DB::table('tbl_orders_invoices')
+                         ->select('tbl_orders_invoices.payer_id', 'tbl_orders_invoices.transaction_id', 'tbl_orders_invoices.total', 'tbl_orders_invoices.status as invoice_status', 'tbl_orders.order_no', 'tbl_orders.status as order_status', 'tbl_orders.order_date', 'tbl_users.first_name', 'tbl_users.last_name')
+                         ->leftJoin('tbl_orders', 'tbl_orders.order_no', '=', 'tbl_orders_invoices.order_no')
+                         ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id');
+                         if(!empty($request->input('order_no'))){
+                   $query->where('tbl_orders.order_no', $request->input('order_no'));
+                         }
+                         if(!empty($request->input('payment_type'))){
+                   $query->where('tbl_orders_invoices.status', $request->input('payment_type'));
+                         }
+                         if(!empty($request->input('status'))){
+                   $query->where('tbl_orders.status', $request->input('status'));
+                         }
+                         if(!empty($request->input('from_date'))){
+                   $query->where('tbl_orders.order_date', '=', date('Y-m-d', strtotime($request->input('from_date'))));
+                         }
+                         if(!empty($request->input('to_date'))){
+                   $query->where('tbl_orders.order_date', '<=', date('Y-m-d', strtotime($request->input('to_date'))));
+                         }
+                   $query->orderBy('tbl_orders_invoices.order_no', 'DESC')
+                         ->groupBy('tbl_orders.order_no');
+            $result['query'] = $query->paginate(10);
+            $result['total_records'] = $result['query']->count();
+
+            //call page
+            return view('admin.payments.invoices.manage', $result); 
         }else{
             print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
         }

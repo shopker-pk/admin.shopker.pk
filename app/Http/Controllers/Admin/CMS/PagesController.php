@@ -71,7 +71,7 @@ class PagesController extends Controller{
 
 	        //Query For Inserting Data
 	    	$page_id = DB::table('tbl_pages')
-	    	             ->insertGetId($data);
+	    	               ->insertGetId($data);
 
          	//Set Field data according to table column
 	        $data = array(
@@ -243,11 +243,10 @@ class PagesController extends Controller{
 			$query = DB::table('tbl_pages')
 	        			 ->select('*');
 	        			 if(!empty($request->input('name'))){
-	        	   $query->Orwhere('title', 'Like', '%'.$request->input('name').'%')
-	        			 ->Orwhere('slug', 'Like', '%'.$request->input('name').'%');
+	        	   $query->where('title', 'Like', '%'.$request->input('name').'%');
 	        			 }
-        			 	 if(!empty($request->input('status'))){
-	        	   $query->Orwhere('status', $request->input('status'));
+        			 	 if(!empty($request->input('status') != 2)){
+	        	   $query->where('status', $request->input('status'));
 	        			 }
 	        	   $query->orderBy('id', 'DESC');
 		 	$result['query'] = $query->paginate(10);

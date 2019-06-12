@@ -32,6 +32,7 @@ class Products extends Migration{
             $column->integer('is_daily_deal')->default(1);
             $column->Time('deal_start_time')->nullable();
             $column->Time('deal_end_time')->nullable();
+            $column->LongText('video_url')->nullable();
             $column->longText('meta_keywords')->nullable();
             $column->longText('meta_description')->nullable();
             $column->date('created_date');

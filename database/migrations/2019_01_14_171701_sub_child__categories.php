@@ -12,8 +12,8 @@ class SubChildCategories extends Migration{
             $column->integer('parent_id');
             $column->integer('child_id');
             $column->string('featured_image')->nullable();
-            $column->string('name', 100)->unique();
-            $column->string('slug', 100)->nullable()->unique();
+            $column->string('name', 100);
+            $column->string('slug', 100);
             $column->longText('meta_keywords')->nullable();
             $column->longText('meta_description')->nullable();
             $column->integer('status');

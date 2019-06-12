@@ -35,6 +35,7 @@
 			                                    <tr>
                                                     <th>Admin Name</th>
                                                     <th>Vendor Name</th>
+                                                    <th>Code</th>
                                                     <th>Discount Type</th>
                                                     <th>Start Date</th>
 			                                        <th>End Date</th>
@@ -62,6 +63,7 @@
                                                             @else
                                                             <td></td>
                                                             @endif
+                                                            <td>{{ $row->code }}</td>
                                                             @if($row->discount_type == 0)
                                                             <td>Percentage</td>
                                                             @else
@@ -69,7 +71,7 @@
                                                             @endif
                                                             <td>{{ date('D M Y', strtotime($row->start_date)) }}</td>
                                                             <td>{{ date('D M Y', strtotime($row->end_date)) }}</td>
-                                                            <td>{{ $row->discount_offer }} @if($row->order_type == 0) % @else RS @endif</td>
+                                                            <td>@if($row->discount_type == 0) {{ $row->discount_offer }}% @else Rs:{{ $row->discount_offer }}  @endif</td>
                                                             <td>{{ $row->no_of_uses }}</td>
                                                             <td>{{ $row->min_order_amount }}</td>
                                                             <td>{{ $row->max_order_amount }}</td>
@@ -81,7 +83,7 @@
                                                             @endif
                                                             <td>
                                                                 <label class="switch">
-                                                                    <a href="{{ url('/user/admin/advertisements/courses/update-status/'.$row->id.'/'.$row->status) }}">
+                                                                    <a href="{{ url('/user/admin/advertisements/coupons/update-status/'.$row->id.'/'.$row->status) }}">
                                                                         <input type="checkbox" id="status" class="form-control" @if($row->status == 0) checked @endif>
                                                                         <span class="slider"></span>
                                                                     </a>

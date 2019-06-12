@@ -26,11 +26,7 @@
                                             </div>
                                             <div class="col-md-1" id="filter_button">
                                                 <a href="javascript::void(0);" id="add_filter"><i class="ft-filter"></i> Filter</a>
-                                                @if(Session::get('role') == 0)
-                                                    <input type="hidden" id="search_url" value="{{ route('search_seller_orders') }}">
-                                                @else
-                                                    <input type="hidden" id="search_url" value="{{ route('search_buyer_orders') }}">
-                                                @endif
+                                                <input type="hidden" id="search_url" value="{{ route('search_seller_orders') }}">
                                             </div>
                                         </div>
                                         <div id="filter_section"></div>
@@ -41,13 +37,11 @@
                                                 <tr>
                                                     <th>Invoice</th>
                                                     <th>Order NO#</th>
-                                                    @if(!empty(Session::get('role') == 0))
-                                                        <th>Customer Name</th>
-                                                    @endif
+                                                    <th>Customer Name</th>
                                                     <th>Payment Type</th>
                                                     <th>Payment Status</th>
-                                                    <th>Order Date</th>
                                                     <th>Order Status</th>
+                                                    <th>Order Date</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -56,17 +50,15 @@
                                                     @foreach($query as $row)
                                                         <tr>
                                                             <td><a href="{{ route('manage_admin_invoices_details', $row->order_no) }}" target="_blank">Invoice</a></td>
-                                                            <td><a id="export_orders" href="{{ route('order_details_seller', $row->order_no) }}" target="_blank">{{ $row->order_no }}</a></td>
+                                                            <td><a href="{{ route('order_details_seller', $row->order_no) }}" target="_blank">{{ $row->order_no }}</a></td>
                                                             @if(!empty(Session::get('role') == 0))
                                                                 <td>{{ $row->first_name }} {{ $row->last_name }}</td>
                                                             @endif
                                                             <td>
                                                                 @if($row->payment_method == 0)
-                                                                    Paypal
+                                                                    Jazz Cash
                                                                 @elseif($row->payment_method == 1)
-                                                                    Stripe
-                                                                @elseif($row->payment_method == 2)
-                                                                    Bank Transaction
+                                                                    Easy Paisa
                                                                 @else
                                                                     Cash On Delivery
                                                                 @endif
@@ -78,18 +70,22 @@
                                                                     <span class="badge badge-danger">Unpaid</span>
                                                                 @endif
                                                             </td>
-                                                            <td>{{ date('d-m-Y', strtotime($row->order_date)) }}</td>
                                                             <td>
                                                                 @if($row->o_status == 0)
-                                                                    <span class="badge badge-success">Delivered</span>
+                                                                    <span class="badge badge-warning">Pending</span>
                                                                 @elseif($row->o_status == 1)
-                                                                    <span class="badge badge-primary">Active</span>
+                                                                    <span class="badge badge-info">In Process</span>
                                                                 @elseif($row->o_status == 2)
-                                                                    <span class="badge badge-warning">In Process</span>
-                                                                @else
-                                                                    <span class="badge badge-danger">Rejected</span>
+                                                                    <span class="badge badge-info">Ready To Ship</span>
+                                                                @elseif($row->o_status == 3)
+                                                                    <span class="badge badge-info">Shipped</span>
+                                                                @elseif($row->o_status == 4)
+                                                                    <span class="badge badge-success">Delivered</span>
+                                                                @elseif($row->o_status == 5)
+                                                                    <span class="badge badge-danger">Canceled</span>
                                                                 @endif
                                                             </td>
+                                                            <td>{{ date('d-m-Y', strtotime($row->order_date)) }}</td>
                                                             <td>
                                                                 <div role="group" class="btn-group">
                                                                     <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-menu-right"><i class="ft-edit icon-left"></i> Action</button>
@@ -133,11 +129,13 @@
                                                         {{ csrf_field() }}
                                                         <div class="modal-body">
                                                             <label class="label-control">Order Status</label><br>
-                                                            <select id="order_status" name="order_status" class="form-control" style="width: 100%">
-                                                                <option value="0" @if($row->o_status == 0) selected @endif>Delivered</option>
-                                                                <option value="1" @if($row->o_status == 1) selected @endif>Active</option>
-                                                                <option value="2" @if($row->o_status == 2) selected @endif>In Process</option>
-                                                                <option value="3" @if($row->o_status == 3) selected @endif>Rejected</option>
+                                                            <select id="order_status" name="order_status" class="form-control select_2" style="width: 100%">
+                                                                <option value="0" @if($row->o_status == 0) selected @endif>Pending</option>
+                                                                <option value="1" @if($row->o_status == 1) selected @endif>In Process</option>
+                                                                <option value="2" @if($row->o_status == 2) selected @endif>Ready to Ship</option>
+                                                                <option value="3" @if($row->o_status == 3) selected @endif>Shiped</option>
+                                                                <option value="4" @if($row->o_status == 4) selected @endif>Delivered</option>
+                                                                <option value="5" @if($row->o_status == 5) selected @endif>Canceled</option>
                                                             </select>
                                                         </div>
                                                         <div class="modal-footer">
@@ -168,7 +166,7 @@
                                                         {{ csrf_field() }}
                                                         <div class="modal-body">
                                                             <label class="label-control">Payment Status</label><br>
-                                                            <select id="payment_status" name="payment_status" class="form-control" style="width: 100%">
+                                                            <select id="payment_status" name="payment_status" class="form-control select_2" style="width: 100%">
                                                                 <option value="0" @if($row->p_status == 0) selected @endif>Paid</option>
                                                                 <option value="1" @if($row->p_status == 1) selected @endif>UnPaid</option>
                                                             </select>
@@ -202,10 +200,12 @@
                                                         <div class="col-md-6">
                                                             <label class="label-control">Select Orders Type</label><br>
                                                             <select id="order_type" name="order_type" class="form-control select_2" style="width: 100%">
-                                                                <option value="0">Delivered</option>
-                                                                <option value="1">Active</option>
-                                                                <option value="2">In Process</option>
-                                                                <option value="3">Rejected</option>
+                                                                <option value="0">Pending</option>
+                                                                <option value="1">In Process</option>
+                                                                <option value="2">Ready to Ship</option>
+                                                                <option value="3">Shiped</option>
+                                                                <option value="4">Delivered</option>
+                                                                <option value="5">Canceled</option>
                                                             </select>
                                                         </div>
                                                         <div class="col-md-6">

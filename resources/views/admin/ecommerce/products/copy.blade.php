@@ -27,7 +27,7 @@
                                                             <select id="parent_category" name="parent_category" class="form-control select_2" style="width: 100%">
                                                                 <option>No cateogry selected</option>
                                                                 @foreach($parent_categories as $row)
-                                                                    <option value="{{ $row->id }}" @if(old('parent_category') == $row->id) selected @endif @if($query_categories->p_id == $row->id) selected @endif>{{ $row->name }}</option>
+                                                                    <option value="{{ $row->id }}" @if($query_categories->p_id == $row->id) selected @endif>{{ $row->name }}</option>
                                                                 @endforeach
                                                             </select> 
                                                         @else
@@ -160,6 +160,14 @@
                                                                 <input id="height" name="height" class="form-control" placeholder="Height" value="{{ old('height', $query_product->height) }}">
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="label-control">Product Video Url</label>
+                                                        <input type="text" id="video_url" name="video_url" class="form-control" placeholder="Product Video Url" value="{{ old('video_url', $query_product->video_url) }}">
                                                     </div>
                                                 </div>
                                             </div>

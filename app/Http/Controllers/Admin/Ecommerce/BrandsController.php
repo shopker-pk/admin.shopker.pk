@@ -246,21 +246,21 @@ class BrandsController extends Controller{
 	function delete(Request $request, $id){
 		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0 && $id)){
 			//Query For Deleting Data
-			$query = DB::table('tbl_categories_for_products')
+			$query = DB::table('tbl_brands_for_products')
 			             ->where('id', $id)
 			             ->delete();
 
          	//Check either data deleted or not
 	     	if(!empty($query)){
 	     		//Flash Success Message
-	     		$request->session()->flash('alert-success', 'Category has been deleted successfully');
+	     		$request->session()->flash('alert-success', 'Brand has been deleted successfully');
 	     	}else{
 	     		//Flash Error Message
 	     		$request->session()->flash('alert-danger', 'Something went wrong !!');
 	     	}
 
 	     	//Redirect 
-	     	return redirect()->route('manage_categories');
+	     	return redirect()->route('manage_brands');
 		}else{
         	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
     	}

@@ -21,6 +21,7 @@
                                         	</div>
                                     		<div class="col-md-1" id="filter_button">
                                     			<a href="javascript::void(0);" id="add_filter"><i class="ft-filter"></i> Filter</a>
+                                                <input type="hidden" id="search_url" value="{{ route('search_admin_invoices') }}">
                                     		</div>
                                     	</div>
                                     	<div id="filter_section"></div>
@@ -43,21 +44,23 @@
                                                 @if(!empty($query))
                                                     @foreach($query as $row)
         			                                    <tr>
-                                                            <td>{{ $row->order_no }}</td>
+                                                            <td><a href="{{ route('order_details_seller', $row->order_no) }}" target="_blank">{{ $row->order_no }}</a></td>
                                                             <td>{{ $row->transaction_id }}</td>
                                                             <td>{{ $row->first_name }} {{ $row->last_name }}</td>
                                                             <td>{{ $row->total }}</td>
         				                                    <td>{{ date('d-m-Y', strtotime($row->order_date)) }}</td>
-                                                            <!-- //0 for delivered, 1 for active, 2 for in process & 3 for rejected -->
-                                                            <td>
-                                                                @if($row->order_status == 0)
-                                                                    <span class="badge badge-success">Delivered</span>
+                                                            <td>@if($row->order_status == 0)
+                                                                    <span class="badge badge-warning">Pending</span>
                                                                 @elseif($row->order_status == 1)
-                                                                    <span class="badge badge-primary">Active</span>
+                                                                    <span class="badge badge-info">In Process</span>
                                                                 @elseif($row->order_status == 2)
-                                                                    <span class="badge badge-warning">In Process</span>
-                                                                @else
-                                                                    <span class="badge badge-danger">Rejected</span>
+                                                                    <span class="badge badge-info">Ready To Ship</span>
+                                                                @elseif($row->order_status == 3)
+                                                                    <span class="badge badge-info">Shipped</span>
+                                                                @elseif($row->order_status == 4)
+                                                                    <span class="badge badge-success">Delivered</span>
+                                                                @elseif($row->order_status == 5)
+                                                                    <span class="badge badge-danger">Canceled</span>
                                                                 @endif
         				                                    <td>
                                                                 @if($row->invoice_status == 0)
@@ -70,7 +73,7 @@
         				                                    	<div role="group" class="btn-group">
         														    <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-menu-right"><i class="ft-edit icon-left"></i> Action</button>
         														    <div aria-labelledby="btnGroupDrop1" class="dropdown-menu">
-        														    	<a href="{{ route('manage_admin_invoices_details', $row->order_no) }}" class="dropdown-item">View Invoice Details</a>
+        														    	<a href="{{ route('manage_admin_invoices_details', $row->order_no) }}" class="dropdown-item">View Details</a>
         													       </div>
         														</div>
         													</td>
