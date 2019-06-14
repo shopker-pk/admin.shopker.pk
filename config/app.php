@@ -56,7 +56,7 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    'frontend_url' => "https://shopker.pk/",
+    'frontend_url' => 'shopker.pk/',
 
     /*
     |--------------------------------------------------------------------------
