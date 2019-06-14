@@ -891,7 +891,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                                        ->where('product_id', $id)
                                        ->update($data);
                     
-                    if(!empty($category_id == 1)){
+                    if(!empty($product_id == 1)){
                         //Flash Erro Msg
                         $request->session()->flash('alert-success', 'Product has been updated successfully');
                     }else{
