@@ -59,7 +59,7 @@
         			                                    <tr>
                                                             <td>{{ $row->first_name }} {{ $row->last_name }}</td>
                                                             @if($row->is_approved == 0)
-                                                            <td><a href="{{ env('FRONTEND_URL').$row->slug }}" class="featured_image" data-id="{{ $count }}" target="_blank">{{ $row->name }}</a></td>
+                                                            <td><a href="{{ env('FRONTEND_URL').'asd/'.$row->slug }}" class="featured_image" data-id="{{ $count }}" target="_blank">{{ $row->name }}</a></td>
                                                             @elseif($row->is_approved == 1)
                                                             <td><a href="javascript::void(0);" class="featured_image" data-id="{{ $count }}">{{ $row->name }}</a></td>
                                                             @endif
