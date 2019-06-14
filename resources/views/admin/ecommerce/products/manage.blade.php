@@ -39,7 +39,7 @@
   										<table class="table">
 											<thead>
 			                                    <tr>
-                                                    <th>Added By <input type="text" value="asd" data-id="{{ config('app.frontend_url') }}"></th>
+                                                    <th>Added By <input type="text" value="asd" data-id="{{ config('app.name') }}"></th>
                                                     <th>Name</th>
 			                                        <th>SKU</th>
                                                     <th>Created</th>
