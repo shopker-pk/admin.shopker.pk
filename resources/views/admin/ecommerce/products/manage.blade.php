@@ -35,6 +35,7 @@
                                     	</div>
                                     	<div id="filter_section"></div>
                                     </div><br><br>
+                                    {{ env('FRONTEND_URL') }}
                                     <div class="table-responsive">          
   										<table class="table">
 											<thead>

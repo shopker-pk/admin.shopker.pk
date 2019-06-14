@@ -213,11 +213,7 @@
                                                                                 <input type='hidden' id="images_{{ $query_product->variation_id }}" name='images[{{ $query_product->variation_id }}][]' value="{{ $image->image }}">
                                                                                 <input type='hidden' id="url_{{ $query_product->variation_id }}" name='url[{{ $query_product->variation_id }}][]' value="{{ asset('public/assets/admin/images/ecommerce/products/'.$image->image) }}">
                                                                             <span class="pip" data-id="{{ $image->id }}">   
-                                                                                @if(!empty(asset('public/assets/admin/images/ecommerce/products/'.$image->image)))
                                                                                 <img src="{{ asset('public/assets/admin/images/ecommerce/products/'.$image->image) }}" alt="{{ $image->image }}" style="width:135px; height:110px"/>
-                                                                                @else
-                                                                                <img src="{{ env('VENDOR_URL').'public/assets/images/products/'.$image->image }}" alt="{{ $image->image }}" style="width:135px; height:110px"/> 
-                                                                                @endif  
                                                                                 <span class="remove remove_product_image" id="{{ $image->id }}" data-id="remove_image_{{ $image->id }}">Remove</span>
                                                                             </span>
                                                                         </li>
