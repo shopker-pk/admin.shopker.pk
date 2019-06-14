@@ -39,7 +39,7 @@
   										<table class="table">
 											<thead>
 			                                    <tr>
-                                                    <th>Added By <input type="text" value="asd" data-id="{{ env('VENDOR_URL') }}"></th>
+                                                    <th>Added By</th>
                                                     <th>Name</th>
 			                                        <th>SKU</th>
                                                     <th>Created</th>
