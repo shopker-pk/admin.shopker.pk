@@ -56,8 +56,6 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
-    'frontend_url' => 'shopker.pk/',
-
     /*
     |--------------------------------------------------------------------------
     | Application Timezone
