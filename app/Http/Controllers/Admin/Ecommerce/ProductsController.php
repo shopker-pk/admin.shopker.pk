@@ -400,7 +400,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     foreach($images_url[$row] as $url){
                         //Upload Product Image
                         $image = uniqid().'.jpeg';
-                        $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/shopker_admin/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
+                        $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
 
                         //Set Field data according to table columns
                         $data = array(
@@ -833,7 +833,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                         }else{
                             //Upload Product Image
                             $image = uniqid().'.jpeg';
-                            $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/shopker_admin/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
+                            $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
                         }
 
                         //Set Field data according to table columns
@@ -1121,7 +1121,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     foreach($images_url[$request->input('variation')] as $url){
                         //Upload Product Image
                         $image = uniqid().'.jpeg';
-                        $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/shopker_admin/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
+                        $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
 
                         //Set Field data according to table columns
                         $data = array(
@@ -1528,7 +1528,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
 
                             //Upload Product Image
                             $image = uniqid().'.jpeg';
-                            $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/shopker_admin/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['featured_image']));
+                            $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['featured_image']));
 
                             //Set Field data according to table columns
                             $data = array(
@@ -1545,7 +1545,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                             if(!empty($row['product_image_1'])){
                                 //Upload Product Image
                                 $image = uniqid().'.jpeg';
-                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/shopker_admin/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_1']));
+                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_1']));
 
                                 //Set Field data according to table columns
                                 $data = array(
@@ -1563,7 +1563,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                             if(!empty($row['product_image_2'])){
                                 //Upload Product Image
                                 $image = uniqid().'.jpeg';
-                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/shopker_admin/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_2']));
+                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_2']));
 
                                 //Set Field data according to table columns
                                 $data = array(
@@ -1581,7 +1581,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                             if(!empty($row['product_image_3'])){
                                 //Upload Product Image
                                 $image = uniqid().'.jpeg';
-                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/shopker_admin/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_3']));
+                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_3']));
 
                                 //Set Field data according to table columns
                                 $data = array(
@@ -1599,7 +1599,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                             if(!empty($row['product_image_4'])){
                                 //Upload Product Image
                                 $image = uniqid().'.jpeg';
-                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/shopker_admin/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_4']));
+                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_4']));
 
                                 //Set Field data according to table columns
                                 $data = array(
