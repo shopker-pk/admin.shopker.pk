@@ -39,7 +39,7 @@
   										<table class="table">
 											<thead>
 			                                    <tr>
-                                                    <th>Added By <input type="text" value="asd" data-id="{{ env('FRONTEND_URL') }}"></th>
+                                                    <th>Added By <input type="text" value="asd" data-id="{{ config('app.frontend_url') }}"></th>
                                                     <th>Name</th>
 			                                        <th>SKU</th>
                                                     <th>Created</th>
@@ -59,7 +59,7 @@
         			                                    <tr>
                                                             <td>{{ $row->first_name }} {{ $row->last_name }}</td>
                                                             @if($row->is_approved == 0)
-                                                            <td><a href="{{ env('FRONTEND_URL').$row->slug }}" class="featured_image" data-id="{{ $count }}" target="_blank">{{ $row->name }}</a></td>
+                                                            <td><a href="{{ config('app.frontend_url').$row->slug }}" class="featured_image" data-id="{{ $count }}" target="_blank">{{ $row->name }}</a></td>
                                                             @elseif($row->is_approved == 1)
                                                             <td><a href="javascript::void(0);" class="featured_image" data-id="{{ $count }}">{{ $row->name }}</a></td>
                                                             @endif
