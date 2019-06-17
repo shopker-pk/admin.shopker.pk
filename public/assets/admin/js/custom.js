@@ -845,7 +845,7 @@ $(document).ready(function(){
 
 			if($(this).val() == 0){
 				$.ajax({
-					url : document.location.href.split('/admin')[0].toString()+'/admin/common/products',
+					url : document.location.href.split('/user')[0].toString()+'/user/admin/common/products',
 					method : 'GET',
 					async: false,
 					success:function(response){
