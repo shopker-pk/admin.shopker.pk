@@ -191,7 +191,7 @@
                                                             </label>
                                                         </div>
                                                         <div class="col-md-12 contain">
-                                                            <input type="hidden" name="variation" value="{{ $query_product->variation_id }}">
+                                                            <input type="hidden" name="variation_id" value="{{ $query_product->variation_id }}">
                                                             <select name="variation" id="variation[]" class="form-control select select_2 variation_{{ $query_product->variation_id }}" data-id="{{ $query_product->variation_id }}" style="width:100%" disabled>
                                                                 <option>Select Variant</option>
                                                                 @foreach($variations as $variant)

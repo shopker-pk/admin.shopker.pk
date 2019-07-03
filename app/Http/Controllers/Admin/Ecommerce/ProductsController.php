@@ -400,7 +400,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     foreach($images_url[$row] as $url){
                         //Upload Product Image
                         $image = uniqid().'.jpeg';
-                        $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
+                        $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
 
                         //Set Field data according to table columns
                         $data = array(
@@ -755,7 +755,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'length' => 'nullable|numeric',
                 'width' => 'nullable|numeric',
                 'height' => 'nullable|numeric',
-                'variation.*' => 'required|numeric',
+                'variation_id' => 'required|numeric',
                 'product_images.*' => 'required|max:5120',
                 'status' => 'required',
                 'sku' => 'required',
@@ -771,7 +771,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'url.*' => 'required',
             ]);
             
-            if(!empty($request->input('variation')[0])){
+            if(!empty($request->input('variation_id'))){
                 if($request->input('sale_price') >= $request->input('price')){
                     //Flash Error Msg
                     $request->session()->flash('alert-danger', 'Special price must be less than the price.');
@@ -801,7 +801,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                         'length' => $request->input('length'),
                         'width' => $request->input('width'),
                         'height' => $request->input('height'),
-                        'variation_id' => $request->input('variation')[0],
+                        'variation_id' => $request->input('variation_id'),
                         'sku_code' => $request->input('sku'),
                         'regural_price' => $request->input('price'),
                         'sale_price' => $request->input('sale_price'),
@@ -827,13 +827,13 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                                  ->delete();
 
                     $count = 0;
-                    foreach($images_url[$request->input('variation')[0]] as $url){
-                        if(!empty(file_exists(public_path().'public/assets/admin/images/ecommerce/products/'.$images[$request->input('variation')[0]][$count]))){
-                            $image = $images[$request->input('variation')[0]][$count];
+                    foreach($images_url[$request->input('variation_id')] as $url){
+                        if(!empty(file_exists(public_path().'public/assets/admin/images/ecommerce/products/'.$images[$request->input('variation_id')][$count]))){
+                            $image = $images[$request->input('variation_id')][$count];
                         }else{
                             //Upload Product Image
                             $image = uniqid().'.jpeg';
-                            $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
+                            $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
                         }
 
                         //Set Field data according to table columns
@@ -1053,7 +1053,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'length' => 'nullable|numeric',
                 'width' => 'nullable|numeric',
                 'height' => 'nullable|numeric',
-                'variation' => 'required|numeric',
+                'variation_id' => 'required|numeric',
                 'product_images.*' => 'required|max:5120',
                 'status' => 'required',
                 'sku' => 'required',
@@ -1069,7 +1069,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'url.*' => 'required',
             ]);
 
-            if(!empty($request->input('variation'))){
+            if(!empty($request->input('variation_id'))){
                 if($request->input('sale_price') >= $request->input('price')){
                     //Flash Error Msg
                     $request->session()->flash('alert-danger', 'Special price must be less than the price.');
@@ -1099,7 +1099,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                         'length' => $request->input('length'),
                         'width' => $request->input('width'),
                         'height' => $request->input('height'),
-                        'variation_id' => $request->input('variation'),
+                        'variation_id' => $request->input('variation_id'),
                         'sku_code' => $request->input('sku'),
                         'regural_price' => $request->input('price'),
                         'sale_price' => $request->input('sale_price'),
@@ -1118,10 +1118,10 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     $product_id = DB::table('tbl_products')
                                  ->insertGetId($data);
 
-                    foreach($images_url[$request->input('variation')] as $url){
+                    foreach($images_url[$request->input('variation_id')] as $url){
                         //Upload Product Image
                         $image = uniqid().'.jpeg';
-                        $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
+                        $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
 
                         //Set Field data according to table columns
                         $data = array(
@@ -1528,7 +1528,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
 
                             //Upload Product Image
                             $image = uniqid().'.jpeg';
-                            $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['featured_image']));
+                            $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['featured_image']));
 
                             //Set Field data according to table columns
                             $data = array(
@@ -1545,7 +1545,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                             if(!empty($row['product_image_1'])){
                                 //Upload Product Image
                                 $image = uniqid().'.jpeg';
-                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_1']));
+                                $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_1']));
 
                                 //Set Field data according to table columns
                                 $data = array(
@@ -1563,7 +1563,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                             if(!empty($row['product_image_2'])){
                                 //Upload Product Image
                                 $image = uniqid().'.jpeg';
-                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_2']));
+                                $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_2']));
 
                                 //Set Field data according to table columns
                                 $data = array(
@@ -1581,7 +1581,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                             if(!empty($row['product_image_3'])){
                                 //Upload Product Image
                                 $image = uniqid().'.jpeg';
-                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_3']));
+                                $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_3']));
 
                                 //Set Field data according to table columns
                                 $data = array(
@@ -1599,7 +1599,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                             if(!empty($row['product_image_4'])){
                                 //Upload Product Image
                                 $image = uniqid().'.jpeg';
-                                $image_path = file_put_contents($_SERVER["DOCUMENT_ROOT"].'/public/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_4']));
+                                $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($row['product_image_4']));
 
                                 //Set Field data according to table columns
                                 $data = array(
