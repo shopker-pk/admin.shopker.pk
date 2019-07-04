@@ -135,7 +135,7 @@ class BannersController extends Controller{
 			//Inputs Validation
 	        $input_validations = $request->validate([
 	            'banner_url' => 'nullable',
-	            'url' => 'required',
+	            'url' => 'nullable',
 	            'page' => 'required',
 	            'type' => 'required',
 	            'start_date' => 'required',
