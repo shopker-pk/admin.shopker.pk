@@ -304,6 +304,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
 
     function insert(Request $request){
         if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+            //dd($request->all());
             //Get All Inputs
             $images = $request->input('images');
             $images_url = $request->input('url');
@@ -355,12 +356,23 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     //Redirect
                     return redirect()->back()->withInput($request->all());
                 }else{
-                    if(!empty($request->input('from')[$count] && $request->input('to')[$count])){
-                        $from_date = date('Y-m-d', strtotime($request->input('from')[$count]));
-                        $to_date = date('Y-m-d', strtotime($request->input('to')[$count]));
+                    if(!empty($request->input('sale_price')[$count] && $request->input('price')[$count])){
+                        if(empty($request->input('from')[$count] || $request->input('to')[$count])){
+                            $from_date = date('Y-m-d', strtotime($request->input('from')[$count]));
+                            //Flash Error Msg
+                            $request->session()->flash('alert-danger', 'From & To date required.');
+
+                            //Redirect
+                            return redirect()->back()->withInput($request->all());
+                        }
                     }else{
-                        $from_date = NULL;
-                        $to_date = NULL;
+                        if(!empty($request->input('from')[$count] && $request->input('to')[$count])){
+                            $from_date = date('Y-m-d', strtotime($request->input('from')[$count]));
+                            $to_date = date('Y-m-d', strtotime($request->input('to')[$count]));
+                        }else{
+                            $from_date = NULL;
+                            $to_date = NULL;
+                        }    
                     }
 
                     //Set Field data according to table columns
@@ -368,7 +380,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                         'ip_address' => $request->ip(),
                         'user_id' => $request->session()->get('id'),
                         'name' => $request->input('name'),
-                        'slug' => strtolower(str_replace(' ', '-', $request->input('name'))),
+                        'slug' => strtolower(str_replace(' ', '-', $request->input('name').'-'.$row)),
                         'high_light' => $request->input('high_light'),
                         'description' => $request->input('details'),
                         'warranty_type' => $request->input('warranty_type'),
@@ -414,12 +426,12 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                         $image_id = DB::table('tbl_products_images')
                                         ->insertGetId($data);
 
-                        $pro_images[] = $image; 
+                        $pro_images[$row][] = $image; 
                     }
                     
                     //Set Field data according to table columns
                     $data = array(
-                        'featured_image' => $pro_images[0],
+                        'featured_image' => $pro_images[$row][0],
                         'product_id' => $product_id,
                     );
 
@@ -792,7 +804,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                         'ip_address' => $request->ip(),
                         'user_id' => $request->session()->get('id'),
                         'name' => $request->input('name'),
-                        'slug' => strtolower(str_replace(' ', '-', $request->input('name'))),
+                        'slug' => strtolower(str_replace(' ', '-', $request->input('name').'-'.$request->input('variation_id'))),
                         'high_light' => $request->input('high_light'),
                         'description' => $request->input('details'),
                         'warranty_type' => $request->input('warranty_type'),
