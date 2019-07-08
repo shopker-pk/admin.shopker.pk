@@ -102,7 +102,7 @@ $(document).ready(function(){
 		//Show Filter
 		$(document).on('click', '#add_filter', function(){
             var current_url = $('#search_url').val();
-            if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/parent/manage'){
+            if(window.location.pathname.split('/user/admin')[1] == '/ecommerce/categories/parent/manage'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -111,7 +111,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/parent/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/ecommerce/categories/parent/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -120,7 +120,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/child/manage'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/ecommerce/categories/child/manage'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-5"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><input type="text" id="parent_name" name="parent_name" class="form-control" placeholder="Parent Name"></div>'
@@ -130,7 +130,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/child/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/ecommerce/categories/child/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Category Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -139,7 +139,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/categories/sub-child/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/ecommerce/categories/sub-child/manage'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-3"></div>'
 					+'<div class="col-md-2"><input type="text" id="parent_name" name="parent_name" class="form-control" placeholder="Parent Name"></div>'
 					+'<div class="col-md-2"><input type="text" id="child_name" name="child_name" class="form-control" placeholder="Child Name"></div>'
@@ -150,7 +150,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/categories/sub-child/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/ecommerce/categories/sub-child/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-3"></div>'
 					+'<div class="col-md-2"><input type="text" id="parent_name" name="parent_name" class="form-control" placeholder="Parent Name"></div>'
 					+'<div class="col-md-2"><input type="text" id="child_name" name="child_name" class="form-control" placeholder="Child Name"></div>'
@@ -161,7 +161,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/brands/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/ecommerce/brands/manage'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Brand Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -170,7 +170,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/brands/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/ecommerce/brands/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Brand Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -179,7 +179,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/variations/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/ecommerce/variations/manage'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Variation Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -188,7 +188,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/variations/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/ecommerce/variations/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Variation Name"></div>'
 					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Active</option><option value="1">Inactive</option></select></div>'
@@ -197,7 +197,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/ecommerce/products/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/ecommerce/products/manage'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Product name"></div>'
 					+'<div class="col-md-2"><input type="text" id="sku" name="sku" class="form-control" placeholder="Product SKU"></div>'
@@ -206,7 +206,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/ecommerce/products/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/ecommerce/products/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Product name"></div>'
 					+'<div class="col-md-2"><input type="text" id="sku" name="sku" class="form-control" placeholder="Product SKU"></div>'
@@ -215,7 +215,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/orders/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/orders/manage'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
 					+'<div class="col-md-2">'
@@ -241,7 +241,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/orders/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/orders/search'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
 					+'<div class="col-md-2">'
@@ -267,7 +267,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/advertisements/banners/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/advertisements/banners/manage'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get">'
             		+'<div class="row">'
 					+'<div class="col-md-2"></div>'
@@ -280,7 +280,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/advertisements/banners/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/advertisements/banners/search'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get">'
             		+'<div class="row">'
 					+'<div class="col-md-2"></div>'
@@ -293,7 +293,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/advertisements/coupons/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/advertisements/coupons/manage'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get">'
             		+'<div class="row">'
 					+'<div class="col-md-6"></div>'
@@ -303,7 +303,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/advertisements/coupons/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/advertisements/coupons/search'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get">'
             		+'<div class="row">'
 					+'<div class="col-md-6"></div>'
@@ -313,7 +313,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/payments/invoices/manage'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/payments/invoices/manage'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
 					+'<div class="col-md-2">'
@@ -339,7 +339,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/payments/invoices/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/payments/invoices/search'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
 					+'<div class="col-md-2">'
@@ -365,7 +365,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/crm/customers/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/crm/customers/manage'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
 					+'<div class="col-md-2"><select id="payment_type" name="payment_type" class="custom-select block select_2"><option value="0">Paypal</option><option value="1">Stripe</option><option value="2">Bank Transaction</option><option value="3">Cash on delivery</option></select></div>'
@@ -377,7 +377,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/crm/customers/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/crm/customers/search'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
 					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
 					+'<div class="col-md-2"><select id="payment_type" name="payment_type" class="custom-select block select_2"><option value="0">Paypal</option><option value="1">Stripe</option><option value="2">Bank Transaction</option><option value="3">Cash on delivery</option></select></div>'
@@ -389,7 +389,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/advertisements/daily-deals/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/advertisements/daily-deals/manage'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Product name"></div>'
 					+'<div class="col-md-2"><input type="text" id="sku" name="sku" class="form-control" placeholder="Product SKU"></div>'
@@ -398,7 +398,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/advertisements/daily-deals/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/advertisements/daily-deals/search'){
             	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-7"></div>'
 					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Product name"></div>'
 					+'<div class="col-md-2"><input type="text" id="sku" name="sku" class="form-control" placeholder="Product SKU"></div>'
@@ -407,7 +407,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/cms/pages/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/cms/pages/manage'){
             	$('#filter_section').append(''
             		+'<form action='+current_url+' method="get">'
             			+'<div class="row">'
@@ -430,7 +430,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/cms/pages/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/cms/pages/search'){
             	$('#filter_section').append(''
             		+'<form action='+current_url+' method="get">'
             			+'<div class="row">'
@@ -453,7 +453,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/finance/account-statement/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/finance/account-statement/manage'){
             	$('#filter_section').append(''
             		+'<form action='+current_url+' method="get">'
             			+'<div class="row">'
@@ -472,7 +472,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/finance/account-statement/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/finance/account-statement/search'){
             	$('#filter_section').append(''
             		+'<form action='+current_url+' method="get">'
             			+'<div class="row">'
@@ -491,7 +491,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.href.split('/admin')[1] == '/finance/orders-overview/manage'){
+            }else if(window.location.href.split('/user/admin')[1] == '/finance/orders-overview/manage'){
             	$('#filter_section').append(''
             		+'<form action='+current_url+' method="get">'
             			+'<div class="row">'
@@ -516,7 +516,7 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/admin')[1] == '/finance/orders-overview/search'){
+            }else if(window.location.pathname.split('/user/admin')[1] == '/finance/orders-overview/search'){
             	$('#filter_section').append(''
             		+'<form action='+current_url+' method="get">'
             			+'<div class="row">'
@@ -706,7 +706,7 @@ $(document).ready(function(){
 	//Getting Cities by country id start
 		$(document).on('change', '#country', function(){
 			$.ajax({
-				url : document.location.href.split('/admin')[0].toString()+'/admin/common/cities/'+$(this).val(),
+				url : document.location.href.split('/user/admin')[0].toString()+'/user/admin/common/cities/'+$(this).val(),
 				method : 'GET',
 				success:function(response){
 					json_data = $.parseJSON(response);
@@ -737,7 +737,7 @@ $(document).ready(function(){
 				+'');
 			}else if($(this).val() == 1){
 				$.ajax({
-					url : document.location.href.split('/admin')[0].toString()+'/admin/common/parent-categories',
+					url : document.location.href.split('/user/admin')[0].toString()+'/user/admin/common/parent-categories',
 					method : 'GET',
 					async: false,
 					success:function(response){
@@ -796,7 +796,7 @@ $(document).ready(function(){
 			var options = '';
 
 			$.ajax({
-				url : document.location.href.split('/admin')[0].toString()+'/admin/common/parent-categories',
+				url : document.location.href.split('/user/admin')[0].toString()+'/user/admin/common/parent-categories',
 				method : 'GET',
 				async: false,
 				success:function(response){
@@ -845,7 +845,7 @@ $(document).ready(function(){
 
 			if($(this).val() == 0){
 				$.ajax({
-					url : document.location.href.split('/user')[0].toString()+'/user/admin/common/products',
+					url : document.location.href.split('/user')[0].toString()+'/user/user/admin/common/products',
 					method : 'GET',
 					async: false,
 					success:function(response){

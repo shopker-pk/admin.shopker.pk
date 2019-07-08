@@ -3,7 +3,6 @@
 	//Admin Panel Routes Start
 		//Admin Auth Routes Start
 			Route::get('/', 'Admin\Auth\AuthController@index')->name('admin_sign_in');
-			Route::get('/user/admin/sign-in', 'Admin\Auth\AuthController@index')->name('admin_sign_in');
 			Route::get('/user/sign-out', 'Admin\Auth\AuthController@sign_out')->name('sign_out');
 			Route::post('/user/admin/validating-credentials', 'Admin\Auth\AuthController@validating_admin_credentials')->name('admin_credentials_validation');
 		//Admin Auth Routes End
