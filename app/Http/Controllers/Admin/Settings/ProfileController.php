@@ -51,269 +51,63 @@ class ProfileController extends Controller{
 	            'address' => 'required',
 	            'phone_no' => 'required|unique:tbl_users,id,'.$request->session()->get('id'),
 	            'city' => 'required|numeric',
-	            'country' => 'required|numeric',
+	            'country' => 'required',
 	            'city' => 'required|numeric',
-	            'dob' => 'required|date',
+	            'dob' => 'required',
 	            'gender' => 'required|numeric',
 	            'password' => 'nullable|min:8|regex:/^((?=.*[a-z]))((?=.*[A-Z]))((?=.*[0-9])).+$/',
-	            'confirm_password' => 'nullable|min:8|regex:/^((?=.*[a-z]))((?=.*[A-Z]))((?=.*[0-9])).+$/',
+	            'confirm_password' => 'nullable|min:8|regex:/^((?=.*[a-z]))((?=.*[A-Z]))((?=.*[0-9])).+$/|same:password',
 	        	'profile' => 'nullable|mimes:jpeg,jpg,png|max:2000',
 	        ]);
 	        
-	        //Set Field data according to table column
-	        $data = array(
-	        	'ip_address' => $request->ip(),
-	        	'first_name' => $request->input('first_name'),
-	        	'last_name' => $request->input('last_name'),
-	        	'address' => $request->input('address'),
-	        	'phone_no' => $request->input('phone_no'),
-	        	'country_id' => $request->input('country'),
-	        	'city_id' => $request->input('city'),
-	        	'date_of_birth' => $request->input('dob'),
-	            'created_date' => date('Y-m-d'),
-	        	'created_time' => date('h:i:s'),
-	        );
+	        if(!empty($request->input('password') && $request->input('confirm_password'))){
+	        	//Set Field data according to table column
+		        $data = array(
+		        	'ip_address' => $request->ip(),
+		        	'first_name' => $request->input('first_name'),
+		        	'last_name' => $request->input('last_name'),
+		        	'address' => $request->input('address'),
+		        	'phone_no' => $request->input('phone_no'),
+		        	'country_id' => $request->input('country'),
+		        	'city_id' => $request->input('city'),
+		        	'dob' => date('Y-m-d', strtotime($request->input('dob'))),
+		            'created_date' => date('Y-m-d'),
+		        	'created_time' => date('h:i:s'),
+		        );
+	        }elseif(empty($request->input('password') && $request->input('confirm_password'))){
+	        	//Set Field data according to table column
+		        $data = array(
+		        	'ip_address' => $request->ip(),
+		        	'first_name' => $request->input('first_name'),
+		        	'last_name' => $request->input('last_name'),
+		        	'address' => $request->input('address'),
+		        	'phone_no' => $request->input('phone_no'),
+		        	'country_id' => $request->input('country'),
+		        	'city_id' => $request->input('city'),
+		        	'dob' => date('Y-m-d', strtotime($request->input('dob'))),
+		        	'password' => sha1($request->input('confirm_password')),
+		            'created_date' => date('Y-m-d'),
+		        	'created_time' => date('h:i:s'),
+		        );
+			}
 
-	        //Query For Updating Data
-	    	$profile_settings = DB::table('tbl_users')
+			//Query For Updating Data
+	    	$query = DB::table('tbl_users')
 	    	             ->where('id', $request->session()->get('id'))
 	    	             ->update($data);
 
-    		if($request->input('btn') == 0){
-	    		//Get All Inputs
-	        	$ip_address = $request->ip();
-	            $first_name = $request->input('first_name');
-	        	$last_name = $request->input('last_name');
-	            $cnic = $request->input('cnic');
-	            $date_of_birth = $request->input('dob');
-	            $gender = $request->input('gender');
-	            $country = $request->input('country');
-	            $city = $request->input('city');
-	            $address = $request->input('address');
-	            $created_date = date('Y-m-d');
-	            $created_time = date('H:i:s');
-
-	            //Inputs Validation
-		        $input_validations = $request->validate([
-		            'first_name' => 'nullable',
-		            'last_name' => 'nullable',
-		            'cnic' => 'nullable|regex:/^[0-9]{13}$/|unique:tbl_users',
-		            'dob' => 'nullable',
-		            'gender' => 'nullable',
-		            'country' => 'nullable',
-		            'city' => 'nullable',
-		            'address' => 'nullable',
-		        ]);
-
-		        //Set Field data according to table column
-		        $data = array(
-		        	'ip_address' => $ip_address,
-		        	'first_name' => $first_name,
-		        	'last_name' => $last_name,
-		        	'cnic' => $cnic,
-		        	'address' => $address,
-		        	'date_of_birth' => $date_of_birth,
-		        	'gender' => $gender,
-		            'created_date' => $created_date,
-		        	'created_time' => $created_time,
-		        );
-
-		        //Query For Updating Data
-		    	$query = DB::table('tbl_users')
-		    	             ->where('id', $request->session()->get('id'))
-		    	             ->update($data);
         		
-        		//Check either data updated or not
-		     	if($query){
-		     		//Flash Success Message
-		     		$request->session()->flash('alert-success', 'Profile Settings has been updated successfully');
-		     	}else{
-		     		//Flash Error Message
-		     		$request->session()->flash('alert-danger', 'Something went wrong !!');
-		     	}
-	    		
-	    		//Redirect 
-		     	return redirect()->route('admin_profile_settings');
-	     	}elseif($request->input('btn') == 1){
-	     		//Get All Inputs
-	        	$ip_address = $request->ip();
-	            $country_code_1 = $request->input('code_1');
-	            $cell_number1 = $request->input('cell_number1');
-	            $country_code_2 = $request->input('code_2');
-	            $cell_number2 = $request->input('cell_number2');
-	            $created_date = date('Y-m-d');
-	            $created_time = date('H:i:s');
-
-	            //Inputs Validation
-		        $input_validations = $request->validate([
-		        	'code_1' => 'nullable',
-		            'cell_number1' => 'nullable|regex:/^[0-9]{10}$/|unique:tbl_users',
-		            'code_2' => 'nullable',
-        			'cell_number2' => 'nullable|regex:/^[0-9]{10}$/|unique:tbl_users',
-		        ]);
-
-		        //Set Field data according to table column
-		        $data = array(
-		        	'ip_address' => $ip_address,
-		        	'country_code_1' => $country_code_1,
-		        	'cell_number1' => $cell_number1,
-		        	'country_code_2' => $country_code_2,
-		        	'cell_number2' => $cell_number2,
-		            'created_date' => $created_date,
-		        	'created_time' => $created_time,
-		        );
-
-		        //Query For Updating Data
-		    	$query = DB::table('tbl_users')
-		    	             ->where('id', $request->session()->get('id'))
-		    	             ->update($data);
-        		
-        		//Check either data updated or not
-		     	if($query){
-		     		//Flash Success Message
-		     		$request->session()->flash('alert-success', 'Contact Details has been updated successfully');
-		     	}else{
-		     		//Flash Error Message
-		     		$request->session()->flash('alert-danger', 'Something went wrong !!');
-		     	}
-
-		     	//Redirect 
-		     	return redirect()->route('admin_profile_settings');
-	     	}elseif($request->input('btn') == 2){
-	     		//Get All Inputs
-	        	$ip_address = $request->ip();
-	            $password = sha1($request->input('password'));
-	            $confirm_password = sha1($request->input('confirm_password'));
-	            $created_date = date('Y-m-d');
-	            $created_time = date('H:i:s');
-
-	            //Inputs Validation
-		        $input_validations = $request->validate([
-		        	'password' => 'nullable|min:8|regex:/^((?=.*[a-z]))((?=.*[0-9])).+$/',
-        			'confirm_password' => 'nullable|min:8|regex:/^((?=.*[a-z]))((?=.*[0-9])).+$/',
-		        ]);
-
-	        	//if password not matched then update other info
-        		if($password <=> $confirm_password){
-        			//Flash Error Message
-		     		$request->session()->flash('alert-danger', 'Password && Confirm Password were not matched !!');
-    			}else{
-			        //Set Field data according to table column
-			        $data = array(
-			        	'ip_address' => $ip_address,
-			        	'password' => $confirm_password,
-			            'created_date' => $created_date,
-			        	'created_time' => $created_time,
-			        );
-
-			        //Query For Updating Data
-			    	$query = DB::table('tbl_users')
-			    	             ->where('id', $request->session()->get('id'))
-			    	             ->update($data);
-	        		
-	        		//Check either data updated or not
-			     	if($query){
-			     		//Flash Success Message
-			     		$request->session()->flash('alert-success', 'Account Credentials has been updated successfully');
-			     	}else{
-			     		//Flash Error Message
-			     		$request->session()->flash('alert-danger', 'Something went wrong !!');
-			     	}
-
-			     	//Redirect 
-			     	return redirect()->route('admin_profile_settings');
-		     	}
-	     	}elseif($request->input('btn') == 3){
-	     		//Get All Inputs
-	     		$ip_address = $request->ip();
-				$image = $request->file('image');
-				$created_date = date('Y-m-d');
-	            $created_time = date('H:i:s');
-
-	     		//Inputs Validation
-		        $input_validations = $request->validate([
-		        	'image' => 'nullable|mimes:jpeg,jpg,png',
-	        	]);
-
-	        	if(!empty($image)){
-	        		//File Upload
-	        		$img = time().'.'.$image->guessExtension();
-                    $image_path = $image->move(public_path().'/assets/admin/images/profile_images/', $img);
-
-                    //Set Field data according to table column
-			        $data = array(
-			        	'ip_address' => $ip_address,
-			        	'image' => $img,
-			            'created_date' => $created_date,
-			        	'created_time' => $created_time,
-			        );
-
-			        //Query For Updating Data
-			    	$query = DB::table('tbl_users')
-			    	             ->where('id', $request->session()->get('id'))
-			    	             ->update($data);
-	        		
-	        		//Check either data updated or not
-			     	if($query){
-			     		//Flash Success Message
-			     		$request->session()->flash('alert-success', 'Profile Image has been updated successfully');
-			     	}else{
-			     		//Flash Error Message
-			     		$request->session()->flash('alert-danger', 'Something went wrong !!');
-			     	}
-
-			     	//Redirect 
-			     	return redirect()->route('admin_profile_settings');
-	        	}else{
-	        		//Flash Error Message
-		     		$request->session()->flash('alert-danger', 'you have to choose image first for updating image !!');
-
-		     		//Redirect 
-			     	return redirect()->route('admin_profile_settings');
-	        	}
-	     	}elseif($request->input('btn') == 4){
-	     		//Get All Inputs
-	     		$ip_address = $request->ip();
-				$facebook = $request->input('facebook');
-				$twitter = $request->input('twitter');
-				$googleplus = $request->input('googleplus');
-				$created_date = date('Y-m-d');
-	            $created_time = date('H:i:s');
-
-	     		//Inputs Validation
-		        $input_validations = $request->validate([
-		        	'facebook' => 'nullable|unique:tbl_users_social_profile',
-		        	'twitter' => 'nullable|unique:tbl_users_social_profile',
-		        	'googleplus' => 'nullable|unique:tbl_users_social_profile',
-	        	]);
-
-	        	//Set Field data according to table column
-		        $data = array(
-		        	'ip_address' => $ip_address,
-		        	'facebook' => $facebook,
-		        	'twitter' => $twitter,
-		        	'googleplus' => $googleplus,
-		        );
-
-		        //Query For Updating Data
-		    	$query = DB::table('tbl_users_social_profile')
-		    	             ->where('user_id', $request->session()->get('id'))
-		    	             ->update($data);
-        		
-        		//Check either data updated or not
-		     	if($query){
-		     		//Flash Success Message
-		     		$request->session()->flash('alert-success', 'Social Profiles has been updated successfully');
-		     	}else{
-		     		//Flash Error Message
-		     		$request->session()->flash('alert-danger', 'Something went wrong !!');
-		     	}
-
-		     	//Redirect 
-		     	return redirect()->route('admin_profile_settings');
+    		//Check either data updated or not
+	     	if($query == 1){
+	     		//Flash Success Message
+	     		$request->session()->flash('alert-success', 'Profile has been updated successfully');
 	     	}else{
-        		print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
-    		}
+	     		//Flash Error Message
+	     		$request->session()->flash('alert-danger', 'Something went wrong !!');
+	     	}
+
+	     	//Redirect 
+     		return redirect()->back();	
     	}else{
     		print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
 		}
