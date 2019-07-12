@@ -12,7 +12,7 @@
                             </div>
                             <div class="p-2 bg-gradient-x-primary white media-body">
                                 <h5>Products</h5>
-                                <h5 class="text-bold-400 mb-0"><i class="ft-plus"></i> 5</h5>
+                                <h5 class="text-bold-400 mb-0"><i class="ft-plus"></i> @if(!empty($total_products->total_products)) {{ $total_products->total_products }} @else 0 @endif</h5>
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                             </div>
                             <div class="p-2 bg-gradient-x-danger white media-body">
                                 <h5>Customers</h5>
-                                <h5 class="text-bold-400 mb-0"><i class="ft-plus"></i> 5</h5>
+                                <h5 class="text-bold-400 mb-0"><i class="ft-plus"></i> @if(!empty($total_users->total_users)) {{ $total_users->total_users }} @else 0 @endif</h5>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                             </div>
                             <div class="p-2 bg-gradient-x-warning white media-body">
                                 <h5>New Orders</h5>
-                                <h5 class="text-bold-400 mb-0"><i class="ft-arrow-up"></i> 5</h5>
+                                <h5 class="text-bold-400 mb-0"><i class="ft-arrow-up"></i> @if(!empty($total_new_orders->new_orders)) {{ $total_new_orders->new_orders }} @else 0 @endif</h5>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="p-2 bg-gradient-x-success white media-body">
                                 <h5>Total Earning</h5>
-                                <h5 class="text-bold-400 mb-0"><i class="ft-arrow-up"></i> 5</h5>
+                                <h5 class="text-bold-400 mb-0"><i class="ft-arrow-up"></i> @if(!empty($total_earning->total_earning)) {{ $total_earning->total_earning }} @else 0 @endif</h5>
                             </div>
                         </div>
                     </div>
@@ -90,19 +90,25 @@
                     </div>
                     <div class="card-content px-1">
                         <div id="recent-buyers" class="media-list height-300 position-relative">
-                            <a href="javascript::void(0)" class="media border-0">
+                            @if(!empty($recent_customers))
+                                @foreach($recent_customers as $row)
+                            <a href="javascript::void(0);" class="media border-0">
                                 <div class="media-left pr-1">
                                     <span class="avatar avatar-md avatar-online">
-                                        <img class="media-object rounded-circle" src="{{ asset('public/assets/admin/images/profile_images/avatar.png') }}" alt="User Image">
+                                        <img class="media-object rounded-circle" src="{{ asset('public/assets/admin/images/profile_images/'.$row->image) }}" alt="User Image">
                                     </span>
                                 </div>
                                 <div class="media-body w-100">
                                     <h6 class="list-group-item-heading">
-                                        Shahzaib Imran<br><br> 
-                                        Total Bill : 5
+                                        {{ $row->first_name.' '.$row->last_name }}<br><br> 
+                                        Total Bill : {{ $row->total }}
                                     </h6>
                                 </div>
                             </a>
+                                @endforeach
+                            @else
+                            No recent buyers found !!
+                            @endif
                         </div>
                     </div>
                 </div>

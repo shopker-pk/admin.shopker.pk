@@ -9,6 +9,7 @@
 
 		//Dashboard Route Start
 			Route::get('/user/admin/dashboard', 'Admin\Dashboard\DashboardController@index')->name('admin_dashboard');
+			Route::get('/user/admin/dashboard/monthly-sales', 'Admin\Dashboard\DashboardController@monthly_sales');
 		//Dashboard Route End
 
 		//Ecommerce Routes Start
