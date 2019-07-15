@@ -48,7 +48,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript::void(0);"><i class="fa fa-send-o fa-fw"></i><span data-i18n="" class="menu-title">Orders</span> {{ count_new_orders() }}</a>
+                    <a href="javascript::void(0);"><i class="fa fa-send-o fa-fw"></i><span data-i18n="" class="menu-title">Orders</span> ({{ count_new_orders() }})</a>
                     <ul class="menu-content">
                         <li>
                             <a href="{{ route('manage_seller_orders') }}"><span data-i18n="" class="menu-title">Manage</span></a>
