@@ -20,8 +20,6 @@ class DailyDealsController extends Controller{
                          ->select('tbl_products.id', 'tbl_products_featured_images.featured_image', 'name', 'sku_code', 'tbl_products.created_date', 'regural_price', 'sale_price', 'quantity', 'tbl_products.status', 'is_approved', 'first_name', 'last_name', 'from_date', 'to_date', 'deal_start_time', 'deal_end_time')
                          ->leftJoin('tbl_products_featured_images', 'tbl_products_featured_images.product_id', '=', 'tbl_products.id')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_products.user_id')
-                         ->where('tbl_products.is_daily_deal', 0)
-                         ->where('tbl_products.to_date', '>=', date('Y-m-d'))
                          ->orderBy('tbl_products.id', 'DESC');
             $result['query'] = $query->paginate(10);
             $result['total_records'] = $result['query']->count();
@@ -103,11 +101,11 @@ class DailyDealsController extends Controller{
                    $query->where('sku_code', 'LIKE', '%'.$request->input('sku').'%');
                          }
                          if(!empty($request->input('is_daily_deal') != 2 && $request->input('is_daily_deal') == 0)){
-                   $query->where('is_daily_deal', 0);
-                         }
-                         if(!empty($request->input('is_daily_deal') != 2 && $request->input('is_daily_deal') == 1)){
                    $query->where('is_daily_deal', 0)
                          ->where('tbl_products.to_date', '>=', date('Y-m-d'));
+                         }
+                         if(!empty($request->input('is_daily_deal') != 2 && $request->input('is_daily_deal') == 1)){
+                   $query->where('is_daily_deal', 0);
                          }
                    $query->orderBy('tbl_products.id', 'DESC');
             $result['query'] = $query->paginate(10);
