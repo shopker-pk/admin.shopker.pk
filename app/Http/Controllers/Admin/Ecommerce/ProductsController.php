@@ -67,7 +67,7 @@ class ProductsController extends Controller{
             //Query For Getting Parent Categories
             $query = DB::table('tbl_users')
                          ->select('id', 'first_name', 'last_name')
-                         ->where('role', 3)
+                         ->where('role', 2)
                          ->orderBy('id', 'DESC');
             $result['vendors'] = $query->get();
 
@@ -363,15 +363,12 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     //Redirect
                     return redirect()->back()->withInput($request->all());
                 }else{
-                    if(!empty($request->input('sale_price')[$count] && $request->input('price')[$count])){
-                        if(empty($request->input('from')[$count] || $request->input('to')[$count])){
-                            $from_date = date('Y-m-d', strtotime($request->input('from')[$count]));
-                            //Flash Error Msg
-                            $request->session()->flash('alert-danger', 'From & To date required.');
+                    if(!empty($request->input('sale_price')[$count] && $request->input('price')[$count]) && empty($request->input('from')[$count] || $request->input('to')[$count])){
+                        //Flash Error Msg
+                        $request->session()->flash('alert-danger', 'From & To date required.');
 
-                            //Redirect
-                            return redirect()->back()->withInput($request->all());
-                        }
+                        //Redirect
+                        return redirect()->back()->withInput($request->all());
                     }else{
                         if(!empty($request->input('from')[$count] && $request->input('to')[$count])){
                             $from_date = date('Y-m-d', strtotime($request->input('from')[$count]));
@@ -713,12 +710,11 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                              ->orderBy('id', 'DESC');
                 $result['variations'] = $query->get();
                 
-                //Query For Getting Vendors
-                $query = DB::table('tbl_products')
-                             ->select('tbl_users.id', 'first_name', 'last_name')
-                             ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_products.user_id')
-                             ->orderBy('tbl_products.id', 'DESC')
-                             ->groupBy('tbl_products.user_id');
+                //Query For Getting Parent Categories
+                $query = DB::table('tbl_users')
+                             ->select('id', 'first_name', 'last_name')
+                             ->where('role', 2)
+                             ->orderBy('id', 'DESC');
                 $result['vendors'] = $query->get();
                 
                 //call page
@@ -816,13 +812,21 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     //Redirect
                     return redirect()->back()->withInput($request->all());
                 }else{
-                    if(!empty($request->input('from') && $request->input('to'))){
-                        $from_date = date('Y-m-d', strtotime($request->input('from')));
-                        $to_date = date('Y-m-d', strtotime($request->input('to')));
+                    if(!empty($request->input('from') && $request->input('to')) && empty($request->input('from') || $request->input('to'))){
+                        //Flash Error Msg
+                        $request->session()->flash('alert-danger', 'From & To date required.');
+
+                        //Redirect
+                        return redirect()->back()->withInput($request->all());
                     }else{
-                        $from_date = NULL;
-                        $to_date = NULL;
-                    } 
+                        if(!empty($request->input('from') && $request->input('to'))){
+                            $from_date = date('Y-m-d', strtotime($request->input('from')));
+                            $to_date = date('Y-m-d', strtotime($request->input('to')));
+                        }else{
+                            $from_date = NULL;
+                            $to_date = NULL;
+                        } 
+                    }
 
                     if($request->input('vendor') == '00'){
                         $user_id = $request->session()->get('id');
@@ -1067,6 +1071,13 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                          ->where('status', 0)
                          ->orderBy('id', 'DESC');
             $result['variations'] = $query->get();
+            
+            //Query For Getting Parent Categories
+            $query = DB::table('tbl_users')
+                         ->select('id', 'first_name', 'last_name')
+                         ->where('role', 2)
+                         ->orderBy('id', 'DESC');
+            $result['vendors'] = $query->get();
             
             if(!empty($result['query_product'])){
                 //call page
