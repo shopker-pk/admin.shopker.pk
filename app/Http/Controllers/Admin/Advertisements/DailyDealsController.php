@@ -103,7 +103,7 @@ class DailyDealsController extends Controller{
                    $query->where('sku_code', 'LIKE', '%'.$request->input('sku').'%');
                          }
                          if(!empty($request->input('is_daily_deal') != 2 && $request->input('is_daily_deal') == 0)){
-                   $query->where('is_daily_deal', $request->input('is_daily_deal'));
+                   $query->where('is_daily_deal', 0);
                          }
                          if(!empty($request->input('is_daily_deal') != 2 && $request->input('is_daily_deal') == 1)){
                    $query->where('is_daily_deal', 0)
