@@ -226,6 +226,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         //PDF
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Input' => Illuminate\Support\Facades\Input::class,
     ],
 
 ];

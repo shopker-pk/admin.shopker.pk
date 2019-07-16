@@ -389,26 +389,6 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/user/admin')[1] == '/advertisements/daily-deals/manage'){
-            	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-5"></div>'
-					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Product name"></div>'
-					+'<div class="col-md-2"><input type="text" id="sku" name="sku" class="form-control" placeholder="Product SKU"></div>'
-					+'<div class="col-md-2"><select id="is_daily_deal" name="is_daily_deal" class="form-control select_2"><option value="2">Deals & Products Both</option><option value="0">Active Deals</option><option value="1">All Deals</option></select></div>'
-					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
-					+'</div></form>'
-				);
-				$('#add_filter').remove();
-				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
-            }else if(window.location.pathname.split('/user/admin')[1] == '/advertisements/daily-deals/search'){
-            	$('#filter_section').append('<form action='+current_url+' method="get"><div class="row"><div class="col-md-5"></div>'
-					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Product name"></div>'
-					+'<div class="col-md-2"><input type="text" id="sku" name="sku" class="form-control" placeholder="Product SKU"></div>'
-					+'<div class="col-md-2"><select id="is_daily_deal" name="is_daily_deal" class="form-control select_2"><option value="2">Deals & Products Both</option><option value="0">Active Deals</option><option value="1">All Deals</option></select></div>'
-					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
-					+'</div></form>'
-				);
-				$('#add_filter').remove();
-				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
             }else if(window.location.pathname.split('/user/admin')[1] == '/cms/pages/manage'){
             	$('#filter_section').append(''
             		+'<form action='+current_url+' method="get">'
