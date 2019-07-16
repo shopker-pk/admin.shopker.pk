@@ -106,7 +106,7 @@ class DailyDealsController extends Controller{
                    $query->where('is_daily_deal', $request->input('is_daily_deal'));
                          }
                          if(!empty($request->input('is_daily_deal') != 2 && $request->input('is_daily_deal') == 1)){
-                   $query->where('is_daily_deal', $request->input('is_daily_deal'))
+                   $query->where('is_daily_deal', 0)
                          ->where('tbl_products.to_date', '>=', date('Y-m-d'));
                          }
                    $query->orderBy('tbl_products.id', 'DESC');
