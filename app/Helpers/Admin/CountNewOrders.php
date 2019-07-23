@@ -3,9 +3,9 @@
 function count_new_orders(){
 	//Query For Getting Count Total New Orders
 	$query = DB::table('tbl_orders')
-	             ->select(DB::raw('COUNT(order_no) as total_new_orders'))
-	             ->where('order_date', date('Y-m-d'))
-	             ->groupBy('order_no');
+	             ->select(DB::raw('COUNT(distinct order_no) as total_new_orders'))
+	             ->where('order_date', date('Y-m-d'));
+
  	$result = $query->first(); 
 
  	if(!empty($result)){
