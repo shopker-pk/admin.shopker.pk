@@ -89,7 +89,7 @@ class CustomersController extends Controller{
     }
 
     function search(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
         	//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',
@@ -108,7 +108,7 @@ class CustomersController extends Controller{
 	        			 if(!empty($request->input('email'))){
 	        	  $query->where('email', 'Like', '%'.$request->input('email').'%');
 	        			 }
-	        			 if(!empty($request->input('status'))){
+	        			 if(!empty($request->input('status') != 2)){
 	        	  $query->where('status', $request->input('status'));
 	        			 } 
 	              $query->where('tbl_users.role', 3)

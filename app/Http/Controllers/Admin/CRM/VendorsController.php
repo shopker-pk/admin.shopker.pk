@@ -187,7 +187,7 @@ class VendorsController extends Controller{
 	        			 if(!empty($request->input('email'))){
 	        	  $query->where('email', 'Like', '%'.$request->input('email').'%');
 	        			 }
-	        			 if(!empty($request->input('status'))){
+	        			 if(!empty($request->input('status') != 2)){
 	        	  $query->where('status', $request->input('status'));
 	        			 } 
 	              $query->where('tbl_users.role', 2)

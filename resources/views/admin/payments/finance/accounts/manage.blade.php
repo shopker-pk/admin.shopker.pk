@@ -65,7 +65,7 @@
                                                                 <span class="price1">Subtotal</span>    
                                                             </div>
                                                             <div class="col-md-2"></div>
-                                                            <div class="col-md-7" id="contenright">
+                                                            <div class="col-md-7" id="contenright" style="padding-left: 210px;">
                                                                 <span class="price1">{{ $query['sub_total'] }} PKR</span>   
                                                             </div>
                                                         </div>
@@ -81,7 +81,7 @@
                                                         <span class="price1">Total Balance</span>
                                                     </div>
                                                     <div class="col-md-2"></div>
-                                                    <div class="col-md-4" id="contenright">
+                                                    <div class="col-md-4" id="contenright" style="padding-left: 160px;">
                                                         <span class="price1">{{ $query['sub_total'] }} PKR</span>
                                                     </div>
                                                 </div>

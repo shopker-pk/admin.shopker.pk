@@ -82,10 +82,10 @@ class AccountsController extends Controller{
                          ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
                          ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id');
                          if(!empty($request->input('from'))){
-                   $query->where('tbl_orders.order_date', '<=', date('Y-m-d', strtotime($request->input('from')))); 
+                   $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '<=', date('m', strtotime($request->input('from')))); 
                          }
-                         if(!empty($request->input('from'))){
-                   $query->where('tbl_orders.order_date', '>=', date('Y-m-d', strtotime($request->input('from')))); 
+                         if(!empty($request->input('to'))){
+                   $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '>=', date('m', strtotime($request->input('to')))); 
                          }
                    $query->orderBy('tbl_orders.id', 'DESC');
             $result['query'] = $query->get();

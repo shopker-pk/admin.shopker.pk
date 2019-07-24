@@ -367,24 +367,66 @@ $(document).ready(function(){
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
             }else if(window.location.pathname.split('/user/admin')[1] == '/crm/customers/manage'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
-					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
-					+'<div class="col-md-2"><select id="payment_type" name="payment_type" class="custom-select block select_2"><option value="0">Paypal</option><option value="1">Stripe</option><option value="2">Bank Transaction</option><option value="3">Cash on delivery</option></select></div>'
-					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Delivered</option><option value="1">Active</option><option value="2">In Process</option><option value="3">Rejected</option></select></div>'
-					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'<div class="col-md-5"></div>'
+					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Search BY Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="email" name="email" class="form-control" placeholder="Search BY Email"></div>'
+					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="2">All</option><option value="0">Active</option><option value="1">Pending</option></select></div>'
+					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
 					+'</div></form>'
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
             }else if(window.location.pathname.split('/user/admin')[1] == '/crm/customers/search'){
             	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
-					+'<div class="col-md-2"><input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#"></div>'
-					+'<div class="col-md-2"><select id="payment_type" name="payment_type" class="custom-select block select_2"><option value="0">Paypal</option><option value="1">Stripe</option><option value="2">Bank Transaction</option><option value="3">Cash on delivery</option></select></div>'
-					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="0">Delivered</option><option value="1">Active</option><option value="2">In Process</option><option value="3">Rejected</option></select></div>'
-					+'<div class="col-md-2"><input type="text" id="from_date" name="from_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><input type="text" id="to_date" name="to_date" class="form-control datepicker" style="height:42px"></div>'
-					+'<div class="col-md-2"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'<div class="col-md-5"></div>'
+					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Search BY Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="email" name="email" class="form-control" placeholder="Search BY Email"></div>'
+					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="2">All</option><option value="0">Active</option><option value="1">Pending</option></select></div>'
+					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/user/admin')[1] == '/crm/vendors/manage'){
+            	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
+					+'<div class="col-md-5"></div>'
+					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Search BY Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="email" name="email" class="form-control" placeholder="Search BY Email"></div>'
+					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="2">All</option><option value="0">Active</option><option value="1">Pending</option></select></div>'
+					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/user/admin')[1] == '/crm/vendors/search'){
+            	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
+					+'<div class="col-md-5"></div>'
+					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Search BY Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="email" name="email" class="form-control" placeholder="Search BY Email"></div>'
+					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="2">All</option><option value="0">Active</option><option value="1">Pending</option></select></div>'
+					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/user/admin')[1] == '/crm/admin/manage'){
+            	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
+					+'<div class="col-md-5"></div>'
+					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Search BY Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="email" name="email" class="form-control" placeholder="Search BY Email"></div>'
+					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="2">All</option><option value="0">Active</option><option value="1">Pending</option></select></div>'
+					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
+					+'</div></form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/user/admin')[1] == '/crm/admin/search'){
+            	$('#filter_section').append('<br><form action='+current_url+' method="get"><div class="row">'
+					+'<div class="col-md-5"></div>'
+					+'<div class="col-md-2"><input type="text" id="name" name="name" class="form-control" placeholder="Search BY Name"></div>'
+					+'<div class="col-md-2"><input type="text" id="email" name="email" class="form-control" placeholder="Search BY Email"></div>'
+					+'<div class="col-md-2"><select id="status" name="status" class="custom-select block select_2"><option value="2">All</option><option value="0">Active</option><option value="1">Pending</option></select></div>'
+					+'<div class="col-md-1"><button type="submit" class="btn btn-primary"><i class="ft-search"></i></button></div>'
 					+'</div></form>'
 				);
 				$('#add_filter').remove();
