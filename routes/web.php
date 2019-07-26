@@ -111,7 +111,7 @@
 		//Invoices Routes Start
 			Route::get('/user/admin/payments/invoices/manage', 'Admin\Payments\InvoicesController@index')->name('manage_admin_invoices');
 			Route::get('/user/admin/payments/invoices/details/{order_no}', 'Admin\Payments\InvoicesController@details')->name('manage_admin_invoices_details');
-			Route::get('/user/admin/payments/invoices/download/{order_no}', 'Admin\Payments\InvoicesController@download')->name('download_admin_invoice');
+			Route::get('/user/admin/payments/invoices/download-pdf/{order_no}', 'Admin\Payments\InvoicesController@download_pdf')->name('admin_invoice_download_pdf');
 			Route::get('/user/admin/payments/invoices/search', 'Admin\Payments\InvoicesController@search')->name('search_admin_invoices');
 		//Invoices Routes End
 

@@ -16,13 +16,11 @@
                                         <div class="col-md-6"></div>
                                         <div class="col-md-2">
                                             <div class="form-body">
-                                                <a id="print" href="javascript::void(0);">Print Invoice</a>
+                                                <a id="print" href="{{ route('admin_invoice_download_pdf', $invoice_and_customer_details->order_no) }}">Download PDF</a>
                                             </div>
                                         </div>
                                     </div>
                                     <div id="print_section">
-                                        <div class="css_js" style="display: hidden">
-                                        </div>
                                         <div id="invoice-company-details" class="row">
                                             <!-- Company Details Start -->
                                             <div class="col-md-6 col-sm-12 text-center text-md-left">

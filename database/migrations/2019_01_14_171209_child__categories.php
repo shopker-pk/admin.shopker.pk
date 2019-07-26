@@ -13,6 +13,7 @@ class ChildCategories extends Migration{
             $column->string('featured_image')->nullable();
             $column->string('name', 100);
             $column->string('slug', 100);
+            $column->integer('sorting_order')->default(0)->unique();
             $column->longText('meta_keywords')->nullable();
             $column->longText('meta_description')->nullable();
             $column->integer('status');
