@@ -210,6 +210,20 @@
 			//Orders Overview Routes End
 		//Finance Routes End
 
+		//Reviews Routes Start
+			//Product Routes Start
+				Route::get('/user/admin/reviews/products/manage', 'Admin\Reviews\ProductsController@manage')->name('manage_product_reviews');
+				Route::post('/user/admin/reviews/products/reply/{id}', 'Admin\Reviews\ProductsController@reply')->name('reply_product_reviews');
+				Route::get('/user/admin/reviews/products/search', 'Admin\Reviews\ProductsController@search')->name('search_product_reviews');
+			//Product Routes End
+
+			//Orders Routes Start
+				Route::get('/user/admin/reviews/orders/manage', 'Admin\Reviews\OrdersController@manage')->name('manage_order_reviews');
+				Route::post('/user/admin/reviews/orders/reply/{order_no}', 'Admin\Reviews\OrdersController@reply')->name('reply_order_reviews');
+				Route::get('/user/admin/reviews/orders/search', 'Admin\Reviews\OrdersController@search')->name('search_order_reviews');
+			//Orders Routes End
+		//Reviews Routes End
+
 		//Common Routes Start
 			Route::get('/user/admin/common/cities/{id}', 'Admin\Common\CommonController@get_ajax_cities_list');
 			Route::get('/user/admin/common/parent-categories', 'Admin\Common\CommonController@get_parent_categories');

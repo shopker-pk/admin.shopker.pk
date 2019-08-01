@@ -98,15 +98,6 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="javascript::void(0);"><i class="ft-settings"></i><span data-i18n="" class="menu-title">Settings</span></a>
-                    <ul class="menu-content">
-                        <li>
-                            <a href="{{ route('edit_store_setting') }}"><span data-i18n="" class="menu-title">Site</span></a>
-                            <a href="{{ route('admin_profile_settings') }}"><span data-i18n="" class="menu-title">Profile</span></a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item">
                     <a href="javascript::void(0);"><i class="fa fa-users fa-fw"></i><span data-i18n="" class="menu-title">CRM</span></a>
                     <ul class="menu-content">
                         <li>
@@ -130,6 +121,24 @@
                                     <a href="{{ route('add_pages') }}"><span data-i18n="" class="menu-title">Add Pages</span></a>
                                 </li>
                             </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript::void(0);"><i class="fa fa-star"></i><span data-i18n="" class="menu-title">Reviews</span></a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="{{ route('manage_order_reviews') }}"><span data-i18n="" class="menu-title">Manage Orders Reviews</span></a>
+                            <a href="{{ route('manage_product_reviews') }}"><span data-i18n="" class="menu-title">Manage Products Reviews</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="javascript::void(0);"><i class="ft-settings"></i><span data-i18n="" class="menu-title">Settings</span></a>
+                    <ul class="menu-content">
+                        <li>
+                            <a href="{{ route('edit_store_setting') }}"><span data-i18n="" class="menu-title">Site</span></a>
+                            <a href="{{ route('admin_profile_settings') }}"><span data-i18n="" class="menu-title">Profile</span></a>
                         </li>
                     </ul>
                 </li>

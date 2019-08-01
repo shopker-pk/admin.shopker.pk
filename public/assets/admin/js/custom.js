@@ -565,7 +565,163 @@ $(document).ready(function(){
 				);
 				$('#add_filter').remove();
 				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/user/admin')[1] == '/reviews/orders/manage'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-1"></div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#">'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<select id="rating" name="rating" class="form-control select_2">'
+                                    +'<option value="0">Ratings Only</option>'
+                                    +'<option value="1">With Comments</option>'
+                                    +'<option value="2">Both</option>'
+                                +'</select>'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<select id="reply" name="reply" class="form-control select_2">'
+                                    +'<option value="0">Replied</option>'
+                                    +'<option value="1">Not Replied</option>'
+                                +'</select>'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" class="form-control datepicker" id="from" name="from" placeholder="From Date">'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" class="form-control datepicker" id="to" name="to" placeholder="To Date">'
+                            +'</div>'
+                            +'<div class="col-md-1">'
+                                +'<div class="input-group-btn">'
+                                    +'<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/user/admin')[1] == '/reviews/orders/search'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-1"></div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" id="order_no" name="order_no" class="form-control" placeholder="Order NO#">'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<select id="rating" name="rating" class="form-control select_2">'
+                                    +'<option value="0">Ratings Only</option>'
+                                    +'<option value="1">With Comments</option>'
+                                    +'<option value="2">Both</option>'
+                                +'</select>'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<select id="reply" name="reply" class="form-control select_2">'
+                                    +'<option value="0">Replied</option>'
+                                    +'<option value="1">Not Replied</option>'
+                                +'</select>'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" class="form-control datepicker" id="from" name="from" placeholder="From Date">'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" class="form-control datepicker" id="to" name="to" placeholder="To Date">'
+                            +'</div>'
+                            +'<div class="col-md-1">'
+                                +'<div class="input-group-btn">'
+                                    +'<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/user/admin')[1] == '/reviews/products/manage'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-1"></div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" id="name" name="name" class="form-control" placeholder="Product Name">'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<select id="rating" name="rating" class="form-control select_2">'
+                                    +'<option value="0">Ratings Only</option>'
+                                    +'<option value="1">With Comments</option>'
+                                    +'<option value="2">Both</option>'
+                                +'</select>'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<select id="reply" name="reply" class="form-control select_2">'
+                                    +'<option value="0">Replied</option>'
+                                    +'<option value="1">Not Replied</option>'
+                                +'</select>'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" class="form-control datepicker" id="from" name="from" placeholder="From Date">'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" class="form-control datepicker" id="to" name="to" placeholder="To Date">'
+                            +'</div>'
+                            +'<div class="col-md-1">'
+                                +'<div class="input-group-btn">'
+                                    +'<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
+            }else if(window.location.pathname.split('/user/admin')[1] == '/reviews/products/search'){
+            	$('#filter_section').append(''
+            		+'<form action='+current_url+' method="get">'
+            			+'<div class="row">'
+            				+'<div class="col-md-1"></div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" id="name" name="name" class="form-control" placeholder="Product Name">'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<select id="rating" name="rating" class="form-control select_2">'
+                                    +'<option value="0">Ratings Only</option>'
+                                    +'<option value="1">With Comments</option>'
+                                    +'<option value="2">Both</option>'
+                                +'</select>'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<select id="reply" name="reply" class="form-control select_2">'
+                                    +'<option value="0">Replied</option>'
+                                    +'<option value="1">Not Replied</option>'
+                                +'</select>'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" class="form-control datepicker" id="from" name="from" placeholder="From Date">'
+                            +'</div>'
+                            +'<div class="col-md-2">'
+                                +'<input type="text" class="form-control datepicker" id="to" name="to" placeholder="To Date">'
+                            +'</div>'
+                            +'<div class="col-md-1">'
+                                +'<div class="input-group-btn">'
+                                    +'<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>'
+                                +'</div>'
+                            +'</div>'
+                        +'</div>'
+					+'</form>'
+				);
+				$('#add_filter').remove();
+				$('#filter_button').append('<a href="javascript::void(0)" id="remove_filter"> X</a>');
             }
+
+            $(document).on('click', '.datepicker', function(){
+				$(this).datepicker({ 
+						autoclose: true,
+						format: 'dd-MM-yy',
+					    changeMonth: true,
+			   	}).datepicker('show');
+			});
 
             $('.select_2').select2();
 		});
