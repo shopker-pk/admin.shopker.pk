@@ -13,7 +13,7 @@ class Users extends Migration{
             $column->string('last_name', 15);
             $column->LongText('address');
             $column->string('phone_no', 13)->unique();
-            $column->string('email', 50)->unique();
+            $column->string('email', 50);
             $column->string('password', 100);
             $column->string('country_id', 5);
             $column->integer('city_id');

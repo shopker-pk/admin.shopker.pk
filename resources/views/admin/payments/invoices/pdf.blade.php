@@ -1,159 +1,100 @@
-@include('admin.layouts.style')
-<div class="content-body">
-    <section id="basic-form-layouts">
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <div class="card">
-                    <div class="card-content collpase show" style="border: 1px solid #989797;">
-                        <div class="card-body">
-                            <form class="form form-horizontal form-bordered">
-                                <div class="row form-section">
-                                    <div class="col-md-12">
-                                        <div class="form-body">
-                                            <h4>Invoice Details</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="print_section">
-                                    <div id="invoice-company-details" class="row">
-                                        <!-- Company Details Start -->
-                                        <div class="col-md-6 col-sm-12 text-center text-md-left">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h2>Company Details</h2>
-                                                    <ul class="list-unstyled">
-                                                        <li class="text-bold-800">@if(!empty($header_details->title)) {{ $header_details->title }} @endif</li>
-                                                        <li>@if(!empty($header_details->address)) {{ $header_details->address }} @endif</li>
-                                                        <li>@if(!empty($header_details->zip_code)) {{ $header_details->zip_code }} @endif</li>
-                                                        <li>@if(!empty($header_details->city_name)) {{ $header_details->city_name }} @endif</li>
-                                                        <li>@if(!empty($header_details->country_name)) {{ $header_details->country_name }} @endif</li>
-                                                    </ul>
-                                                    <h2>Customer Details</h2>
-                                                    <ul class="list-unstyled">
-                                                        <li class="text-bold-800">
-                                                            <label>Name :</label> @if(!empty($invoice_and_customer_details->first_name && $invoice_and_customer_details->last_name)) {{ $invoice_and_customer_details->first_name }} {{ $invoice_and_customer_details->last_name }} @endif
-                                                        </li>
-                                                        <li class="text-bold-800">
-                                                            <label>Contact :</label> @if(!empty($invoice_and_customer_details->phone_no)) {{ $invoice_and_customer_details->phone_no }} @endif
-                                                        </li>
-                                                        <li class="text-bold-800">
-                                                            <label>Email :</label> @if(!empty($invoice_and_customer_details->email)) {{ $invoice_and_customer_details->email }} @endif
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Company Details End -->
-                                        <!-- Invoice Details Start -->
-                                        <div class="col-md-6 col-sm-12 text-center text-md-right">
-                                            <div class="media">
-                                                <div class="media-body">
-                                                    <h2>Invoice Details</h2>
-                                                    <ul class="ml-2 px-0 list-unstyled">
-                                                        <li class="text-bold-800">
-                                                            <label>No# :</label> @if(!empty($invoice_and_customer_details->order_no)) {{ $invoice_and_customer_details->order_no }} @endif
-                                                        </li>
-                                                        <li class="text-bold-800">
-                                                            <label>Date :</label> @if(!empty($invoice_and_customer_details->order_date)) {{ date('d-m-Y', strtotime($invoice_and_customer_details->order_date)) }} @endif
-                                                        </li>
-                                                        <li class="text-bold-800">
-                                                            <label>Transaction ID :</label> @if(!empty($invoice_and_customer_details->transaction_id)) {{ $invoice_and_customer_details->transaction_id }} @endif
-                                                        </li>
-                                                        <li class="text-bold-800">
-                                                            <label>Total Amount :</label> @if(!empty($invoice_and_customer_details->total)) {{ $invoice_and_customer_details->total }} @endif
-                                                        </li>
-                                                        <li class="text-bold-800">
-                                                            <label>Order Status :</label> 
-                                                            @if($invoice_and_customer_details->order_status == 0)
-                                                                <span class="badge badge-warning">Pending</span>
-                                                            @elseif($invoice_and_customer_details->order_status == 1)
-                                                                <span class="badge badge-info">In Process</span>
-                                                            @elseif($invoice_and_customer_details->order_status == 2)
-                                                                <span class="badge badge-info">Ready To Ship</span>
-                                                            @elseif($invoice_and_customer_details->order_status == 3)
-                                                                <span class="badge badge-info">Shipped</span>
-                                                            @elseif($invoice_and_customer_details->order_status == 4)
-                                                                <span class="badge badge-success">Delivered</span>
-                                                            @elseif($invoice_and_customer_details->order_status == 5)
-                                                                <span class="badge badge-danger">Canceled</span>
-                                                            @endif
-                                                        </li>
-                                                        <li class="text-bold-800">
-                                                            <label>Payment Status :</label> 
-                                                            @if($invoice_and_customer_details->payment_status == 0)
-                                                                <span class="badge badge-success">Paid</span>
-                                                            @else
-                                                                <span class="badge badge-danger">Unpaid</span>
-                                                            @endif
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Invoice Details End -->
-                                    </div>
-                                    <div class="table-responsive">          
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Product Name</th>
-                                                    <th>Product Type</th>
-                                                    <th>Product Quantity</th>
-                                                    <th>Product Amount</th>
-                                                    <th>Total Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @if(!empty($order_details))
-                                                    @foreach($order_details as $row)
-                                                        <tr>
-                                                            <td>{{ $row->product_name }}</td>
-                                                            <td>@if($row->type == 0) On Sale @elseif($row->type == 1) Normal @endif</td>
-                                                            <td>{{ $row->product_quantity }}</td>
-                                                            <td>{{ $row->product_price }}</td>
-                                                            <td>{{ $row->total_amount }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-7 col-sm-12"></div>
-                                        <div class="col-md-5 col-sm-12">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td>Sub Total</td>
-                                                            <td class="text-right">{{ $payment_details->sub_total }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Discount</td>
-                                                            <td class="text-right"></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Shipping</td>
-                                                            <td class="text-right">{{ $payment_details->charges }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-bold-800">Total</td>
-                                                            <td class="text-bold-800 text-right">{{ $payment_details->total }}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-                            </form>
-                        </div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/invoice.css') }}">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div id="invoice">
+    <div class="invoice overflow-auto">
+        <div style="min-width: 600px">
+            <header>
+                <div class="row">
+                    <div class="col company-details">
+                        <h2 class="name">Company Details</h2>
+                        <div>{{ $header_details->title }}</div>
+                        <div>{{ $header_details->address }}</div>
+                        <div>{{ $header_details->zip_code }}</div>
+                        <div>{{ $header_details->city_name }}</div>
+                        <div>{{ $header_details->country_name }}</div>
+                    </div>
+                    <div class="col logo">
+                        <a target="_blank" href="#">
+                            <img src="{{ asset('public/assets/admin/images/settings/logo/'.$site_logo->header_image) }}" height="100" data-holder-rendered="true" />
+                        </a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-1"></div>
+            </header>
+            <main>
+                <div class="row contacts">
+                    <div class="col invoice-to">
+                        <h2>Customer Details</h2>
+                        <div class="to">Name: {{ $invoice_and_customer_details->first_name }} {{ $invoice_and_customer_details->last_name }}</div>
+                        <div class="address">Contact: {{ $invoice_and_customer_details->phone_no }}</div>
+                        <div class="email"><a href="">Email: {{ $invoice_and_customer_details->email }}</a></div>
+                    </div>
+                    <div class="col invoice-details">
+                        <h1 class="invoice-id">Invoice Details</h1>
+                        <div class="date">Number: {{ $invoice_and_customer_details->order_no }}</div>
+                        <div class="date">Date: {{ date('d-m-Y', strtotime($invoice_and_customer_details->order_date)) }}</div>
+                        <div class="date">Transaction Id: {{ $invoice_and_customer_details->transaction_id }}</div>
+                        <div class="date">Total Amount: {{ $invoice_and_customer_details->total }}</div>
+                        <div class="date">Order Status: @if($invoice_and_customer_details->order_status == 0) Pending @elseif($invoice_and_customer_details->order_status == 1) In Process @elseif($invoice_and_customer_details->order_status == 2) Ready To Ship @elseif($invoice_and_customer_details->order_status == 3) Shipped @elseif($invoice_and_customer_details->order_status == 4) Delivered @elseif($invoice_and_customer_details->order_status == 5) Canceled @endif</div>
+                        <div class="date">Payment Status: @if($invoice_and_customer_details->payment_status == 0)Paid @else Unpaid @endif</div>
+                    </div>
+                </div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Product Name</th>
+                            <th class="text-right">Product Type</th>
+                            <th class="text-right">Product Quantity</th>
+                            <th class="text-right">Product Amount</th>
+                            <th class="text-right">Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if(!empty($order_details))
+                            @foreach($order_details as $row)
+                        <tr>
+                            <td>{{ $row->product_name }}</td>
+                            <td>@if($row->type == 0) On Sale @elseif($row->type == 1) Normal @endif</td>
+                            <td>{{ $row->product_quantity }}</td>
+                            <td>{{ $row->product_price }}</td>
+                            <td>{{ $row->total_amount }}</td>
+                        </tr>
+                            @endforeach
+                        @endif
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td colspan="2">SUBTOTAL</td>
+                            <td>Rs {{ $payment_details->sub_total }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td colspan="2">Discount</td>
+                            <td>Rs 0</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td colspan="2">Shipping</td>
+                            <td>Rs {{ $payment_details->charges }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"></td>
+                            <td colspan="2">GRAND TOTAL</td>
+                            <td>Rs {{ $payment_details->total }}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <div class="thanks">Thank you!</div>
+            </main>
         </div>
-    </section>
+        <div></div>
+    </div>
 </div>
-@include('admin.layouts.script')
+</body>
+</html>

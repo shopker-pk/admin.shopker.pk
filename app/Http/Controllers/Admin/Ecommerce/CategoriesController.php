@@ -397,7 +397,7 @@ class CategoriesController extends Controller{
 	        	'image' => 'nullable|mimes:jpeg,jpg,png|max:2000|', //dimensions:max_width=300,max_height:200',
 	        	'parent_category' => 'required|numeric',
 	            'name' => 'required',
-	            'sorting_order' => 'required|numeric|unique:tbl_parent_categories',
+	            'sorting_order' => 'required|numeric|unique:tbl_child_categories',
 	            'meta_keywords' => 'nullable',
 	            'meta_description' => 'nullable',
 	            'status' => 'required|numeric',
@@ -546,6 +546,7 @@ class CategoriesController extends Controller{
 	        $input_validations = $request->validate([
 	        	'image' => 'nullable|mimes:jpeg,jpg,png|max:2000|', //dimensions:max_width=300,max_height:200',
 	            'name' => 'required',
+	            'sorting_order' => 'required|numeric|unique:tbl_child_categories,sorting_order,'.$id,
 	            'parent_category' => 'required|numeric',
 	            'meta_keywords' => 'nullable',
 	            'meta_description' => 'nullable',

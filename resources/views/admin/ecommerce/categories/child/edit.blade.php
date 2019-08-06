@@ -61,17 +61,25 @@
                                                     <textarea id="meta_description" name="meta_description" rows="5" class="form-control" placeholder="Meta Description">{{ old('meta_description', $query->meta_description) }}</textarea>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="row">
                                             <div class="col-md-6">
-                                                <div class="form-group row last">
+                                                <div class="form-group">
+                                                    <label class="label-control">Sorting Order</label>
+                                                    <input type="text" id="sorting_order" name="sorting_order" class="form-control" placeholder="Sorting Order" value="{{ old('sorting_order', $query->sorting_order) }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
                                                     <label class="label-control">Category Status</label>
                                                     <div class="input-group">
                                                         <label class="d-inline-block custom-control custom-radio ml-1">
-                                                            <input type="radio" id="status" name="status" class="custom-control-input" value="0" @if(old('status') == '0') checked @endif @if($query->status == '0') checked @endif>
+                                                            <input type="radio" id="status" name="status" class="custom-control-input select_2" value="0" @if(old('status') ==  '0') checked @endif @if($query->status == '0') checked @endif>
                                                             <span class="custom-control-indicator"></span>
                                                             <span class="custom-control-description ml-0">Active</span>
                                                         </label>
                                                         <label class="d-inline-block custom-control custom-radio">
-                                                            <input type="radio" id="status" name="status" class="custom-control-input" value="1" @if(old('status') == '1') checked @endif @if($query->status == '1') checked @endif>
+                                                            <input type="radio" id="status" name="status" class="custom-control-input select_2" value="1" @if(old('status') ==  '1') checked @endif @if($query->status == '1') checked @endif>
                                                             <span class="custom-control-indicator"></span>
                                                             <span class="custom-control-description ml-0">Inactive</span>
                                                         </label>

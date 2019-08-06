@@ -339,7 +339,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'width' => 'nullable|numeric',
                 'height' => 'nullable|numeric',
                 'variation.*' => 'required|numeric',
-                'product_images.*' => 'required|max:5120',
+                //'product_images.*' => 'required|max:5120',
                 'status.*' => 'required',
                 'sku.*' => 'required',
                 'quantity.*' => 'required|numeric',
@@ -422,35 +422,37 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                                       ->insertGetId($data);    
                     $count++;
 
-                    foreach($images_url[$row] as $url){
-                        //Upload Product Image
-                        $image = uniqid().'.jpeg';
-                        $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
+                    if(!empty($images_url)){
+                        foreach($images_url[$row] as $url){
+                            //Upload Product Image
+                            $image = uniqid().'.jpeg';
+                            $image_path = file_put_contents(public_path().'/assets/admin/images/ecommerce/products/'.$image, file_get_contents($url));
 
+                            //Set Field data according to table columns
+                            $data = array(
+                                'ip_address' => $request->ip(),
+                                'user_id' => $user_id,
+                                'product_id' => $product_id,
+                                'image' => $image,
+                            ); 
+                            
+                            //Query For Inserting Data
+                            $image_id = DB::table('tbl_products_images')
+                                            ->insertGetId($data);
+
+                            $pro_images[$row][] = $image; 
+                        }
+                        
                         //Set Field data according to table columns
                         $data = array(
-                            'ip_address' => $request->ip(),
-                            'user_id' => $user_id,
+                            'featured_image' => $pro_images[$row][0],
                             'product_id' => $product_id,
-                            'image' => $image,
-                        ); 
-                        
+                        );
+
                         //Query For Inserting Data
-                        $image_id = DB::table('tbl_products_images')
+                        $featured_image_id = DB::table('tbl_products_featured_images')
                                         ->insertGetId($data);
-
-                        $pro_images[$row][] = $image; 
                     }
-                    
-                    //Set Field data according to table columns
-                    $data = array(
-                        'featured_image' => $pro_images[$row][0],
-                        'product_id' => $product_id,
-                    );
-
-                    //Query For Inserting Data
-                    $brand_id = DB::table('tbl_products_featured_images')
-                                    ->insertGetId($data);
 
                     //Set Field data according to table columns
                     $data = array(
@@ -484,22 +486,36 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 //Flash Error Msg
                 $request->session()->flash('alert-success', 'Product has been added successfully');
             }else{
-                $p_id = DB::table('tbl_products')
-                             ->where('id', $product_id)
-                             ->delete();
+                if(!empty($product_id)){
+                    $p_id = DB::table('tbl_products')
+                                ->where('id', $product_id)
+                                ->delete();
+                }
+                    
+                if(!empty($image_id)){
+                    $i_id = DB::table('tbl_products_images')
+                                ->where('product_id', $product_id)
+                                ->delete();
+                }
 
-                $b_id = DB::table('tbl_product_brands')
-                             ->where('product_id', $product_id)
-                             ->delete();
+                if(!empty($featured_image_id)){
+                    DB::table('tbl_products_featured_images')
+                        ->where('product_id', $product_id)
+                        ->delete();
+                }
 
-                $c_id = DB::table('tbl_product_categories')
-                             ->where('product_id', $product_id)
-                             ->delete();
+                if(!empty($brand_id)){
+                    $b_id = DB::table('tbl_product_brands')
+                                ->where('product_id', $product_id)
+                                ->delete();
+                }
 
-                $i_id = DB::table('tbl_products_images')
-                             ->where('product_id', $product_id)
-                             ->delete();
-                             
+                if(!empty($category_id)){
+                    $c_id = DB::table('tbl_product_categories')
+                                ->where('product_id', $product_id)
+                                ->delete();
+                }                
+
                 //Flash Erro Msg
                 $request->session()->flash('alert-danger', 'Something went wrong !!');
             }
@@ -789,7 +805,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'width' => 'nullable|numeric',
                 'height' => 'nullable|numeric',
                 'variation_id' => 'required|numeric',
-                'product_images.*' => 'required|max:5120',
+                //'product_images.*' => 'required|max:5120',
                 'status' => 'required',
                 'sku' => 'required',
                 'quantity' => 'required|numeric',
@@ -911,7 +927,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     );
 
                     //Query For Inserting Data
-                    $brand_id = DB::table('tbl_products_featured_images')
+                    $featured_image_id = DB::table('tbl_products_featured_images')
                                     ->where('product_id', $id)
                                     ->update($data);
 
@@ -1212,7 +1228,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                     );
 
                     //Query For Inserting Data
-                    $brand_id = DB::table('tbl_products_featured_images')
+                    $featured_image_id = DB::table('tbl_products_featured_images')
                                     ->insertGetId($data);
 
                     //Set Field data according to table columns
@@ -1245,21 +1261,35 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                         //Flash Erro Msg
                         $request->session()->flash('alert-success', 'Product has been added successfully');
                     }else{
-                        $p_id = DB::table('tbl_products')
-                                     ->where('id', $product_id)
-                                     ->delete();
+                        if(!empty($product_id)){
+                            $p_id = DB::table('tbl_products')
+                                        ->where('id', $product_id)
+                                        ->delete();
+                        }
+                            
+                        if(!empty($image_id)){
+                            $i_id = DB::table('tbl_products_images')
+                                        ->where('product_id', $product_id)
+                                        ->delete();
+                        }
 
-                        $b_id = DB::table('tbl_product_brands')
-                                     ->where('product_id', $product_id)
-                                     ->delete();
+                        if(!empty($featured_image_id)){
+                            DB::table('tbl_products_featured_images')
+                                ->where('product_id', $product_id)
+                                ->delete();
+                        }
 
-                        $c_id = DB::table('tbl_product_categories')
-                                     ->where('product_id', $product_id)
-                                     ->delete();
+                        if(!empty($brand_id)){
+                            $b_id = DB::table('tbl_product_brands')
+                                        ->where('product_id', $product_id)
+                                        ->delete();
+                        }
 
-                        $i_id = DB::table('tbl_products_images')
-                                     ->where('product_id', $product_id)
-                                     ->delete();
+                        if(!empty($category_id)){
+                            $c_id = DB::table('tbl_product_categories')
+                                        ->where('product_id', $product_id)
+                                        ->delete();
+                        }  
                                      
                         //Flash Erro Msg
                         $request->session()->flash('alert-danger', 'Something went wrong !!');

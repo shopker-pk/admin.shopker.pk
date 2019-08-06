@@ -168,8 +168,13 @@ class InvoicesController extends Controller{
                          ->where('tbl_orders.order_no', $order_no);
             $result['payment_details'] = $query->first();
             
+            //Query For Getting Sites
+            $query = DB::table('tbl_site_images')
+                         ->select('header_image');
+            $result['site_logo'] = $query->first();
+            
             //Download PDF
-            $pdf = PDF::loadView('admin.payments.invoices.pdf', $result)->setPaper('A4', 'landscape');
+            $pdf = PDF::loadView('admin.payments.invoices.pdf', $result)->setPaper('A4', 'Portrait');
             return $pdf->download('Invoice-'.$order_no.'.pdf');
 
             $request->session()->flash('alert-success', 'Invoice-'.$order_no.' has been download successfully');
