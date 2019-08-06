@@ -1520,7 +1520,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
 
     function import(Request $request){
         if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
-            if(!empty($request->input('name'))){
+            if(!empty($request->file('products'))){
                 //Getting Import File Content
                 $data = Excel::load($request->file('products')->getRealPath());
                 $result = $data->toArray();
