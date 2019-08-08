@@ -77,7 +77,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group row last">
                                                     <label class="label-control">Date OF Birth</label>
-                                                    <input type="text" id="dob" name="dob" class="form-control datepicker" value="{{ old('dob', date('d/m/y', strtotime($query->dob))) }}">
+                                                    <input type="text" id="dob" name="dob" class="form-control datepicker" value="{{ old('dob', date('m/d/Y', strtotime($query->dob))) }}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">

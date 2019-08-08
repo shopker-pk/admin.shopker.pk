@@ -844,6 +844,22 @@ $(document).ready(function(){
 			});
 		});
 	//Export Customers End
+
+	//Export Orders Overview Start
+		$(document).on('click', '.export_orders_overview', function(){
+			$('#export_orders_overview').modal({
+    			show: true
+			});
+		});
+	//Export Orders Overview End
+
+	//Export Account Statement Start
+		$(document).on('click', '.export_account_statement', function(){
+			$('#export_account_statement').modal({
+    			show: true
+			});
+		});
+	//Export Account Statement End
 	
 	//Per Page Records Change Start
 		$(document).on('change', '#per_page', function(){

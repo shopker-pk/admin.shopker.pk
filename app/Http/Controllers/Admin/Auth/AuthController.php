@@ -41,14 +41,14 @@ class AuthController extends Controller{
             //Inputs Validation
             $input_validations = $request->validate([
                 'email' => 'required|email|String',
-                'password' => 'required|min:8|regex:/^((?=.*[a-z]))((?=.*[A-Z]))((?=.*[0-9])).+$/',
+                'password' => 'nullable|min:8|regex:/^((?=.*[a-z]))((?=.*[A-Z]))((?=.*[0-9])).+$/',
             ]);
 
             //check user email and password in table
             $query = DB::table('tbl_users')
                          ->select('*')
-                         ->where('email', '=', $email_address)
-                         ->where('password', '=', $password)
+                         ->where('email', 'like', '%'.$email_address.'%')
+                         ->where('password', $password)
                          ->where('role', '=', 0)
                          ->where('status', '=', 0);
             $result = $query->first();

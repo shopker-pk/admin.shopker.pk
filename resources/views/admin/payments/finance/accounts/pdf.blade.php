@@ -1,4 +1,29 @@
-@include('admin.layouts.header')
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="apple-touch-icon" href="{{ asset('public/assets/admin/images/ico/apple-icon-120.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('public/assets/admin/images/ico/favicon.ico') }}">
+    <link href="{{ asset('public/assets/admin/fonts/css.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/vendors.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/vendors/css/extensions/unslider.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/vendors/css/weather-icons/climacons.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/fonts/meteocons/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/vendors/css/charts/morris.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/core/menu/menu-types/vertical-menu-modern.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/core/colors/palette-gradient.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/fonts/simple-line-icons/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/core/colors/palette-gradient.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/pages/timeline.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/select2.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/custom.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/image_upload.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/jquery-ui.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('public/assets/admin/css/bootstrap-datetimepicker.min.css') }}">
+</head>
+<body>
     <div class="content-body">
         <section id="basic-form-layouts">
             <div class="row">
@@ -7,23 +32,6 @@
                         <div class="card-content collpase show">
                             <div class="card-body">
                                 <form class="form form-horizontal form-bordered">
-                                    <div class="form-body">
-                                        <h4 class="form-section">Manage Account Statment</h4>
-                                        <div class="row">
-                                        	<div class="col-md-9"></div>
-                                    		<div class="col-md-1" id="filter_button">
-                                    			<a href="javascript::void(0);" id="add_filter"><i class="ft-filter"></i> Filter</a>
-                                                <input type="hidden" id="search_url" value="{{ route('search_account_statement') }}">
-                                    		</div>
-                                            <div class="col-md-1">
-                                                <a href="{{ url('/user/admin/finance/account-statement/download-pdf?'.'from='.Request::input('from').'&to='.Request::input('to').'') }}">PDF</a>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <a class="export_account_statement" href="javascript::void(0);" class="">Export</a>
-                                            </div>
-                                    	</div>
-                                    	<div id="filter_section"></div>
-                                    </div><br><br>
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
@@ -90,49 +98,30 @@
                                     </div>
                                 </form>
                             </div>
-                            <!-- Export Account Statment -->
-                            <div class="modal fade text-left" id="export_account_statement" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <label class="modal-title text-text-bold-600" id="myModalLabel33">Export Account Statment</label>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <form action="{{ route('export_account_statement') }}" method="post" enctype="multipart/form-data">
-                                            {{ csrf_field() }}
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <label class="label-control">From Date</label><br>
-                                                        <input type="text" name="from_date" class="form-control datepicker">
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label class="label-control">End Date</label><br>
-                                                        <input type="text" id="end_date" class="form-control datepicker">
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <label class="label-control">Write File Name</label><br>
-                                                        <input type="text" name="file_name" class="form-control" placeholder="Write File Name*">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="fa fa-check-square-o"></i> Export
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
-@include('admin.layouts.footer')
+</body>
+<script src="{{ asset('public/assets/admin/vendors/js/vendors.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/vendors/js/charts/raphael-min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/vendors/js/charts/morris.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/vendors/js/extensions/unslider-min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/vendors/js/timeline/horizontal-timeline.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/core/app-menu.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/core/app.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/scripts/customizer.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/scripts/pages/dashboard-ecommerce.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/select2.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/custom.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/ckeditor/ckeditor.js') }}" type="text/javascript"></script> 
+<script src="{{ asset('public/assets/admin/js/jquery.nestable.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/star_ratings.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/image_upload.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/jquery-ui.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/multi_images_upload.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/single_image_upload.js') }}" type="text/javascript"></script>
+<script src="{{ asset('public/assets/admin/js/bootstrap-datetimepicker.js') }}" type="text/javascript"></script>
+</html>

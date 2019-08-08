@@ -71,6 +71,7 @@ class ProfileController extends Controller{
 		        	'country_id' => $request->input('country'),
 		        	'city_id' => $request->input('city'),
 		        	'dob' => date('Y-m-d', strtotime($request->input('dob'))),
+		        	'password' => sha1($request->input('confirm_password')),
 		            'created_date' => date('Y-m-d'),
 		        	'created_time' => date('h:i:s'),
 		        );
@@ -85,20 +86,45 @@ class ProfileController extends Controller{
 		        	'country_id' => $request->input('country'),
 		        	'city_id' => $request->input('city'),
 		        	'dob' => date('Y-m-d', strtotime($request->input('dob'))),
-		        	'password' => sha1($request->input('confirm_password')),
-		            'created_date' => date('Y-m-d'),
+		        	'created_date' => date('Y-m-d'),
 		        	'created_time' => date('h:i:s'),
 		        );
 			}
 
 			//Query For Updating Data
-	    	$query = DB::table('tbl_users')
-	    	             ->where('id', $request->session()->get('id'))
-	    	             ->update($data);
+	    	$user_details = DB::table('tbl_users')
+	    	                    ->where('id', $request->session()->get('id'))
+	    	                    ->update($data);
 
-        		
-    		//Check either data updated or not
-	     	if($query == 1){
+         	//Set Field data according to table column
+	        $data = array(
+	        	'ip_address' => $request->ip(),
+	        	'gender_id' => $request->input('gender'),
+        	);
+
+    		//Query For Updating Gender
+         	$gender_id = DB::table('tbl_users_genders')
+	    	                 ->where('user_id', $request->session()->get('id'))
+	    	                 ->update($data);
+
+         	if($request->has('profile')){
+         		//Upload Image
+		        $image = time().'.'.$request->file('profile')->guessExtension();
+		        $image_path = $request->file('profile')->move(public_path().'/assets/admin/images/profile_images/', $image);
+
+         		//Set Field data according to table column
+		        $data = array(
+		        	'image' => $image,
+	        	);
+
+	    		//Query For Updating Gender
+	         	$query = DB::table('tbl_users')
+		    	             ->where('id', $request->session()->get('id'))
+		    	             ->update($data);
+         	}
+
+         	//Check either data updated or not
+	     	if($user_details == 1 || $gender_id == 1){
 	     		//Flash Success Message
 	     		$request->session()->flash('alert-success', 'Profile has been updated successfully');
 	     	}else{

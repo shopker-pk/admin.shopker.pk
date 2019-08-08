@@ -1525,13 +1525,14 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 $data = Excel::load($request->file('products')->getRealPath());
                 $result = $data->toArray();
                 
-                if(!empty(count($result) > 0)){
+                if(count($result) > 0){
                     foreach($result as $row){
                         //Query For Getting Vendor Id
                         $query = DB::table('tbl_users')
                                      ->select('tbl_users.id as vendor_id', 'store_name')
                                      ->leftJoin('tbl_store_settings', 'tbl_store_settings.vendor_id', '=', 'tbl_users.id')
-                                     ->where(DB::raw("CONCAT(first_name, ' ', last_name)"), $row['vendor_name']);
+                                     ->where(DB::raw("CONCAT(first_name, ' ', last_name)"), $row['vendor_name'])
+                                     ->where('tbl_users.role', 2);
                         $vendor_details = $query->first();
 
                         //Query For Getting Brand Id

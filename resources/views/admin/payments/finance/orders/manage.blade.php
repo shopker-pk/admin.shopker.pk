@@ -20,7 +20,7 @@
                                                 @endif 
                                             </div>
                                             <div class="col-md-1">
-                                                <a class="export_orders" href="javascript::void(0);" class="fa fa-file-excel-o">
+                                                <a class="export_orders_overview" href="javascript::void(0);" class="fa fa-file-excel-o">
                                                     Export
                                                 </a>
                                             </div>
@@ -53,8 +53,8 @@
                                                             <td>{{ date('D-M-Y', strtotime($row->order_date)) }}</td>
                                                             <td>{{ $row->sku_code }}</td>
                                                             <td>{{ $row->product_amount }}</td>
-                                                            <td>{{ round(($row->commission_percent / 100) * $row->product_amount) }}</td>
-                                                            <td>{{ round(($row->product_amount) - ($row->commission_percent / 100) * $row->product_amount) }}</td>
+                                                            <td>{{ floor(($row->commission_percent / 100) * $row->product_amount) }}</td>
+                                                            <td>{{ floor(($row->product_amount) - ($row->commission_percent / 100) * $row->product_amount) }}</td>
                                                             <td>
                                                                 @if($row->operational_status == 0)
                                                                     <span class="badge badge-warning">Pending</span>
@@ -91,6 +91,49 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                            <!-- Export Orders Overview -->
+                            <div class="modal fade text-left" id="export_orders_overview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <label class="modal-title text-text-bold-600" id="myModalLabel33">Export Orders Overview</label>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">×</span>
+                                            </button>
+                                        </div>
+                                        <form action="{{ route('export_orders_overview') }}" method="post" enctype="multipart/form-data">
+                                            {{ csrf_field() }}
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="label-control">Order From Date</label><br>
+                                                        <input type="text" name="from_date" class="form-control datepicker">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="label-control">Order End Date</label><br>
+                                                        <input type="text" id="end_date" class="form-control datepicker">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="label-control">Order No#</label><br>
+                                                        <input type="text" name="order_no" class="form-control">
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="label-control">Write File Name</label><br>
+                                                        <input type="text" name="file_name" class="form-control" placeholder="Write File Name*">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="fa fa-check-square-o"></i> Export
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
