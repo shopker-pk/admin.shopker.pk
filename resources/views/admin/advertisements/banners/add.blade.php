@@ -45,8 +45,8 @@
                                                     <select id="type" name="type" class="form-control select_2" style="width: 100%">
                                                         <option>No Type Selected</option>
                                                         <option value="0" @if(old('type') == 0) selected @endif>Header</option>
-                                                        <option value="1" @if(old('type') == 1) selected @endif>Bottom Top</option>
-                                                        <option value="2" @if(old('type') == 2) selected @endif>Bottom Center</option>
+                                                        <option value="1" @if(old('type') == 1) selected @endif>Middle Banner 1</option>
+                                                        <option value="2" @if(old('type') == 2) selected @endif>Middle Banner 2</option>
                                                     </select>
                                                 </div>
                                             </div>

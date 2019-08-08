@@ -341,7 +341,7 @@ class CategoriesController extends Controller{
 
 	    	//Query for Getting Data
 	    	$query = DB::table('tbl_child_categories')
-	    	             ->select('tbl_child_categories.id', 'tbl_child_categories.name as child_name', 'tbl_child_categories.status', 'tbl_parent_categories.name as parent_name')
+	    	             ->select('tbl_child_categories.id', 'tbl_child_categories.name as child_name', 'tbl_child_categories.status', 'tbl_child_categories.sorting_order', 'tbl_parent_categories.name as parent_name')
 	    	             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_child_categories.parent_id')
 	    	             ->orderBy('tbl_child_categories.id', 'DESC');
 	 		$result['query'] = $query->paginate(10);
@@ -650,7 +650,7 @@ class CategoriesController extends Controller{
 
 			//Query For Getting Search Data
 			$query = DB::table('tbl_child_categories')
-	                     ->select('tbl_child_categories.id', 'tbl_child_categories.name as child_name', 'tbl_child_categories.status', 'tbl_parent_categories.name as parent_name')
+	                     ->select('tbl_child_categories.id', 'tbl_child_categories.name as child_name', 'tbl_child_categories.status', 'tbl_child_categories.sorting_order', 'tbl_parent_categories.name as parent_name')
 	    	             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_child_categories.parent_id');
 	                     if(!empty($request->input('name'))){
                    $query->where('tbl_child_categories.name', 'Like', '%'.$request->input('name').'%');

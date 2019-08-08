@@ -46,8 +46,8 @@
                                                     <label class="label-control">Type</label><label class="label-control" style="color:red">*</label>
                                                     <select id="type" name="type" class="form-control select_2" style="width: 100%">
                                                         <option value="0" @if(old('type', $query->type) == 0) selected @endif>Header</option>
-                                                        <option value="1" @if(old('type', $query->type) == 1) selected @endif>Bottom Top</option>
-                                                        <option value="2" @if(old('type', $query->type) == 2) selected @endif>Bottom Center</option>
+                                                        <option value="1" @if(old('type', $query->type) == 1) selected @endif>Middle Banner 1</option>
+                                                        <option value="2" @if(old('type', $query->type) == 2) selected @endif>Middle Banner 2</option>
                                                     </select>
                                                 </div>
                                             </div>

@@ -26,15 +26,24 @@ class VendorsController extends Controller{
 		 	$result['query'] = $query->paginate(10);
      		$result['total_records'] = $result['query']->count();
 
-     		//Query For Getting Vendors Commission Details if exist
-     		$query = DB::table('tbl_vendors_commission')
-     		             ->select('vendor_id', 'type', 'total_percent', 'name')
-     		             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_vendors_commission.category_id')
-     		             ->where('status', 0)
-     		             ->orderBy('tbl_vendors_commission.id', 'DESC');
-         	$result['commission'] = $query->get();
+     		foreach($result['query'] as $row){
+     			//Query For Getting Vendors Commission Details if exist
+	     		$query = DB::table('tbl_vendors_commission')
+	     		             ->select('tbl_vendors_commission.id', 'vendor_id', 'type', 'total_percent', 'category_id')
+	     		             ->leftJoin('tbl_parent_categories', 'tbl_parent_categories.id', '=', 'tbl_vendors_commission.category_id')
+	     		             ->where('vendor_id', $row->id)
+	     		             ->orderBy('tbl_vendors_commission.id', 'DESC');
+	         	$result['commission'][$row->id] = $query->get();
+     		}
 
-         	//call page
+     		//Query For Getting Parent Categories
+     		$query = DB::table('tbl_parent_categories')
+     		             ->select('id', 'name')
+     		             ->where('status', 0)
+     		             ->orderBy('sorting_order', 'ASC');
+         	$result['categories'] = $query->get();
+     		//dd($result['commission']);
+     		//call page
 	        return view('admin.crm.vendors.manage', $result); 
         }else{
         	print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
@@ -105,6 +114,11 @@ class VendorsController extends Controller{
 	            'total_commission' => 'nullable',
 	        ]);
 
+	        //Query For Deleting All Previous Commisions
+	        $query = DB::table('tbl_vendors_commission')
+	                     ->where('vendor_id', $id)
+	                     ->delete();
+
 	        if(!empty($request->input('commision_type') == 1)){
 	        	$count = 0;
 	     		foreach($request->input('category') as $row){
@@ -118,13 +132,14 @@ class VendorsController extends Controller{
 			            'total_percent' => $request->input('total')[$count],
 			            'created_date' => date('Y-m-d'),
 			        	'created_time' => date('H:i:s'),
-			        );
-					$count++;
+			        );	
 
-					//Query For Inserting Data
+			        $count++;
+
+			        //Query For Inserting Data
 			    	$query = DB::table('tbl_vendors_commission')
 			    	             ->insertGetId($data);
-	     		}
+				}
 	        }else{
 	        	//Set Field data according to table column
 		        $data = array(
@@ -137,13 +152,13 @@ class VendorsController extends Controller{
 		            'created_date' => date('Y-m-d'),
 		        	'created_time' => date('H:i:s'),
 		        );
-
-		        //Query For Inserting Data
+				
+				//Query For Inserting Data
 		    	$query = DB::table('tbl_vendors_commission')
 		    	             ->insertGetId($data);
-	        }
+			}
 
-	        //Check either data inserted or not
+			//Check either data inserted or not
 	     	if(!empty($query)){
 	     		//Flash Success Message
 	     		$request->session()->flash('alert-success', 'Commission has been updated successfully');

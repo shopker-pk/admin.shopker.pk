@@ -10,44 +10,44 @@
                                     <div class="form-body">
                                         <h4 class="form-section">Manage Vendors</h4>
                                         <div class="row">
-                                        	<div class="col-md-10">
-                                        		@if($total_records > 1)
+                                            <div class="col-md-10">
+                                                @if($total_records > 1)
                                                     Total {{ $total_records }} Record Found
                                                 @elseif($total_records == 1)
                                                     Total {{ $total_records }} Record Found
                                                 @else
                                                     No records found
                                                 @endif 
-                                        	</div>
-                                    		<div class="col-md-1" id="filter_button">
-                                    			<a href="javascript::void(0);" id="add_filter"><i class="ft-filter"></i> Filter</a>
+                                            </div>
+                                            <div class="col-md-1" id="filter_button">
+                                                <a href="javascript::void(0);" id="add_filter"><i class="ft-filter"></i> Filter</a>
                                                 <input type="hidden" id="search_url" value="{{ route('search_vendors') }}">
-                                    		</div>
+                                            </div>
                                             <div class="col-md-1" id="filter_button">
                                                 <a href="javascript::void(0);" class="export_vendors">Export</a>
                                             </div>
-                                    	</div>
-                                    	<div id="filter_section"></div>
+                                        </div>
+                                        <div id="filter_section"></div>
                                     </div><br><br>
                                     <div class="table-responsive">          
-  										<table class="table">
-											<thead>
-			                                    <tr>
-			                                        <th>Image</th>
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
                                                     <th>Name</th>
                                                     <th>Email</th>
-			                                        <th>Status</th>
-			                                        <th>Action</th>
-			                                    </tr>
-			                                </thead>
-			                                <tbody>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
                                                 @if(!empty($query))
                                                     @foreach($query as $row)
-        			                                    <tr>
-        				                                    <td><img src="{{ asset('public/assets/admin/images/profile_images/'.$row->image) }}" class="m_image" alt="User Profile Image"></td>
+                                                        <tr>
+                                                            <td><img src="{{ asset('public/assets/admin/images/profile_images/'.$row->image) }}" class="m_image" alt="User Profile Image"></td>
                                                             <td>{{ $row->first_name }} {{ $row->last_name }}</td>
-        				                                    <td>{{ $row->email }}</td>
-        				                                    <td>
+                                                            <td>{{ $row->email }}</td>
+                                                            <td>
                                                                 <label class="switch">
                                                                     <a href="{{ url('/user/admin/crm/vendors/update-status/'.$row->id.'/'.$row->status) }}">
                                                                         <input type="checkbox" id="status" class="form-control" @if($row->status == 0) checked @endif>
@@ -55,22 +55,22 @@
                                                                     </a>
                                                                 </label>                  
                                                             </td>
-        				                                    <td>
-        				                                    	<div role="group" class="btn-group">
-        														    <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-menu-right"><i class="ft-edit icon-left"></i> Action</button>
-        														    <div aria-labelledby="btnGroupDrop1" class="dropdown-menu">
+                                                            <td>
+                                                                <div role="group" class="btn-group">
+                                                                    <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-menu-right"><i class="ft-edit icon-left"></i> Action</button>
+                                                                    <div aria-labelledby="btnGroupDrop1" class="dropdown-menu">
                                                                         <a href="javascript::void(0);" class="dropdown-item" data-toggle="modal" data-target="#vendor_status_{{ $row->id }}">Edit Status</a>
-        														    	<a href="javascript::void(0);" class="dropdown-item" data-toggle="modal" data-target="#vendor_details_{{ $row->id }}">View Details</a>
+                                                                        <a href="javascript::void(0);" class="dropdown-item" data-toggle="modal" data-target="#vendor_details_{{ $row->id }}">View Details</a>
                                                                         <a href="javascript::void(0);" class="dropdown-item" data-toggle="modal" data-target="#assign_commission_{{ $row->id }}">Edit Commision</a>
-        														    </div>
-        														</div>
-        													</td>
-        				                               	</tr>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     @endforeach
                                                 @endif
-			                               	</tbody>
-										</table>
-									</div>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                     {{ $query->links() }}
                                 </form>
                                 @if(!empty($query))
@@ -197,13 +197,57 @@
                                                                 <label class="label-control" style="color:red">*</label>
                                                                 <select id="commision_type" name="commision_type" class="form-control select_2" style="width:100%" data-id="{{ $row->id }}">
                                                                     <option>Select Commission Type</option>
-                                                                    <option value="0">Total Commission</option>
-                                                                    <option value="1">Category Wise Commission</option>
+                                                                    <option value="0" @if(!empty($commission[$row->id][0]) && $commission[$row->id][0]->type == 0) selected @endif>Total Commission</option>
+                                                                    <option value="1" @if(!empty($commission[$row->id][0]) && $commission[$row->id][0]->type == 1) selected @endif>Category Wise Commission</option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div id="additional_divs_{{ $row->id }}"></div>
+                                                    <div id="additional_divs_{{ $row->id }}" class="additional_divs">
+                                                        @if(!empty($commission[$row->id][0]))
+                                                            @if($commission[$row->id][0]->type == 0)
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label class="label-control">Total Commission</label>
+                                                                        <label class="label-control" style="color:red">*</label>
+                                                                        <input type="text" id="total_commission" name="total_commission" class="form-control" placeholder="Total Commission*" value="{{ $commission[$row->id][0]->total_percent }}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            @elseif($commission[$row->id][0]->type == 1)
+                                                                @foreach($commission[$row->id] as $row)
+                                                            <div id="{{ $row->id }}">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group">
+                                                                            <label class="label-control">Category</label>
+                                                                            <label class="label-control" style="color:red">*</label>
+                                                                            <select id="category" name="category[]" class="form-control select_2" style="width:100%">
+                                                                                @foreach($categories as $category)
+                                                                                <option value="{{ $category->id }}" @if($row->category_id == $category->id) selected selected @endif>{{ $category->name }}</option>
+                                                                                @endforeach
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-5">
+                                                                        <div class="form-group">
+                                                                            <label class="label-control">Total Commission%</label>
+                                                                            <label class="label-control" style="color:red">*</label>
+                                                                            <input type="text" id="total" name="total[]" class="form-control" placeholder="Total Commission% *" value="{{ $row->total_percent }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-1">
+                                                                        <div class="form-group">
+                                                                            <a href="javascript::void(0);" id="remove_commission_category" data-id="{{ $row->id }}" style="color: red"><i class="ft-minus"></i></a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                                @endforeach
+                                                            @endif
+                                                        @endif
+                                                    </div>
                                                     <div id="add_btn_{{ $row->id }}"></div>
                                                 </div>
                                                 <div class="modal-footer">

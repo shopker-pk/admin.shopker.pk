@@ -35,6 +35,7 @@
 			                                    <tr>
 			                                        <th>Parent Name</th>
                                                     <th>Child Name</th>
+                                                    <th>Sorting Order</th>
 			                                        <th>Status</th>
 			                                        <th>Action</th>
 			                                    </tr>
@@ -45,6 +46,7 @@
                                                         <tr>
         				                                    <td>{{ $row->parent_name }}</td>
                                                             <td>{{ $row->child_name }}</td>
+                                                            <td>{{ $row->sorting_order }}</td>
         				                                    <td>
                                                                 <label class="switch">
                                                                     <a href="{{ url('/user/admin/ecommerce/categories/child/ajax/update-status/'. $row->id.'/'. $row->status) }}">

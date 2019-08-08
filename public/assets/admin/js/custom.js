@@ -953,7 +953,7 @@ $(document).ready(function(){
 	    					+'</div>'
 	    					+'<div class="col-md-1">'
         					+'<div class="form-group">'
-        					+'<a href="javascript::void(0);" id="remove_commission_category" data-id="'+id+'" style="color: red"><i class="ft-minus"></i></a>'
+        					+'<a href="javascript:void(0);" id="remove_commission_category" data-id="'+id+'" style="color: red"><i class="ft-minus"></i></a>'
         					+'</div>'
     					+'</div>'
 						+'</div>'
@@ -990,7 +990,7 @@ $(document).ready(function(){
 				}
 			});
 
-			$('#additional_divs').append(''
+			$('.additional_divs').append(''
 				+'<div id="row_'+id+'">'
 					+'<div class="row">'
     					+'<div class="col-md-6">'
