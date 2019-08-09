@@ -354,7 +354,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'url.*' => 'required',
             ]);
             
-            if(!empty($request->input('status') && $request->input('variation') && $request->input('product_images') && $request->input('sku') && $request->input('quantity') && $request->input('price'))){
+            if(!empty($request->input('status') && $request->input('variation') && $request->input('url') && $request->input('sku') && $request->input('quantity') && $request->input('price'))){
                 $count = 0;
                 foreach($variation as $row){
                     if($request->input('sale_price')[$count] >= $request->input('price')[$count]){
@@ -825,7 +825,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'url.*' => 'required',
             ]);
             
-            if(!empty($request->input('status') && $request->input('variation') && $request->input('product_images') && $request->input('sku') && $request->input('quantity') && $request->input('price'))){
+            if(!empty($request->input('status') && $request->input('variation') && $request->input('url') && $request->input('sku') && $request->input('quantity') && $request->input('price'))){
                 if(!empty($request->input('variation_id'))){
                     if($request->input('sale_price') >= $request->input('price')){
                         //Flash Error Msg
@@ -1153,7 +1153,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
                 'url.*' => 'required',
             ]);
 
-            if(!empty($request->input('status') && $request->input('variation') && $request->input('product_images') && $request->input('sku') && $request->input('quantity') && $request->input('price'))){
+            if(!empty($request->input('status') && $request->input('variation') && $request->input('url') && $request->input('sku') && $request->input('quantity') && $request->input('price'))){
                 if(!empty($request->input('variation_id'))){
                     if($request->input('sale_price') >= $request->input('price')){
                         //Flash Error Msg
