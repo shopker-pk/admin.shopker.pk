@@ -49,7 +49,7 @@ class AuthController extends Controller{
                          ->select('*')
                          ->where('email', 'like', '%'.$email_address.'%')
                          ->where('password', $password)
-                         ->where('role', '=', 0)
+                         ->where('role', '<=', 1)
                          ->where('status', '=', 0);
             $result = $query->first();
 
