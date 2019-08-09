@@ -156,9 +156,9 @@ class AuthController extends Controller{
                          ->select('id', 'first_name', 'last_name')   
                          ->where('email', 'like', '%'.$request->input('email').'%')
                          ->where('role', '<=', 1);
-            $result = $query->first();
+            $user_details = $query->first();
 
-            if(!empty($result->id)){
+            if(!empty($user_details->id)){
                 $new_password =  'S'.rand(111111, 999999).'r';
 
                 //Set data accordings to table columns
@@ -183,7 +183,7 @@ class AuthController extends Controller{
                         'content' => 'Your new password is '.$new_password.' Dear',
                         'website_url' => env('FRONTEND_URL'),
                         'logo' => env('ADMIN_URL').'images/settings/logo/'.$result->header_image,
-                        'name' => $result->first_name.' '.$result->last_name,
+                        'name' => $user_details->first_name.' '.$user_details->last_name,
                         'email' => $request->input('email'),
                         'type' => 'forget_password',
                     );
