@@ -153,7 +153,7 @@ class AuthController extends Controller{
 
             //Query For Checking if email is exist or not
             $query = DB::table('tbl_users')
-                         ->select('id')   
+                         ->select('id', 'first_name', 'last_name')   
                          ->where('email', 'like', '%'.$request->input('email').'%')
                          ->where('role', '<=', 1);
             $result = $query->first();
@@ -174,8 +174,28 @@ class AuthController extends Controller{
                              ->update($data);
 
                 if($query == 1){
+                    //Query For Getting Logo
+                    $query = DB::table('tbl_site_images')
+                                 ->select('header_image');
+                    $result = $query->first();
+
+                    $data = array(
+                        'content' => 'Your new password is '.$new_password.' Dear',
+                        'website_url' => route('home'),
+                        'logo' => env('ADMIN_URL').'images/settings/logo/'.$result->header_image,
+                        'name' => $result->first_name.' '.$result->last_name,
+                        'email' => $request->input('email'),
+                        'type' => 'forget_password',
+                    );
+
+                    \Mail::send(['html' => 'admin.email_templates.template'], $data, function($message) use ($data){
+                        $message->to($data['email'], $data['name'])
+                                ->subject('Forget Password.')
+                                ->from('admin@shopker.pk', 'Shopker');
+                    });
+
                     //Flash Erro Msg
-                    $request->session()->flash('alert-success', 'We have sent you a new password at your given email.'.' Use this new password for login till email will activate on system :'.$new_password);
+                    $request->session()->flash('alert-success', 'We have sent you a new password at your given email.');
                 }else{
                     //Flash Erro Msg
                     $request->session()->flash('alert-danger', "Something went wrong !!");
