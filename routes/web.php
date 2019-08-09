@@ -3,6 +3,8 @@
 	//Admin Panel Routes Start
 		//Admin Auth Routes Start
 			Route::get('/', 'Admin\Auth\AuthController@index')->name('admin_sign_in');
+			Route::get('/forget-password', 'Admin\Auth\AuthController@forget_password')->name('forget_password');
+			Route::post('/sent-password', 'Admin\Auth\AuthController@sent_password')->name('sent_password');
 			Route::get('/user/sign-out', 'Admin\Auth\AuthController@sign_out')->name('sign_out');
 			Route::post('/user/admin/validating-credentials', 'Admin\Auth\AuthController@validating_admin_credentials')->name('admin_credentials_validation');
 		//Admin Auth Routes End

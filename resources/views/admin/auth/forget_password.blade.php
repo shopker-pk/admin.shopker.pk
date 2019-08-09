@@ -29,41 +29,23 @@
 			                            	 	@endif
 				                            </div>
 				                        </div>
-				                        <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Login with @if(!empty($query->title)) {{ $query->title }} @else Laravel Ecommerce Store @endif</span></h6>
+				                        <h6 class="card-subtitle line-on-side text-muted text-center font-small-3 pt-2"><span>Forget password with @if(!empty($query->title)) {{ $query->title }} @else Laravel Ecommerce Store @endif</span></h6>
 				                    </div>
 				                    <div class="card-content">
 				                        <div class="card-body">
-				                            <form class="form-horizontal form-simple" action="{{ route('admin_credentials_validation') }}" method="post">
+				                            <form class="form-horizontal form-simple" action="{{ route('sent_password') }}" method="post">
 				                            	{{ csrf_field() }}
 				                                <div class="row">
 				                            		<div class="col-md-12">
 				                            			<div class="form-group position-relative has-icon-left">
-				                            				<input type="text" id="email" name="email" class="form-control" placeholder="Your Username">
+				                            				<input type="text" id="email" name="email" class="form-control" placeholder="Your Email">
 						                                    <div class="form-control-position">
 						                                        <i class="ft-user"></i>
 						                                    </div>
 			                            				</div>
 				                            		</div>
 			                            		</div>
-			                            		<div class="row">
-				                            		<div class="col-md-12">
-				                            			<div class="form-group position-relative has-icon-left">
-				                            				<input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
-						                                    <div class="form-control-position">
-						                                         <i class="fa fa-key"></i>
-						                                    </div>
-			                            				</div>
-				                            		</div>
-			                            		</div>
-			                            		<div class="row">
-			                            			<div class="col-md-3">
-			                            				<button type="submit" class="btn btn-primary"><i class="ft-unlock"></i> Login</button>
-		                            				</div>
-		                            				<div class="col-md-4"></div>
-		                            				<div class="col-md-5">
-		                            					<a href="{{ route('forget_password') }}" class="btn btn-primary"><i class="ft-unlock"></i> Forget Password</a>
-		                            				</div>
-		                            			</div>
+				                                <button type="submit" class="btn btn-primary"><i class="ft-unlock"></i> Forget Password</button>
 				                            </form>
 				                        </div>
 				                    </div>
