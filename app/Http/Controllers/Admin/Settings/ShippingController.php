@@ -7,7 +7,7 @@ use DB;
 
 class ShippingController extends Controller{
     function index(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Shipping Areas',
@@ -33,7 +33,7 @@ class ShippingController extends Controller{
     }
 
     function add(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Add Shipping Areas',
@@ -55,7 +55,7 @@ class ShippingController extends Controller{
     }
 
     function insert(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Get All Inputs
         	$user_id = $request->session()->get('id');
         	$ip_address = $request->ip();
@@ -141,7 +141,7 @@ class ShippingController extends Controller{
     }
 
     function edit(Request $request, $id){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Edit Shipping Areas',
@@ -189,7 +189,7 @@ class ShippingController extends Controller{
     }
 
     function update(Request $request, $id){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Get All Inputs
         	$user_id = $request->session()->get('id');
         	$ip_address = $request->ip();
@@ -307,7 +307,7 @@ class ShippingController extends Controller{
     }
 
     function search(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',

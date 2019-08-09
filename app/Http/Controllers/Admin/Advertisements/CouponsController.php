@@ -7,7 +7,7 @@ use DB;
 
 class CouponsController extends Controller{
 	function index(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Coupons',
@@ -37,7 +37,7 @@ class CouponsController extends Controller{
 	}
 
 	function add(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Add Coupon',
@@ -53,7 +53,7 @@ class CouponsController extends Controller{
 	}
 
 	function insert(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Inputs Validation
 	        $input_validations = $request->validate([
 	            'code' => 'required',
@@ -434,7 +434,7 @@ class CouponsController extends Controller{
 	}
 
 	function search(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Search Records',

@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class VariationsController extends Controller{
 	function index(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Manage Variations',
@@ -32,7 +32,7 @@ class VariationsController extends Controller{
     }
 
     function add(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Add Variations',
@@ -244,7 +244,7 @@ class VariationsController extends Controller{
     }
 
     function import(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
     		//Inputs Validation
 	        $input_validations = $request->validate([
 	            'file' => 'required|mimes:csv,xls,xlsx',
@@ -293,7 +293,7 @@ class VariationsController extends Controller{
     }
 
     function export(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
     		$query = DB::table('tbl_variations_for_products')
 			             ->select('label', 'value')
 			             ->where('label', $request->input('label'));
@@ -333,7 +333,7 @@ class VariationsController extends Controller{
 	}
 
     function search(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',

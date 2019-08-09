@@ -7,7 +7,7 @@ use DB;
 
 class AdminsController extends Controller{
 	function index(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Admins',
@@ -33,7 +33,7 @@ class AdminsController extends Controller{
 	}
 
     function add(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Add Admin',
@@ -55,7 +55,7 @@ class AdminsController extends Controller{
     }
 
     function insert(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Inputs Validation
 	        $input_validations = $request->validate([
 	            'first_name' => 'required',
@@ -156,7 +156,7 @@ class AdminsController extends Controller{
 	}
 
     function edit(Request $request, $id){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Edit Admin',
@@ -313,7 +313,7 @@ class AdminsController extends Controller{
     }
 
     function search(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){ 
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){ 
     		//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',

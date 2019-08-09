@@ -51,7 +51,7 @@
                                                         <tr>
                                                             <td><a href="{{ route('manage_admin_invoices_details', $row->order_no) }}" target="_blank">Invoice</a></td>
                                                             <td><a href="{{ route('order_details_seller', $row->order_no) }}" target="_blank">{{ $row->order_no }}</a></td>
-                                                            @if(!empty(Session::get('role') == 0))
+                                                            @if(!empty(session::get('role') <= 1))
                                                                 <td>{{ $row->first_name }} {{ $row->last_name }}</td>
                                                             @endif
                                                             <td>
@@ -90,7 +90,7 @@
                                                                 <div role="group" class="btn-group">
                                                                     <button id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-outline-primary dropdown-toggle dropdown-menu-right"><i class="ft-edit icon-left"></i> Action</button>
                                                                     <div aria-labelledby="btnGroupDrop1" class="dropdown-menu">
-                                                                        @if(!empty(Session::get('role') == 0))
+                                                                        @if(!empty(session::get('role') <= 1))
                                                                             <a href="javascript::void(0);" class="dropdown-item" data-toggle="modal" data-target="#order_{{ $row->order_no }}">Change Order Status</a>
                                                                             <a href="javascript::void(0);" class="dropdown-item" data-toggle="modal" data-target="#payment_{{ $row->order_no }}">Change Payment Status</a>
                                                                             <a href="{{ route('order_details_seller', $row->order_no) }}" class="dropdown-item">View Order Details</a>

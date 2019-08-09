@@ -46,7 +46,7 @@
                         <span class="user-name">{{ $result->first_name }} {{ $result->last_name }}</span>
                      </a>
                      <div class="dropdown-menu dropdown-menu-right">
-                        @if(session::get('role') == 0)
+                        @if(session::get('role') <= 1)
                            <a href="{{ route('admin_profile_settings') }}" class="dropdown-item"><i class="ft-user"></i> Edit Profile</a>
                            <div class="dropdown-divider"></div>
                            <a href="{{ route('sign_out') }}" class="dropdown-item"><i class="ft-power"></i> Logout</a>

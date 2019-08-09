@@ -7,7 +7,7 @@ use DB;
 
 class AuthController extends Controller{
     function index(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Redirect to dashboard
             return redirect()->back();
         }else{
@@ -122,7 +122,7 @@ class AuthController extends Controller{
     }
 
     function forget_password(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Redirect to dashboard
             return redirect()->back();
         }else{
@@ -145,7 +145,7 @@ class AuthController extends Controller{
     }
 
     function sent_password(Request $request){
-        if(empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Inputs Validation
             $input_validations = $request->validate([
                 'email' => 'required|email',

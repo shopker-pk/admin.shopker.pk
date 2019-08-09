@@ -9,7 +9,7 @@ use PDF;
 
 class AccountsController extends Controller{
 	function manage(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Necessary Page Data For header Page
             $result = array(
                 'page_title' => 'Manage Account Statement',
@@ -60,7 +60,7 @@ class AccountsController extends Controller{
 	}
 
     function search(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Necessary Page Data For header Page
             $result = array(
                 'page_title' => 'Search Result',
@@ -124,7 +124,7 @@ class AccountsController extends Controller{
 	}
 
     function export(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Inputs Validation
             $input_validations = $request->validate([
                 'file_name' => 'required',
@@ -203,7 +203,7 @@ class AccountsController extends Controller{
     }
 
     function pdf(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Query For Getting Orders Overview Data
             $query = DB::table('tbl_orders')
                          ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')

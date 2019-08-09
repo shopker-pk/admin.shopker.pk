@@ -45,7 +45,7 @@ class CommonController extends Controller{
 	}
 
 	function get_parent_categories(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Query For Getting Cities
 	 		$query = DB::table('tbl_parent_categories')
 	    	             ->select('*')
@@ -77,7 +77,7 @@ class CommonController extends Controller{
 	}
 
 	function get_products(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Query For Getting Products
 	    	$query = DB::table('tbl_products')
 	    	             ->select('id', 'name')

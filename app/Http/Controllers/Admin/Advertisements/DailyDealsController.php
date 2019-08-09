@@ -7,7 +7,7 @@ use DB;
 
 class DailyDealsController extends Controller{
 	function index(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Header Data
             $result = array(
                 'page_title' => 'Manage Daily Deals',
@@ -82,7 +82,7 @@ class DailyDealsController extends Controller{
     }
 
     function search(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Header Data
             $result = array(
                 'page_title' => 'Search Records',

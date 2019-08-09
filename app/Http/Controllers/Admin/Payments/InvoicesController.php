@@ -8,7 +8,7 @@ use PDF;
 
 class InvoicesController extends Controller{
     function index(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Header Data
             $result = array(
                 'page_title' => 'Manage Invoices',
@@ -34,7 +34,7 @@ class InvoicesController extends Controller{
     }
 
     function details(Request $request, $order_no){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Header Data
             $result = array(
                 'page_title' => 'Invoice Details',
@@ -83,7 +83,7 @@ class InvoicesController extends Controller{
     }
 
     function print_details(Request $request, $order_no){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Header Data
             $result = array(
                 'page_title' => 'Invoice Details',
@@ -132,7 +132,7 @@ class InvoicesController extends Controller{
     }
 
     function download_pdf(Request $request, $order_no){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             set_time_limit(0);
 
             //Query For Getting Data
@@ -186,7 +186,7 @@ class InvoicesController extends Controller{
     }
 
     function search(Request $request){
-        if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+        if(!empty($request->session()->has('id')) && $request->session()->get('role') <= 1){
             //Necessary Page Data For header Page
             $result = array(
                 'page_title' => 'Search Result',

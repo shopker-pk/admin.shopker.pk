@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class CustomersController extends Controller{
 	function index(Request $request){
-		if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+		if(!empty($request->session()->has('id')) && $request->session()->get('role') <= 1){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Customers',
@@ -89,7 +89,7 @@ class CustomersController extends Controller{
     }
 
     function search(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',
@@ -124,7 +124,7 @@ class CustomersController extends Controller{
     }
 
     function export(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Query For Getting Product
             $query = DB::table('tbl_users')
                      ->select('first_name', 'last_name', 'address', 'phone_no', 'email', 'image', 'status', 'created_date', 'created_time', 'country_name', 'name as city_name')

@@ -7,7 +7,7 @@ use DB;
 
 class DashboardController extends Controller{
 	function index(Request $request){
-    	if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+    	if(!empty($request->session()->has('id')) && $request->session()->get('role') <= 1){
             //Necessary Page Data For header Page
             $result = array(
                 'page_title' => 'Admin Dashboard',
@@ -55,7 +55,7 @@ class DashboardController extends Controller{
     }
 
     function monthly_sales(Request $request){
-        if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+        if(!empty($request->session()->has('id')) && $request->session()->get('role') <= 1){
             //initializing Generate data variables
             $ajax_response_data = array(
                 'ERROR' => 'FALSE',

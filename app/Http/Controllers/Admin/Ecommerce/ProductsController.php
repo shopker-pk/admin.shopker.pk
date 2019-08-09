@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ProductsController extends Controller{
     function index(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Header Data
             $result = array(
                 'page_title' => 'Manage Products',
@@ -42,7 +42,7 @@ class ProductsController extends Controller{
     }
 
     function add(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Header Data
             $result = array(
                 'page_title' => 'Add Products',
@@ -79,7 +79,7 @@ class ProductsController extends Controller{
     }
 
     function variation_labels(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //initializing Generate data variables
             $ajax_response_data = array(
                 'ERROR' => 'FALSE',
@@ -232,7 +232,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
     }
 
     function get_child_categories(Request $request, $id){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             $ajax_response_data = array(
                 'ERROR' => 'FALSE',
                 'DATA' => '',
@@ -271,7 +271,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
     }
 
     function get_sub_child_categories(Request $request, $id){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             $ajax_response_data = array(
                 'ERROR' => 'FALSE',
                 'DATA' => '',
@@ -310,7 +310,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
     }
 
     function insert(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Get All Inputs
             $images = $request->input('images');
             $images_url = $request->input('url');
@@ -1117,7 +1117,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
     }
 
     function insert_copy_product(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Get All Inputs
             $images = $request->input('images');
             $images_url = $request->input('url');
@@ -1323,7 +1323,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
     }
 
     function search(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Header Data
             $result = array(
                 'page_title' => 'Search Records',
@@ -1353,7 +1353,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
     }
 
     function export(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             if(!empty($request->input('name'))){
                 //Query For Getting Product
                 $query = DB::table('tbl_products')
@@ -1534,7 +1534,7 @@ $html .=    '<div class="row main" data-id="'.$id.'">
     }
 
     function import(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             if(!empty($request->file('products'))){
                 //Getting Import File Content
                 $data = Excel::load($request->file('products')->getRealPath());

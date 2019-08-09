@@ -7,7 +7,7 @@ use DB;
 
 class ProfileController extends Controller{
 	function edit(Request $request){
-    	if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+    	if(!empty($request->session()->has('id')) && $request->session()->get('role') <= 1){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Profile Settings',
@@ -43,7 +43,7 @@ class ProfileController extends Controller{
     }
 
     function update(Request $request){
-    	if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+    	if(!empty($request->session()->has('id')) && $request->session()->get('role') <= 1){
     		//Inputs Validation
 	        $input_validations = $request->validate([
 	            'first_name' => 'required',

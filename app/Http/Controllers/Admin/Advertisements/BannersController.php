@@ -8,7 +8,7 @@ use File;
 
 class BannersController extends Controller{
 	function index(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Banner Advertisements',
@@ -32,7 +32,7 @@ class BannersController extends Controller{
 	}
 
 	function add(Request $request){
-	    if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+	    if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Add Banners',
@@ -48,7 +48,7 @@ class BannersController extends Controller{
 	}
 
 	function insert(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	        //Inputs Validation
 	        $input_validations = $request->validate([
 	            'banner_url.*' => 'nullable',
@@ -105,7 +105,7 @@ class BannersController extends Controller{
 	}
 
 	function edit(Request $request, $id){
-	    if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+	    if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Edit Banner',
@@ -231,7 +231,7 @@ class BannersController extends Controller{
     }
 
     function search(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){ 
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){ 
     		//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',

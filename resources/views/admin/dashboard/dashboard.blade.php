@@ -1,6 +1,6 @@
 @include('admin.layouts.header')
 <div class="content-body">
-    @if(!empty(session::get('role') == 0))
+    @if(!empty(session::get('role') <= 1))
         <!-- First Colunm Start -->
         <div class="row">
             <a href="{{ route('manage_products') }}">

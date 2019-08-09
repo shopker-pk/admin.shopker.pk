@@ -7,7 +7,7 @@ use DB;
 
 class StoreController extends Controller{
 	function countries_list(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Query For Getting Countries
 	 		$query = DB::table('tbl_countries')
 	    	             ->select('*');
@@ -42,7 +42,7 @@ class StoreController extends Controller{
 	}
 
     function edit(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Store Settings',
@@ -83,7 +83,7 @@ class StoreController extends Controller{
     }
 
     function update(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
     		//Inputs Validation
 	        $input_validations = $request->validate([
 	            'title' => 'required',

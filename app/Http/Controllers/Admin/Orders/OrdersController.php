@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class OrdersController extends Controller{
 	function view_orders(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             //Necessary Page Data For header Page
             $result = array(
                 'page_title' => 'Manage Orders',
@@ -140,7 +140,7 @@ class OrdersController extends Controller{
 	}
 
     function export(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             $query = DB::table('tbl_orders')
                          ->select('tbl_orders.order_no', 'tbl_orders.quantity', 'tbl_orders.product_amount', 'tbl_orders.type', 'tbl_orders.payment_method', 'tbl_orders.status', 'tbl_orders.order_date', 'tbl_orders.order_time', 'tbl_users.first_name', 'tbl_users.last_name', 'tbl_users.phone_no', 'tbl_users.email', 'tbl_users.address', 'tbl_products.name', 'tbl_products.regural_price', 'tbl_orders.product_amount', 'tbl_products.sku_code')
                          ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.buyer_id')
@@ -209,7 +209,7 @@ class OrdersController extends Controller{
     }
 
 	function search(Request $request){
-		if(!empty($request->session()->has('id')) && $request->session()->get('role') == 0){
+		if(!empty($request->session()->has('id')) && $request->session()->get('role') <= 1){
             //Necessary Page Data For header Page
             $result = array(
                 'page_title' => 'Search Result',

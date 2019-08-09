@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-content collpase show">
                         <div class="card-body">
-                            @if(session::get('role') == 0)
+                            @if(session::get('role') <= 1)
                                 <form class="form form-horizontal form-bordered" action="{{ route('update_admin_profile_settings') }}" method="post" enctype="multipart/form-data">
                             @else
                                 <form class="form form-horizontal form-bordered" action="{{ route('update_user_profile_settings') }}" method="post" enctype="multipart/form-data">

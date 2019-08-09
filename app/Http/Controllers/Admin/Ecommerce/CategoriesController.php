@@ -7,7 +7,7 @@ use DB;
 
 class CategoriesController extends Controller{
 	function view_parent_categories(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
     		//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Parent Categories',
@@ -36,7 +36,7 @@ class CategoriesController extends Controller{
     }
 
     function add_parent_categories(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Add Parent Categories',
@@ -296,7 +296,7 @@ class CategoriesController extends Controller{
 	}
 
 	function search_parent_categories(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',
@@ -331,7 +331,7 @@ class CategoriesController extends Controller{
 	}
 
 	function view_child_categories(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Child Categories',
@@ -355,7 +355,7 @@ class CategoriesController extends Controller{
 	}
 
 	function add_child_categories(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Add child Categories',
@@ -640,7 +640,7 @@ class CategoriesController extends Controller{
 	}
 
 	function search_child_categories(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',
@@ -674,7 +674,7 @@ class CategoriesController extends Controller{
 
 
 	function view_sub_child_categories(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Header Data
 	    	$result = array(
 	            'page_title' => 'Manage Sub Child Categories',
@@ -699,7 +699,7 @@ class CategoriesController extends Controller{
 	}
 
 	function add_sub_child_categories(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
         	//Header Data
 	    	$result = array(
 	            'page_title' => 'Add sub_child Categories',
@@ -722,7 +722,7 @@ class CategoriesController extends Controller{
     }
 
     function get_child_categories(Request $request, $id){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
             $ajax_response_data = array(
                 'ERROR' => 'FALSE',
                 'DATA' => '',
@@ -761,7 +761,7 @@ class CategoriesController extends Controller{
     }
 
     function insert_sub_child_categories(Request $request){
-    	if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+    	if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 	    	//Get All Inputs
         	$user_id = $request->session()->get('id');
         	$ip_address = $request->ip();
@@ -1034,7 +1034,7 @@ class CategoriesController extends Controller{
 	}
 
 	function search_sub_child_categories(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') == 0)){
+		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
 			//Necessary Page Data For header Page
 	        $result = array(
 	            'page_title' => 'Search Records',
