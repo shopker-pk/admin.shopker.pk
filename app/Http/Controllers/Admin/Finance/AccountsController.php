@@ -34,7 +34,7 @@ class AccountsController extends Controller{
                 $sub_total = 0;
                 foreach($result['query'] as $row){
                     $total_earning += +$row->product_amount;
-                    $total_commission += round(($row->commission_percent / 100) * $row->product_amount);
+                    $total_commission += +round(($row->commission_percent / 100) * $row->product_amount);
                     
                 }
                 
@@ -84,7 +84,7 @@ class AccountsController extends Controller{
                 $sub_total = 0;
                 foreach($results as $row){
                     $total_earning += +$row->product_amount;
-                    $total_commission += round(($row->commission_percent / 100) * $row->product_amount);
+                    $total_commission += +round(($row->commission_percent / 100) * $row->product_amount);
                     
                 }
                 
@@ -140,7 +140,7 @@ class AccountsController extends Controller{
                 $result = array();
                 foreach($results as $row){
                     $total_earning += +$row->product_amount;
-                    $total_commission += round(($row->commission_percent / 100) * $row->product_amount);
+                    $total_commission += +round(($row->commission_percent / 100) * $row->product_amount);
                     
                 }
                 
@@ -206,7 +206,7 @@ class AccountsController extends Controller{
                 $sub_total = 0;
                 foreach($results as $row){
                     $total_earning += +$row->product_amount;
-                    $total_commission += round(($row->commission_percent / 100) * $row->product_amount);
+                    $total_commission += +round(($row->commission_percent / 100) * $row->product_amount);
                     
                 }
                 
