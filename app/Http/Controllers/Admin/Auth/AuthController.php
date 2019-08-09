@@ -181,7 +181,7 @@ class AuthController extends Controller{
 
                     $data = array(
                         'content' => 'Your new password is '.$new_password.' Dear',
-                        'website_url' => end('FRONTEND_URL'),
+                        'website_url' => env('FRONTEND_URL'),
                         'logo' => env('ADMIN_URL').'images/settings/logo/'.$result->header_image,
                         'name' => $result->first_name.' '.$result->last_name,
                         'email' => $request->input('email'),
