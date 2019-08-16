@@ -124,14 +124,25 @@ class OrdersController extends Controller{
                         $payout_status = 'Unpaid';
                     }
                     
+                    if(explode('%', $row->commission_percent)[0] != ''){
+                        $commission = floor((explode('%', $row->commission_percent)[0] / 100) * $row->product_amount);
+                    }else{ 
+                        $commission = floor(($row->commission_percent / 100) * $row->product_amount);
+                    }
+
+                    if(explode('%', $row->commission_percent)[0] != ''){ 
+                        $payout_amount = floor(($row->product_amount) - (explode('%', $row->commission_percent)[0] / 100) * $row->product_amount);
+                    }else{ 
+                        $payout_amount = floor(($row->product_amount) - ($row->commission_percent / 100) * $row->product_amount);
+                    }
 
                     $data = array(
                         'Order No#' => $row->order_no,
                         'Order Date' => date('D-M-Y', strtotime($row->order_date)),
                         'Product SKU' => $row->sku_code,
                         'Sale Price' => $row->product_amount,
-                        'Commision' => floor(($row->commission_percent / 100) * $row->product_amount),
-                        'Payout Amount' => floor(($row->product_amount) - ($row->commission_percent / 100) * $row->product_amount),
+                        'Commision' => $commission,
+                        'Payout Amount' => $payout_amount,
                         'Operational Status' => $operational_status,
                         'Payout Status' => $payout_status,
                     );
