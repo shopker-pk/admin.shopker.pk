@@ -202,16 +202,16 @@
 
 		//Finance Routes Start
 			//Account Statement Routes Start
-				Route::get('/user/admin/finance/account-statement/manage', 'Admin\Finance\AccountsController@manage')->name('manage_account_statement')->middleware('validate_admin_permissions:0');
-				Route::get('/user/admin/finance/account-statement/search', 'Admin\Finance\AccountsController@search')->name('search_account_statement')->middleware('validate_admin_permissions:0');
-				Route::post('/user/admin/finance/account-statement/export', 'Admin\Finance\AccountsController@export')->name('export_account_statement')->middleware('validate_admin_permissions:0');
-				Route::get('/user/admin/finance/account-statement/download-pdf', 'Admin\Finance\AccountsController@pdf')->middleware('validate_admin_permissions:0');
+				Route::get('/user/admin/finance/account-statement/manage', 'Admin\Finance\AccountsController@manage')->name('manage_account_statement')->middleware('validate_admin_permissions:50');
+				Route::get('/user/admin/finance/account-statement/search', 'Admin\Finance\AccountsController@search')->name('search_account_statement')->middleware('validate_admin_permissions:50');
+				Route::post('/user/admin/finance/account-statement/export', 'Admin\Finance\AccountsController@export')->name('export_account_statement')->middleware('validate_admin_permissions:50');
+				Route::get('/user/admin/finance/account-statement/download-pdf', 'Admin\Finance\AccountsController@pdf')->middleware('validate_admin_permissions:50');
 			//Account Statement Routes End
 
 			//Orders Overview Routes Start
-				Route::get('/user/admin/finance/orders-overview/manage', 'Admin\Finance\OrdersController@manage')->name('manage_orders_overview')->middleware('validate_admin_permissions:0');
-				Route::get('/user/admin/finance/orders-overview/search', 'Admin\Finance\OrdersController@search')->name('search_orders_overview')->middleware('validate_admin_permissions:0');
-				Route::post('/user/admin/finance/orders-overview/export', 'Admin\Finance\OrdersController@export')->name('export_orders_overview')->middleware('validate_admin_permissions:0');
+				Route::get('/user/admin/finance/orders-overview/manage', 'Admin\Finance\OrdersController@manage')->name('manage_orders_overview')->middleware('validate_admin_permissions:50');
+				Route::get('/user/admin/finance/orders-overview/search', 'Admin\Finance\OrdersController@search')->name('search_orders_overview')->middleware('validate_admin_permissions:50');
+				Route::post('/user/admin/finance/orders-overview/export', 'Admin\Finance\OrdersController@export')->name('export_orders_overview')->middleware('validate_admin_permissions:50');
 			//Orders Overview Routes End
 		//Finance Routes End
 
