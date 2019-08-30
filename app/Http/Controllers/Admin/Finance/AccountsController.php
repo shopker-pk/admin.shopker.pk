@@ -9,253 +9,238 @@ use PDF;
 
 class AccountsController extends Controller{
 	function manage(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
-            //Necessary Page Data For header Page
-            $result = array(
-                'page_title' => 'Manage Account Statement',
-                'meta_keywords' => '',
-                'meta_description' => '',
-            );
+		//Necessary Page Data For header Page
+        $result = array(
+            'page_title' => 'Manage Account Statement',
+            'meta_keywords' => '',
+            'meta_description' => '',
+        );
 
-            //Query For Getting Orders Overview Data
-            $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')
-                         ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
-                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
-                         ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.seller_id')
-                         ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
-                         ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id')
-                         ->orderBy('tbl_orders.id', 'DESC');
-            $result['query'] = $query->get();
+        //Query For Getting Orders Overview Data
+        $query = DB::table('tbl_orders')
+                     ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')
+                     ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
+                     ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
+                     ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.seller_id')
+                     ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
+                     ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id')
+                     ->orderBy('tbl_orders.id', 'DESC');
+        $result['query'] = $query->get();
 
-            if(count($result['query'])){
-                $total_commission = 0;
-                $total_earning = 0;
-                $sub_total = 0;
-                foreach($result['query'] as $row){
-                    $total_earning += +$row->product_amount;
+        if(count($result['query'])){
+            $total_commission = 0;
+            $total_earning = 0;
+            $sub_total = 0;
+            foreach($result['query'] as $row){
+                $total_earning += +$row->product_amount;
 
-                    if(explode('%', $row->commission_percent)[0] != ''){
-                        $commission_percent = explode('%', $row->commission_percent)[0];
-                    }else{
-                        $commission_percent = $row->commission_percent;
-                    }
-
-                    $total_commission += +round(($commission_percent / 100) * $row->product_amount);
-                    
+                if(explode('%', $row->commission_percent)[0] != ''){
+                    $commission_percent = explode('%', $row->commission_percent)[0];
+                }else{
+                    $commission_percent = $row->commission_percent;
                 }
-                
-                $result['query'] = array(
-                    'total_commission' => $total_commission,
-                    'total_earning' => $total_earning,
-                    'sub_total' => $total_earning - $total_commission,
-                );
-            }
 
-            //Call Page
-            return view('admin.payments.finance.accounts.manage', $result);
-        }else{
-			print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
-		}
+                $total_commission += +round(($commission_percent / 100) * $row->product_amount);
+                
+            }
+            
+            $result['query'] = array(
+                'total_commission' => $total_commission,
+                'total_earning' => $total_earning,
+                'sub_total' => $total_earning - $total_commission,
+            );
+        }
+
+        //Call Page
+        return view('admin.payments.finance.accounts.manage', $result);
 	}
 
     function search(Request $request){
-		if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
-            //Necessary Page Data For header Page
-            $result = array(
-                'page_title' => 'Search Result',
-                'meta_keywords' => '',
-                'meta_description' => '',
+		//Necessary Page Data For header Page
+        $result = array(
+            'page_title' => 'Search Result',
+            'meta_keywords' => '',
+            'meta_description' => '',
+        );
+
+        //Query For Getting Orders Overview Data
+        $query = DB::table('tbl_orders')
+                     ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')
+                     ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
+                     ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
+                     ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.seller_id')
+                     ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
+                     ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id');
+                     if(!empty($request->input('from'))){
+               $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '<=', date('m', strtotime($request->input('from')))); 
+                     }
+                     if(!empty($request->input('to'))){
+               $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '>=', date('m', strtotime($request->input('to')))); 
+                     }
+               $query->orderBy('tbl_orders.id', 'DESC');
+        $results = $query->get();
+
+        if(count($results) > 0){
+            $total_commission = 0;
+            $total_earning = 0;
+            $sub_total = 0;
+            foreach($results as $row){
+                $total_earning += +$row->product_amount;
+
+                if(explode('%', $row->commission_percent)[0] != ''){
+                    $commission_percent = explode('%', $row->commission_percent)[0];
+                }else{
+                    $commission_percent = $row->commission_percent;
+                }
+
+                $total_commission += +round(($commission_percent / 100) * $row->product_amount);
+                
+            }
+            
+            $result['query'] = array(
+                'total_commission' => $total_commission,
+                'total_earning' => $total_earning,
+                'sub_total' => $total_earning - $total_commission,
             );
 
-            //Query For Getting Orders Overview Data
-            $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')
-                         ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
-                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
-                         ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.seller_id')
-                         ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
-                         ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id');
-                         if(!empty($request->input('from'))){
-                   $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '<=', date('m', strtotime($request->input('from')))); 
-                         }
-                         if(!empty($request->input('to'))){
-                   $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '>=', date('m', strtotime($request->input('to')))); 
-                         }
-                   $query->orderBy('tbl_orders.id', 'DESC');
-            $results = $query->get();
-
-            if(count($results) > 0){
-                $total_commission = 0;
-                $total_earning = 0;
-                $sub_total = 0;
-                foreach($results as $row){
-                    $total_earning += +$row->product_amount;
-
-                    if(explode('%', $row->commission_percent)[0] != ''){
-                        $commission_percent = explode('%', $row->commission_percent)[0];
-                    }else{
-                        $commission_percent = $row->commission_percent;
-                    }
-
-                    $total_commission += +round(($commission_percent / 100) * $row->product_amount);
-                    
-                }
-                
-                $result['query'] = array(
-                    'total_commission' => $total_commission,
-                    'total_earning' => $total_earning,
-                    'sub_total' => $total_earning - $total_commission,
-                );
-
-            }else{
-                $result['query'] = array(
-                    'total_commission' => 0,
-                    'total_earning' => 0,
-                    'sub_total' => 0,
-                );
-            }
-
-            //Call Page
-            return view('admin.payments.finance.accounts.manage', $result);
         }else{
-			print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
-		}
+            $result['query'] = array(
+                'total_commission' => 0,
+                'total_earning' => 0,
+                'sub_total' => 0,
+            );
+        }
+
+        //Call Page
+        return view('admin.payments.finance.accounts.manage', $result);
 	}
 
     function export(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
-            //Inputs Validation
-            $input_validations = $request->validate([
-                'file_name' => 'required',
-            ]);
+        //Inputs Validation
+        $input_validations = $request->validate([
+            'file_name' => 'required',
+        ]);
 
-            //Query For Getting Orders Overview Data
-            $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')
-                         ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
-                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
-                         ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.seller_id')
-                         ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
-                         ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id');
-                         if(!empty($request->input('from_date'))){
-                   $query->where('tbl_orders.order_date', '>=', $request->input('from_date'));
-                         }
-                         if(!empty($request->input('end_date'))){
-                   $query->where('tbl_orders.order_date', '<=', $request->input('end_date'));
-                         }
-                   $query->orderBy('tbl_orders.id', 'DESC');
-            $results = $query->get();
+        //Query For Getting Orders Overview Data
+        $query = DB::table('tbl_orders')
+                     ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')
+                     ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
+                     ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
+                     ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.seller_id')
+                     ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
+                     ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id');
+                     if(!empty($request->input('from_date'))){
+               $query->where('tbl_orders.order_date', '>=', $request->input('from_date'));
+                     }
+                     if(!empty($request->input('end_date'))){
+               $query->where('tbl_orders.order_date', '<=', $request->input('end_date'));
+                     }
+               $query->orderBy('tbl_orders.id', 'DESC');
+        $results = $query->get();
 
-            if(count($results) > 0){
-                $total_commission = 0;
-                $total_earning = 0;
-                $sub_total = 0;
-                $result = array();
-                foreach($results as $row){
-                    $total_earning += +$row->product_amount;
+        if(count($results) > 0){
+            $total_commission = 0;
+            $total_earning = 0;
+            $sub_total = 0;
+            $result = array();
+            foreach($results as $row){
+                $total_earning += +$row->product_amount;
 
-                    if(explode('%', $row->commission_percent)[0] != ''){
-                        $commission_percent = explode('%', $row->commission_percent)[0];
-                    }else{
-                        $commission_percent = $row->commission_percent;
-                    }
-
-                    $total_commission += +round(($commission_percent / 100) * $row->product_amount);
-                    
-                }
-                
-
-                if($total_commission == 0){
-                    $total_commission = '0';
+                if(explode('%', $row->commission_percent)[0] != ''){
+                    $commission_percent = explode('%', $row->commission_percent)[0];
                 }else{
-                    $total_commission = $total_commission;
+                    $commission_percent = $row->commission_percent;
                 }
 
-                $data = array(
-                    'Item Charges' => $total_earning,
-                    'Shopker Fees' => $total_commission,
-                    'Subtotal' => $total_earning - $total_commission,
-                    'Total Balance' => $total_earning - $total_commission,
-                );
-
-                $result[] = (array)$data;
-
-                //Export As Excel File
-                $excel_sheet = Excel::create($request->input('file_name'), function($excel) use ($result){
-                    $excel->sheet('New sheet', function($sheet) use ($result){
-                        $sheet->fromArray($result);
-                    });
-                })->download('xlsx');
+                $total_commission += +round(($commission_percent / 100) * $row->product_amount);
                 
-                //Flash Success Message
-                $request->session()->flash('alert-success', 'Account Statement has been export successfully');
-            }else{
-                //Flash Error Message
-                $request->session()->flash('alert-danger', 'No records found for export.');
             }
             
-            //Redirect 
-            return redirect()->back();
+
+            if($total_commission == 0){
+                $total_commission = '0';
+            }else{
+                $total_commission = $total_commission;
+            }
+
+            $data = array(
+                'Item Charges' => $total_earning,
+                'Shopker Fees' => $total_commission,
+                'Subtotal' => $total_earning - $total_commission,
+                'Total Balance' => $total_earning - $total_commission,
+            );
+
+            $result[] = (array)$data;
+
+            //Export As Excel File
+            $excel_sheet = Excel::create($request->input('file_name'), function($excel) use ($result){
+                $excel->sheet('New sheet', function($sheet) use ($result){
+                    $sheet->fromArray($result);
+                });
+            })->download('xlsx');
+            
+            //Flash Success Message
+            $request->session()->flash('alert-success', 'Account Statement has been export successfully');
         }else{
-            print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+            //Flash Error Message
+            $request->session()->flash('alert-danger', 'No records found for export.');
         }
+        
+        //Redirect 
+        return redirect()->back();
     }
 
     function pdf(Request $request){
-        if(!empty($request->session()->has('id') && $request->session()->get('role') <= 1)){
-            //Query For Getting Orders Overview Data
-            $query = DB::table('tbl_orders')
-                         ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')
-                         ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
-                         ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
-                         ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.seller_id')
-                         ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
-                         ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id');
-                         if(!empty($request->input('from'))){
-                   $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '<=', date('m', strtotime($request->input('from')))); 
-                         }
-                         if(!empty($request->input('to'))){
-                   $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '>=', date('m', strtotime($request->input('to')))); 
-                         }
-                   $query->orderBy('tbl_orders.id', 'DESC');
-            $results = $query->get();
+        //Query For Getting Orders Overview Data
+        $query = DB::table('tbl_orders')
+                     ->select('tbl_orders.order_no', 'tbl_orders.order_date', 'tbl_products.sku_code', 'tbl_orders.product_amount', 'tbl_orders.status as operational_status', 'tbl_orders_invoices.status as payout_status', 'tbl_vendors_commission.type as commission_type', 'tbl_vendors_commission.total_percent as commission_percent')
+                     ->leftJoin('tbl_products', 'tbl_products.id', '=', 'tbl_orders.product_id')
+                     ->leftJoin('tbl_orders_invoices', 'tbl_orders_invoices.order_no', '=', 'tbl_orders.order_no')
+                     ->leftJoin('tbl_users', 'tbl_users.id', '=', 'tbl_orders.seller_id')
+                     ->leftJoin('tbl_vendors_commission', 'tbl_vendors_commission.vendor_id', '=', 'tbl_orders.seller_id')
+                     ->leftJoin('tbl_product_categories', 'tbl_product_categories.product_id', '=', 'tbl_orders.product_id');
+                     if(!empty($request->input('from'))){
+               $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '<=', date('m', strtotime($request->input('from')))); 
+                     }
+                     if(!empty($request->input('to'))){
+               $query->where(DB::raw('MONTH(tbl_orders.order_date)'), '>=', date('m', strtotime($request->input('to')))); 
+                     }
+               $query->orderBy('tbl_orders.id', 'DESC');
+        $results = $query->get();
 
-            if(count($results) > 0){
-                $total_commission = 0;
-                $total_earning = 0;
-                $sub_total = 0;
-                foreach($results as $row){
-                    $total_earning += +$row->product_amount;
-                    
-                    if(explode('%', $row->commission_percent)[0] != ''){
-                        $commission_percent = explode('%', $row->commission_percent)[0];
-                    }else{
-                        $commission_percent = $row->commission_percent;
-                    }
-
-                    $total_commission += +round(($commission_percent / 100) * $row->product_amount);
-                }
+        if(count($results) > 0){
+            $total_commission = 0;
+            $total_earning = 0;
+            $sub_total = 0;
+            foreach($results as $row){
+                $total_earning += +$row->product_amount;
                 
-                $result['query'] = array(
-                    'total_commission' => $total_commission,
-                    'total_earning' => $total_earning,
-                    'sub_total' => $total_earning - $total_commission,
-                );
+                if(explode('%', $row->commission_percent)[0] != ''){
+                    $commission_percent = explode('%', $row->commission_percent)[0];
+                }else{
+                    $commission_percent = $row->commission_percent;
+                }
 
-            }else{
-                $result['query'] = array(
-                    'total_commission' => 0,
-                    'total_earning' => 0,
-                    'sub_total' => 0,
-                );
+                $total_commission += +round(($commission_percent / 100) * $row->product_amount);
             }
+            
+            $result['query'] = array(
+                'total_commission' => $total_commission,
+                'total_earning' => $total_earning,
+                'sub_total' => $total_earning - $total_commission,
+            );
 
-            //Download PDF
-            $pdf = PDF::loadView('admin.payments.finance.accounts.pdf', $result)->setPaper('A4', 'Portrait');
-            return $pdf->download('Statement.pdf');
         }else{
-            print_r("<center><h4>Error 404 !!<br> You don't have accees of this page<br> Please move back<h4></center>");
+            $result['query'] = array(
+                'total_commission' => 0,
+                'total_earning' => 0,
+                'sub_total' => 0,
+            );
         }
+
+        //Download PDF
+        $pdf = PDF::loadView('admin.payments.finance.accounts.pdf', $result)->setPaper('A4', 'Portrait');
+
+        return $pdf->download('Statement.pdf');
     }
 }
